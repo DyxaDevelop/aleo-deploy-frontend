@@ -23,7 +23,7 @@ const Container = styled.div(() => ({
 }));
 
 const FirstSection = styled.div(() => ({
-  paddingTop: '150px',
+  paddingTop: '140px',
   display: 'flex',
   alignItems: 'center',
   paddingRight: '50px',
@@ -310,55 +310,56 @@ export const MainPage = () => (
             <BlockNumber>1</BlockNumber>
             <BlockTitle>Install Leo wallet</BlockTitle>
             <BlockDesc>
-              From IDE to blockchain and <br />
-              everything in between.
+              Install Leo Wallet to interact with
+              <br />
+              WEB3 applications on Aleo
             </BlockDesc>
-            <Button>Explore Packages</Button>
+            <Button>Install</Button>
           </BlockItem>
           <BlockItem>
             <BlockNumber>2</BlockNumber>
             <BlockTitle>Get tokens from Faucet</BlockTitle>
             <BlockDesc>
-              From IDE to blockchain and <br />
-              everything in between.
+              Get tokens from faucet <br />
+              to pay for gas fees
             </BlockDesc>
-            <Button>Explore Packages</Button>
+            <Button>Faucet</Button>
           </BlockItem>
           <BlockItem>
             <BlockNumber>3</BlockNumber>
             <BlockTitle>Choose a game you want to play</BlockTitle>
             <BlockDesc>
-              From IDE to blockchain and <br />
-              everything in between.
+              Choose a game you want <br />
+              to play and enjoy!
             </BlockDesc>
-            <Button>Explore Packages</Button>
+            <Button>Play</Button>
           </BlockItem>
           <BlockItem>
             <BlockNumber>4</BlockNumber>
             <BlockTitle>Invite friends and make a bet</BlockTitle>
             <BlockDesc>
-              From IDE to blockchain and <br />
-              everything in between.
+              Invite your friend <br />
+              to play 1 vs 1
             </BlockDesc>
-            <Button>Explore Packages</Button>
+            <Button>Invite</Button>
           </BlockItem>
           <BlockItem>
             <BlockNumber>5</BlockNumber>
             <BlockTitle>Create unique ENS</BlockTitle>
             <BlockDesc>
-              From IDE to blockchain and <br />
-              everything in between.
+              Create your unique ENS <br />
+              name to be different
             </BlockDesc>
-            <Button>Explore Packages</Button>
+            <Button>Create ENS</Button>
           </BlockItem>
           <BlockItem>
             <BlockNumber>6</BlockNumber>
             <BlockTitle>Vote for future games</BlockTitle>
             <BlockDesc>
-              From IDE to blockchain and <br />
-              everything in between.
+              Vote for games you want <br />
+              to see next on Aleo Games
             </BlockDesc>
-            <Button>Explore Packages</Button>
+            <Button>Vote</Button>
           </BlockItem>
         </BlockSection>
         <LiveFeed>
