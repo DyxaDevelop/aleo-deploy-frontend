@@ -19,14 +19,13 @@ import LogoSVG from '../assets/svg/LOGO.svg';
 import TwitterSVG from '../assets/svg/twitter.svg';
 import DiscordSVG from '../assets/svg/discord.svg';
 import GithubSVG from '../assets/svg/github.svg';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const Container = styled.div(() => ({
   backgroundColor: '#171922',
-  width: '256px',
+  width: '170px',
   height: '100%',
   paddingTop: '48px',
-  paddingLeft: '23px',
   paddingBottom: '48px',
   position: 'fixed',
   boxSizing: 'border-box',
@@ -36,40 +35,63 @@ const Container = styled.div(() => ({
   zIndex: 2,
 }));
 
-const LogoBlock = styled.div(() => ({
+const LogoBlock = styled(NavLink)(() => ({
+  paddingLeft: '23px',
   '& img': {
-    width: 115,
+    width: 100,
     marginBottom: 80,
   },
 }));
 
 const ImgBlock = styled.div(() => ({
-  width: '41px',
+  width: '26px',
   display: 'flex',
   alignItems: 'center',
 }));
 
-const ItemText = styled.p(() => ({
-  color: '#999999',
+const ImgBlockActive = styled(ImgBlock)(() => ({
+  '& img': {
+    filter: 'brightness(0) invert(1)',
+  },
 }));
+
+const ItemText = styled.p(() => ({}));
 
 const Item = styled(NavLink)(() => ({
   display: 'flex',
   textDecoration: 'none',
-  gap: '30px',
+  gap: '25px',
   alignItems: 'center',
   color: '#999999',
-  marginBottom: '28px',
+  paddingTop: '14px',
+  paddingBottom: '14px',
+  fontWeight: 600,
+  lineHeight: '11px',
+  letterSpacing: '-0.415435px',
+  paddingLeft: '23px',
+  fontSize: '12px',
+}));
+
+const ItemActive = styled(Item)(() => ({
+  marginBottom: '0',
+  paddingTop: '14px',
+  paddingBottom: '14px',
+  color: '#fff',
+  backgroundColor: '#0C6BFA',
 }));
 
 const Menu = styled.div(() => ({}));
 
 const Links = styled.div(() => ({
+  paddingLeft: '23px',
   width: '150px',
   marginTop: 'auto',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
+  gap: '15px',
+  '& img': {
+    width: '25px',
+  },
 }));
 
 const sidebarItems = [
@@ -111,13 +133,25 @@ const socialMedias = [
 ];
 
 export const Sidebar = () => {
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <Container>
-      <LogoBlock>
+      <LogoBlock to={'/'}>
         <img src={LogoSVG} />
       </LogoBlock>
       <Menu>
         {sidebarItems.map((elem) => {
+          if (location.pathname === elem.link) {
+            return (
+              <ItemActive to={elem.link}>
+                <ImgBlockActive>
+                  <img src={elem.icon} />
+                </ImgBlockActive>
+                <ItemText>{elem.label}</ItemText>
+              </ItemActive>
+            );
+          }
           return (
             <Item to={elem.link}>
               <ImgBlock>

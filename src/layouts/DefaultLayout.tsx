@@ -19,7 +19,7 @@ import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 
 const Container = styled.div(() => ({
-  paddingLeft: '256px',
+  paddingLeft: '170px',
   backgroundColor: '#12141D',
 }));
 

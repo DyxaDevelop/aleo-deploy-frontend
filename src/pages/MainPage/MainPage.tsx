@@ -12,6 +12,7 @@ import logoSVG from '../../assets/svg/LOGO.svg';
 import twitterWhiteSVG from '../../assets/svg/twitterWhite.svg';
 import discordWhiteSVG from '../../assets/svg/discordWhite.svg';
 import githubWhiteSVG from '../../assets/svg/githubWhite.svg';
+import { Loader } from 'components/Loader/Loader';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -20,6 +21,20 @@ const Container = styled.div(() => ({
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
+  // '& ::-webkit-scrollbar': {
+  //   width: '5px',
+  //   background: 'transparent',
+  // },
+  // '& ::-webkit-scrollbar-thumb': {
+  //   borderRadius: '6px',
+  //   background: 'transparent',
+  // },
+  // '& ::-webkit-scrollbar-thumb:hover': {
+  //   background: '#337AB7',
+  // },
+  // '& ::-webkit-scrollbar-track': {
+  //   background: 'transparent',
+  // },
 }));
 
 const FirstSection = styled.div(() => ({
@@ -279,234 +294,237 @@ const FooterRightLinks = styled.div(() => ({
   color: 'rgba(255, 255, 255, 0.5)',
 }));
 
-export const MainPage = () => (
-  <>
-    <DefaultLayout>
-      <Container>
-        <FirstSection>
-          <img src={FirstScreenSVG} />
-          <FirstSectionText>
-            <FirstSectionTextTitle>
-              <Aleo>Aleo Games</Aleo> — 1st platform with multiple games on
-              <Web3> Aleo</Web3>, bets, DAO voting and ENS
-            </FirstSectionTextTitle>
-            <p>
-              On Aleo Games you can choose game you want to play, invite your
-              friends, make bets, claim tickets and use them to vote for future
-              games, create your unique ENS. Everything is recorded on
-              blockchain!
-            </p>
-          </FirstSectionText>
-        </FirstSection>
-        <SecondSection>
-          <SecondSectionText>
-            <Platform>Platform</Platform>
-            <br /> description
-          </SecondSectionText>
-          <img src={SecondScreenSVG} />
-        </SecondSection>
-        <BlockSection>
-          <BlockItem>
-            <BlockNumber>1</BlockNumber>
-            <BlockTitle>Install Leo wallet</BlockTitle>
-            <BlockDesc>
-              Install Leo Wallet to interact with
+export default function MainPage() {
+  return (
+    <>
+      <DefaultLayout>
+        {/* <Loader /> */}
+        <Container>
+          <FirstSection>
+            <img src={FirstScreenSVG} />
+            <FirstSectionText>
+              <FirstSectionTextTitle>
+                <Aleo>Aleo Games</Aleo> — 1st platform with multiple games on
+                <Web3> Aleo</Web3>, bets, DAO voting and ENS
+              </FirstSectionTextTitle>
+              <p>
+                On Aleo Games you can choose game you want to play, invite your
+                friends, make bets, claim tickets and use them to vote for
+                future games, create your unique ENS. Everything is recorded on
+                blockchain!
+              </p>
+            </FirstSectionText>
+          </FirstSection>
+          <SecondSection>
+            <SecondSectionText>
+              <Platform>Platform</Platform>
+              <br /> description
+            </SecondSectionText>
+            <img src={SecondScreenSVG} />
+          </SecondSection>
+          <BlockSection>
+            <BlockItem>
+              <BlockNumber>1</BlockNumber>
+              <BlockTitle>Install Leo wallet</BlockTitle>
+              <BlockDesc>
+                Install Leo Wallet to interact with
+                <br />
+                WEB3 applications on Aleo
+              </BlockDesc>
+              <Button>Install</Button>
+            </BlockItem>
+            <BlockItem>
+              <BlockNumber>2</BlockNumber>
+              <BlockTitle>Get tokens from Faucet</BlockTitle>
+              <BlockDesc>
+                Get tokens from faucet <br />
+                to pay for gas fees
+              </BlockDesc>
+              <Button>Faucet</Button>
+            </BlockItem>
+            <BlockItem>
+              <BlockNumber>3</BlockNumber>
+              <BlockTitle>Choose a game you want to play</BlockTitle>
+              <BlockDesc>
+                Choose a game you want <br />
+                to play and enjoy!
+              </BlockDesc>
+              <Button>Play</Button>
+            </BlockItem>
+            <BlockItem>
+              <BlockNumber>4</BlockNumber>
+              <BlockTitle>Invite friends and make a bet</BlockTitle>
+              <BlockDesc>
+                Invite your friend <br />
+                to play 1 vs 1
+              </BlockDesc>
+              <Button>Invite</Button>
+            </BlockItem>
+            <BlockItem>
+              <BlockNumber>5</BlockNumber>
+              <BlockTitle>Create unique ENS</BlockTitle>
+              <BlockDesc>
+                Create your unique ENS <br />
+                name to be different
+              </BlockDesc>
+              <Button>Create ENS</Button>
+            </BlockItem>
+            <BlockItem>
+              <BlockNumber>6</BlockNumber>
+              <BlockTitle>Vote for future games</BlockTitle>
+              <BlockDesc>
+                Vote for games you want <br />
+                to see next on Aleo Games
+              </BlockDesc>
+              <Button>Vote</Button>
+            </BlockItem>
+          </BlockSection>
+          <LiveFeed>
+            {/* <Tab>Live Feed</Tab> */}
+            <LiveFeedBlock>
+              <LiveFeedTitle>
+                <div className="th t-1">Game</div>
+                <div className="th t-2">User</div>
+                <div className="th t-3">Time</div>
+                <div className="th t-4">Bid amount</div>
+                <div className="th t-5">Payment</div>
+              </LiveFeedTitle>
+              <LiveFeedItem>
+                <div className="row r-1">
+                  <img src={xSVG} />
+                  Zalupa.eth
+                </div>
+                <div className="row r-3">
+                  <img src={HiddenSVG} />
+                  Hidden
+                </div>
+                <div className="row r-3">23:26</div>
+                <div className="row r-4">2.59950002</div>
+                <div className="row r-5">2.82695627</div>
+              </LiveFeedItem>
+              <LiveFeedItem>
+                <div className="row r-1">
+                  <img src={xSVG} />
+                  Zalupa.eth
+                </div>
+                <div className="row r-3">
+                  <img src={HiddenSVG} />
+                  Hidden
+                </div>
+                <div className="row r-3">23:26</div>
+                <div className="row r-4">2.59950002</div>
+                <div className="row r-5">2.82695627</div>
+              </LiveFeedItem>
+              <LiveFeedItem>
+                <div className="row r-1">
+                  <img src={xSVG} />
+                  Zalupa.eth
+                </div>
+                <div className="row r-3">
+                  <img src={HiddenSVG} />
+                  Hidden
+                </div>
+                <div className="row r-3">23:26</div>
+                <div className="row r-4">2.59950002</div>
+                <div className="row r-5">2.82695627</div>
+              </LiveFeedItem>
+              <LiveFeedItem>
+                <div className="row r-1">
+                  <img src={xSVG} />
+                  Zalupa.eth
+                </div>
+                <div className="row r-3">
+                  <img src={HiddenSVG} />
+                  Hidden
+                </div>
+                <div className="row r-3">23:26</div>
+                <div className="row r-4">2.59950002</div>
+                <div className="row r-5">2.82695627</div>
+              </LiveFeedItem>
+              <LiveFeedItem>
+                <div className="row r-1">
+                  <img src={xSVG} />
+                  Zalupa.eth
+                </div>
+                <div className="row r-3">
+                  <img src={HiddenSVG} />
+                  Hidden
+                </div>
+                <div className="row r-3">23:26</div>
+                <div className="row r-4">2.59950002</div>
+                <div className="row r-5">2.82695627</div>
+              </LiveFeedItem>
+              <LiveFeedItem>
+                <div className="row r-1">
+                  <img src={xSVG} />
+                  Zalupa.eth
+                </div>
+                <div className="row r-3">
+                  <img src={HiddenSVG} />
+                  Hidden
+                </div>
+                <div className="row r-3">23:26</div>
+                <div className="row r-4">2.59950002</div>
+                <div className="row r-5">2.82695627</div>
+              </LiveFeedItem>
+              <LiveFeedItem>
+                <div className="row r-1">
+                  <img src={xSVG} />
+                  Zalupa.eth
+                </div>
+                <div className="row r-3">
+                  <img src={HiddenSVG} />
+                  Hidden
+                </div>
+                <div className="row r-3">23:26</div>
+                <div className="row r-4">2.59950002</div>
+                <div className="row r-5">2.82695627</div>
+              </LiveFeedItem>
+            </LiveFeedBlock>
+          </LiveFeed>
+        </Container>
+        <Foooter>
+          <FooterContainer>
+            <FooterLogoBlock>
+              <img style={{ width: 177 }} src={logoSVG} />
+              Where Applications
               <br />
-              WEB3 applications on Aleo
-            </BlockDesc>
-            <Button>Install</Button>
-          </BlockItem>
-          <BlockItem>
-            <BlockNumber>2</BlockNumber>
-            <BlockTitle>Get tokens from Faucet</BlockTitle>
-            <BlockDesc>
-              Get tokens from faucet <br />
-              to pay for gas fees
-            </BlockDesc>
-            <Button>Faucet</Button>
-          </BlockItem>
-          <BlockItem>
-            <BlockNumber>3</BlockNumber>
-            <BlockTitle>Choose a game you want to play</BlockTitle>
-            <BlockDesc>
-              Choose a game you want <br />
-              to play and enjoy!
-            </BlockDesc>
-            <Button>Play</Button>
-          </BlockItem>
-          <BlockItem>
-            <BlockNumber>4</BlockNumber>
-            <BlockTitle>Invite friends and make a bet</BlockTitle>
-            <BlockDesc>
-              Invite your friend <br />
-              to play 1 vs 1
-            </BlockDesc>
-            <Button>Invite</Button>
-          </BlockItem>
-          <BlockItem>
-            <BlockNumber>5</BlockNumber>
-            <BlockTitle>Create unique ENS</BlockTitle>
-            <BlockDesc>
-              Create your unique ENS <br />
-              name to be different
-            </BlockDesc>
-            <Button>Create ENS</Button>
-          </BlockItem>
-          <BlockItem>
-            <BlockNumber>6</BlockNumber>
-            <BlockTitle>Vote for future games</BlockTitle>
-            <BlockDesc>
-              Vote for games you want <br />
-              to see next on Aleo Games
-            </BlockDesc>
-            <Button>Vote</Button>
-          </BlockItem>
-        </BlockSection>
-        <LiveFeed>
-          {/* <Tab>Live Feed</Tab> */}
-          <LiveFeedBlock>
-            <LiveFeedTitle>
-              <div className="th t-1">Game</div>
-              <div className="th t-2">User</div>
-              <div className="th t-3">Time</div>
-              <div className="th t-4">Bid amount</div>
-              <div className="th t-5">Payment</div>
-            </LiveFeedTitle>
-            <LiveFeedItem>
-              <div className="row r-1">
-                <img src={xSVG} />
-                Zalupa.eth
-              </div>
-              <div className="row r-3">
-                <img src={HiddenSVG} />
-                Hidden
-              </div>
-              <div className="row r-3">23:26</div>
-              <div className="row r-4">2.59950002</div>
-              <div className="row r-5">2.82695627</div>
-            </LiveFeedItem>
-            <LiveFeedItem>
-              <div className="row r-1">
-                <img src={xSVG} />
-                Zalupa.eth
-              </div>
-              <div className="row r-3">
-                <img src={HiddenSVG} />
-                Hidden
-              </div>
-              <div className="row r-3">23:26</div>
-              <div className="row r-4">2.59950002</div>
-              <div className="row r-5">2.82695627</div>
-            </LiveFeedItem>
-            <LiveFeedItem>
-              <div className="row r-1">
-                <img src={xSVG} />
-                Zalupa.eth
-              </div>
-              <div className="row r-3">
-                <img src={HiddenSVG} />
-                Hidden
-              </div>
-              <div className="row r-3">23:26</div>
-              <div className="row r-4">2.59950002</div>
-              <div className="row r-5">2.82695627</div>
-            </LiveFeedItem>
-            <LiveFeedItem>
-              <div className="row r-1">
-                <img src={xSVG} />
-                Zalupa.eth
-              </div>
-              <div className="row r-3">
-                <img src={HiddenSVG} />
-                Hidden
-              </div>
-              <div className="row r-3">23:26</div>
-              <div className="row r-4">2.59950002</div>
-              <div className="row r-5">2.82695627</div>
-            </LiveFeedItem>
-            <LiveFeedItem>
-              <div className="row r-1">
-                <img src={xSVG} />
-                Zalupa.eth
-              </div>
-              <div className="row r-3">
-                <img src={HiddenSVG} />
-                Hidden
-              </div>
-              <div className="row r-3">23:26</div>
-              <div className="row r-4">2.59950002</div>
-              <div className="row r-5">2.82695627</div>
-            </LiveFeedItem>
-            <LiveFeedItem>
-              <div className="row r-1">
-                <img src={xSVG} />
-                Zalupa.eth
-              </div>
-              <div className="row r-3">
-                <img src={HiddenSVG} />
-                Hidden
-              </div>
-              <div className="row r-3">23:26</div>
-              <div className="row r-4">2.59950002</div>
-              <div className="row r-5">2.82695627</div>
-            </LiveFeedItem>
-            <LiveFeedItem>
-              <div className="row r-1">
-                <img src={xSVG} />
-                Zalupa.eth
-              </div>
-              <div className="row r-3">
-                <img src={HiddenSVG} />
-                Hidden
-              </div>
-              <div className="row r-3">23:26</div>
-              <div className="row r-4">2.59950002</div>
-              <div className="row r-5">2.82695627</div>
-            </LiveFeedItem>
-          </LiveFeedBlock>
-        </LiveFeed>
-      </Container>
-      <Foooter>
-        <FooterContainer>
-          <FooterLogoBlock>
-            <img style={{ width: 177 }} src={logoSVG} />
-            Where Applications
-            <br />
-            Become Private.
-            <LinksFooter>
-              <img src={twitterWhiteSVG} />
-              <img src={githubWhiteSVG} />
-              <img src={discordWhiteSVG} />
-            </LinksFooter>
-            <BottomFooterText>
-              © Aleo Systems Inc • Your Privacy is{' '}
-              <span style={{ color: '#fff' }}>Protected</span>
-            </BottomFooterText>
-          </FooterLogoBlock>
-          <FooterRightLinks>
-            <FooterRightLinksBlock>
-              <span style={{ color: '#fff' }}>Aleo.org</span>
-              <span style={{ color: '#fff' }}>Home</span>
-              <span>Our Blog</span>
-              <span>Opportunities</span>
-            </FooterRightLinksBlock>
-            <FooterRightLinksBlock>
-              <span style={{ color: '#fff' }}>For Developers</span>
-              <span>Aleo Studio</span>
-              <span>Aleo Explorer</span>
-              <span>Aleo Package Manager</span>
-              <span> Aleo Developer Docs</span>
-            </FooterRightLinksBlock>
-          </FooterRightLinks>
-        </FooterContainer>
-      </Foooter>
-    </DefaultLayout>
-    {/* <DefaultLayout>
+              Become Private.
+              <LinksFooter>
+                <img src={twitterWhiteSVG} />
+                <img src={githubWhiteSVG} />
+                <img src={discordWhiteSVG} />
+              </LinksFooter>
+              <BottomFooterText>
+                © Aleo Systems Inc • Your Privacy is{' '}
+                <span style={{ color: '#fff' }}>Protected</span>
+              </BottomFooterText>
+            </FooterLogoBlock>
+            <FooterRightLinks>
+              <FooterRightLinksBlock>
+                <span style={{ color: '#fff' }}>Aleo.org</span>
+                <span style={{ color: '#fff' }}>Home</span>
+                <span>Our Blog</span>
+                <span>Opportunities</span>
+              </FooterRightLinksBlock>
+              <FooterRightLinksBlock>
+                <span style={{ color: '#fff' }}>For Developers</span>
+                <span>Aleo Studio</span>
+                <span>Aleo Explorer</span>
+                <span>Aleo Package Manager</span>
+                <span> Aleo Developer Docs</span>
+              </FooterRightLinksBlock>
+            </FooterRightLinks>
+          </FooterContainer>
+        </Foooter>
+      </DefaultLayout>
+      {/* <DefaultLayout>
       <header className="App-header">
         Pipeline test
         <WalletMultiButton />
       </header>
       Test main
     </DefaultLayout> */}
-  </>
-);
+    </>
+  );
+}

@@ -12,6 +12,9 @@ import {
 // import styled from '@emotion/styled';
 import { AppRoutes } from './Routes';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './chess/src/redux/store';
+import './index.css';
 require('@demox-labs/aleo-wallet-adapter-reactui/styles.css');
 
 // const WalletMultiButtonStyled = styled(WalletMultiButton)(() => ({
@@ -30,19 +33,21 @@ function App() {
   return (
     <div className="App">
       {' '}
-      <BrowserRouter>
-        <WalletProvider
-          wallets={wallets}
-          decryptPermission={DecryptPermission.UponRequest}
-          // @ts-ignore
-          network={WalletAdapterNetwork.Localnet}
-          autoConnect
-        >
-          <WalletModalProvider>
-            <AppRoutes />
-          </WalletModalProvider>
-        </WalletProvider>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <WalletProvider
+            wallets={wallets}
+            decryptPermission={DecryptPermission.UponRequest}
+            // @ts-ignore
+            network={WalletAdapterNetwork.Localnet}
+            autoConnect
+          >
+            <WalletModalProvider>
+              <AppRoutes />
+            </WalletModalProvider>
+          </WalletProvider>
+        </BrowserRouter>
+      </Provider>
     </div>
   );
 }
