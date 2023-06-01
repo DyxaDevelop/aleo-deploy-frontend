@@ -13,6 +13,7 @@ import { Voting } from 'pages/Voting/Voting';
 import { DefaultLayout } from 'layouts/DefaultLayout';
 import { Loader } from 'components/Loader/Loader';
 import { Chess } from 'pages/Chess/Chess';
+import { CreateENS } from 'pages/CreateEns/CreateENS';
 
 //@ts-ignore
 const MainPage = lazy(() => import('./pages/MainPage/MainPage'));
@@ -46,6 +47,7 @@ export const AppRoutes = () => (
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/account" element={<Profile />} />
         <Route path="/voting" element={<Voting />} />
+        <Route path="/ens" element={<CreateENS />} />
         {/* </div> */}
       </Routes>
     </Suspense>
