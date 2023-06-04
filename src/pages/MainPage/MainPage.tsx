@@ -13,6 +13,7 @@ import twitterWhiteSVG from '../../assets/svg/twitterWhite.svg';
 import discordWhiteSVG from '../../assets/svg/discordWhite.svg';
 import githubWhiteSVG from '../../assets/svg/githubWhite.svg';
 import { Loader } from 'components/Loader/Loader';
+import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -301,7 +302,7 @@ export default function MainPage() {
         {/* <Loader /> */}
         <Container>
           <FirstSection>
-            <img src={FirstScreenSVG} />
+            <SuspenseImg src={FirstScreenSVG} />
             <FirstSectionText>
               <FirstSectionTextTitle>
                 <Aleo>Aleo Games</Aleo> — 1st platform with multiple games on
@@ -320,7 +321,7 @@ export default function MainPage() {
               <Platform>Platform</Platform>
               <br /> description
             </SecondSectionText>
-            <img src={SecondScreenSVG} />
+            <SuspenseImg src={SecondScreenSVG} />
           </SecondSection>
           <BlockSection>
             <BlockItem>
@@ -391,11 +392,11 @@ export default function MainPage() {
               </LiveFeedTitle>
               <LiveFeedItem>
                 <div className="row r-1">
-                  <img src={xSVG} />
+                  <SuspenseImg src={xSVG} />
                   Zalupa.eth
                 </div>
                 <div className="row r-3">
-                  <img src={HiddenSVG} />
+                  <SuspenseImg src={HiddenSVG} />
                   Hidden
                 </div>
                 <div className="row r-3">23:26</div>
@@ -404,11 +405,11 @@ export default function MainPage() {
               </LiveFeedItem>
               <LiveFeedItem>
                 <div className="row r-1">
-                  <img src={xSVG} />
+                  <SuspenseImg src={xSVG} />
                   Zalupa.eth
                 </div>
                 <div className="row r-3">
-                  <img src={HiddenSVG} />
+                  <SuspenseImg src={HiddenSVG} />
                   Hidden
                 </div>
                 <div className="row r-3">23:26</div>
@@ -417,7 +418,7 @@ export default function MainPage() {
               </LiveFeedItem>
               <LiveFeedItem>
                 <div className="row r-1">
-                  <img src={xSVG} />
+                  <SuspenseImg src={xSVG} />
                   Zalupa.eth
                 </div>
                 <div className="row r-3">

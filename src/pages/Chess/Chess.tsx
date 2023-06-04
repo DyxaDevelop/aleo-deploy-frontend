@@ -8,6 +8,7 @@ import chessBoardSVG from '../../assets/svg/chessBoard.svg';
 import soonGamesSVG from '../../assets/svg/soonGames.svg';
 import leftArrow from '../../assets/svg/leftArrow.svg';
 import xIcon from '../../assets/svg/xIcon.svg';
+import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -96,13 +97,13 @@ export const Chess = () => (
         <GameBlocksContainer>
           <ControlBtns>
             <NavLink to={'/games/'}>
-              <img src={leftArrow} />
+              <SuspenseImg src={leftArrow} />
             </NavLink>
             <NavLink to={'/'}>
-              <img src={xIcon} />
+              <SuspenseImg src={xIcon} />
             </NavLink>
           </ControlBtns>
-          <img src={chessBoardSVG} />
+          <SuspenseImg src={chessBoardSVG} />
           <ContentBlock>
             <div style={{ margin: 'auto' }}>
               <Title>Aleo chess </Title>

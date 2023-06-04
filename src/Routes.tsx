@@ -32,9 +32,11 @@ export const AppRoutes = () => (
   <>
     <Suspense
       fallback={
-        <LoaderContainer>
-          <Loader />
-        </LoaderContainer>
+        <DefaultLayout>
+          <LoaderContainer>
+            <Loader />
+          </LoaderContainer>
+        </DefaultLayout>
       }
     >
       <Routes>

@@ -1,8 +1,7 @@
 body {
   margin: 0;
   background-color: #12141D;
-  font-family: 'Inter', sans-serif;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter';
   cursor: url('./assets/svg/cursor.svg'), auto;
 }
 

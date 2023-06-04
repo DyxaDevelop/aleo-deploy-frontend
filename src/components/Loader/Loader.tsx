@@ -2,6 +2,7 @@ import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import React, { Suspense } from 'react';
+import logo from '../../assets/gif/aleoLoader.gif';
 
 const Hop = keyframes`
   0% {
@@ -43,12 +44,13 @@ export const Loader = () => {
 
   return (
     <>
-      <LoaderContainer>
+      <img style={{ width: '400px' }} src={logo} />
+      {/* <LoaderContainer>
         <div></div>
         <div></div>
         <div></div>
         <div></div>
-      </LoaderContainer>
+      </LoaderContainer> */}
     </>
   );
 };

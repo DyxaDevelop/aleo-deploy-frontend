@@ -7,6 +7,7 @@ import profileAvatarSVG from '../../assets/svg/profileAvatar.svg';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
 import xSVG from '../../assets/svg/x.svg';
 import HiddenSVG from '../../assets/svg/hidden.svg';
+import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -282,11 +283,11 @@ export const Profile = () => (
                 <LiveFeedBlock>
                   <LiveFeedItem>
                     <div className="row r-1">
-                      <img src={xSVG} />
+                      <SuspenseImg src={xSVG} />
                       Zalupa.eth
                     </div>
                     <div className="row r-3">
-                      <img src={HiddenSVG} />
+                      <SuspenseImg src={HiddenSVG} />
                       Hidden
                     </div>
                     <div className="row r-3">23:26</div>
@@ -295,11 +296,11 @@ export const Profile = () => (
                   </LiveFeedItem>
                   <LiveFeedItem>
                     <div className="row r-1">
-                      <img src={xSVG} />
+                      <SuspenseImg src={xSVG} />
                       Zalupa.eth
                     </div>
                     <div className="row r-3">
-                      <img src={HiddenSVG} />
+                      <SuspenseImg src={HiddenSVG} />
                       Hidden
                     </div>
                     <div className="row r-3">23:26</div>
@@ -308,11 +309,11 @@ export const Profile = () => (
                   </LiveFeedItem>
                   <LiveFeedItem>
                     <div className="row r-1">
-                      <img src={xSVG} />
+                      <SuspenseImg src={xSVG} />
                       Zalupa.eth
                     </div>
                     <div className="row r-3">
-                      <img src={HiddenSVG} />
+                      <SuspenseImg src={HiddenSVG} />
                       Hidden
                     </div>
                     <div className="row r-3">23:26</div>
@@ -321,7 +322,7 @@ export const Profile = () => (
                   </LiveFeedItem>
                   <LiveFeedItem>
                     <div className="row r-1">
-                      <img src={xSVG} />
+                      <SuspenseImg src={xSVG} />
                       Zalupa.eth
                     </div>
                     <div className="row r-3">
