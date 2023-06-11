@@ -32,13 +32,13 @@ const Container = styled.div(() => ({
   top: 0,
   display: 'flex',
   flexDirection: 'column',
-  zIndex: 2,
+  zIndex: 10,
 }));
 
-const LogoBlock = styled(NavLink)(() => ({
+const LogoBlock = styled.div(() => ({
   paddingLeft: '23px',
   '& img': {
-    width: 100,
+    width: 120,
     marginBottom: 80,
   },
 }));
@@ -137,8 +137,10 @@ export const Sidebar = () => {
   console.log(location.pathname);
   return (
     <Container>
-      <LogoBlock to={'/'}>
-        <img src={LogoSVG} />
+      <LogoBlock>
+        <NavLink to={'/'}>
+          <img src={LogoSVG} />
+        </NavLink>
       </LogoBlock>
       <Menu>
         {sidebarItems.map((elem) => {

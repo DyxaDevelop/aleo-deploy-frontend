@@ -8,6 +8,8 @@ import { DefaultLayout } from '../../layouts/DefaultLayout';
 import xSVG from '../../assets/svg/x.svg';
 import HiddenSVG from '../../assets/svg/hidden.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
+import { Modal } from 'components/Modal/Modal';
+import walletImage from '../../assets/svg/walletImage.svg';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -179,26 +181,6 @@ const LiveFeedBlock = styled.div(() => ({
   },
 }));
 
-const LiveFeedTitle = styled.div(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  color: '#fff',
-  width: '100%',
-  '& .t-1': {
-    paddingLeft: '6px',
-  },
-  '& .th': {
-    display: 'flex',
-    width: '20%',
-    paddingTop: '10px',
-    paddingBottom: '10px',
-  },
-  '& .t-5': {
-    justifyContent: 'flex-end',
-    paddingRight: '6px',
-  },
-}));
-
 const LiveFeed = styled.div(() => ({
   width: '100%',
   boxSizing: 'border-box',
@@ -237,7 +219,7 @@ const LiveFeedItem = styled.div(() => ({
   '& .r-5': {
     justifyContent: 'flex-end',
     paddingRight: '6px',
-    color: '#1FFF20',
+    color: '#02C4F7',
   },
 }));
 
@@ -267,6 +249,12 @@ export const Profile = () => (
               <span>Available votes</span>
               <ContentDynamic>50</ContentDynamic>
             </AvailableVotes>
+            <ClaimVotes>
+              <span>Token Minting</span>
+              <ContentDynamic>
+                <Button>Mint</Button>
+              </ContentDynamic>
+            </ClaimVotes>
             <Balance>
               <span>Your balance</span>
               <ContentDynamic>100$</ContentDynamic>
@@ -323,6 +311,45 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <SuspenseImg src={xSVG} />
+                      Zalupa.eth
+                    </div>
+                    <div className="row r-3">
+                      <img src={HiddenSVG} />
+                      Hidden
+                    </div>
+                    <div className="row r-3">23:26</div>
+                    <div className="row r-4">2.59950002</div>
+                    <div className="row r-5">2.82695627</div>
+                  </LiveFeedItem>
+                  <LiveFeedItem>
+                    <div className="row r-1">
+                      <img src={xSVG} />
+                      Zalupa.eth
+                    </div>
+                    <div className="row r-3">
+                      <img src={HiddenSVG} />
+                      Hidden
+                    </div>
+                    <div className="row r-3">23:26</div>
+                    <div className="row r-4">2.59950002</div>
+                    <div className="row r-5">2.82695627</div>
+                  </LiveFeedItem>
+                  <LiveFeedItem>
+                    <div className="row r-1">
+                      <img src={xSVG} />
+                      Zalupa.eth
+                    </div>
+                    <div className="row r-3">
+                      <img src={HiddenSVG} />
+                      Hidden
+                    </div>
+                    <div className="row r-3">23:26</div>
+                    <div className="row r-4">2.59950002</div>
+                    <div className="row r-5">2.82695627</div>
+                  </LiveFeedItem>
+                  <LiveFeedItem>
+                    <div className="row r-1">
+                      <img src={xSVG} />
                       Zalupa.eth
                     </div>
                     <div className="row r-3">

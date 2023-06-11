@@ -1,4 +1,3 @@
-export {};
 import styled from '@emotion/styled';
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
@@ -14,6 +13,7 @@ import { DefaultLayout } from 'layouts/DefaultLayout';
 import { Loader } from 'components/Loader/Loader';
 import { Chess } from 'pages/Chess/Chess';
 import { CreateENS } from 'pages/CreateEns/CreateENS';
+import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute';
 
 //@ts-ignore
 const MainPage = lazy(() => import('./pages/MainPage/MainPage'));
@@ -44,10 +44,31 @@ export const AppRoutes = () => (
         <Route path="/" element={<MainPage />} />
         {/* <div className="app"> */}
         <Route path="/games/chess" element={<Chess />} />
-        <Route path="/games/chess/board" element={<Board />} />
+        <Route
+          path="/games/chess/board"
+          element={
+            <PrivateRoute>
+              <Board />
+            </PrivateRoute>
+          }
+        />
         <Route path="/games" element={<Games />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/account" element={<Profile />} />
+        <Route
+          path="/wallet"
+          element={
+            <PrivateRoute>
+              <Wallet />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
         <Route path="/voting" element={<Voting />} />
         <Route path="/ens" element={<CreateENS />} />
         {/* </div> */}

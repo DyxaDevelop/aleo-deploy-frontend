@@ -1,6 +1,6 @@
 import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import styled from '@emotion/styled';
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Sidebar } from '../../layouts/Sidebar';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
@@ -12,6 +12,7 @@ import logoSVG from '../../assets/svg/LOGO.svg';
 import twitterWhiteSVG from '../../assets/svg/twitterWhite.svg';
 import discordWhiteSVG from '../../assets/svg/discordWhite.svg';
 import githubWhiteSVG from '../../assets/svg/githubWhite.svg';
+import FaqSVG from '../../assets/svg/FaqArrow.svg';
 import { Loader } from 'components/Loader/Loader';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 
@@ -233,7 +234,7 @@ const LiveFeed = styled.div(() => ({
   paddingRight: 50,
   width: '100%',
   boxSizing: 'border-box',
-  marginTop: '100px',
+  marginTop: '50px',
 }));
 
 const LiveFeedItem = styled.div(() => ({
@@ -295,7 +296,54 @@ const FooterRightLinks = styled.div(() => ({
   color: 'rgba(255, 255, 255, 0.5)',
 }));
 
+const FAQBlock = styled.div(() => ({
+  width: '70%',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  fontSize: '18px',
+  lineHeight: '22px',
+  color: '#AAABAE',
+  marginTop: 50,
+}));
+
+const FAQItem = styled.div(() => ({
+  background: '#14161F',
+  borderRadius: '8px',
+  marginBottom: '12px',
+  '& img': {
+    transform: 'rotate(180deg)',
+  },
+  '&.active': {
+    '& div': {
+      opacity: '1',
+    },
+    '& img': {
+      transform: 'rotate(0deg)',
+    },
+    '& div:last-child': {
+      display: 'block',
+    },
+  },
+}));
+
+const FAQItemTitle = styled.div(() => ({
+  background: 'rgba(255, 255, 255, 0.05)',
+  opacity: '0.64',
+  padding: '20px 25px',
+  borderRadius: '6px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  cursor: 'pointer',
+}));
+
+const FAQItemDescription = styled.div(() => ({
+  display: 'none',
+  padding: '20px',
+  color: 'rgba(255, 255, 255, 0.9)',
+}));
+
 export default function MainPage() {
+  const [openAccordeon, setOpenAccordeon] = useState('');
   return (
     <>
       <DefaultLayout>
@@ -318,8 +366,8 @@ export default function MainPage() {
           </FirstSection>
           <SecondSection>
             <SecondSectionText>
-              <Platform>Platform</Platform>
-              <br /> description
+              <Platform>What is</Platform>
+              <br /> Aleo Games
             </SecondSectionText>
             <SuspenseImg src={SecondScreenSVG} />
           </SecondSection>
@@ -380,6 +428,84 @@ export default function MainPage() {
               <Button>Vote</Button>
             </BlockItem>
           </BlockSection>
+          <FAQBlock>
+            <Platform>FAQ</Platform>
+            <FAQItem className={openAccordeon === '1' ? 'active' : ''}>
+              <FAQItemTitle
+                onClick={() => {
+                  if (openAccordeon === '1') {
+                    setOpenAccordeon('');
+                  } else {
+                    setOpenAccordeon('1');
+                  }
+                }}
+              >
+                What is Aleo Games? <SuspenseImg src={FaqSVG} />
+              </FAQItemTitle>
+              <FAQItemDescription>
+                Aleo Games is a gaming platform made on Aleo to show blockchain
+                in use. <br /> Here you can create your ENS profile, choose a
+                game to play, invite your friends, place the bets and have a fun
+                time!
+              </FAQItemDescription>
+            </FAQItem>
+            <FAQItem className={openAccordeon === '2' ? 'active' : ''}>
+              <FAQItemTitle
+                onClick={() => {
+                  if (openAccordeon === '2') {
+                    setOpenAccordeon('');
+                  } else {
+                    setOpenAccordeon('2');
+                  }
+                }}
+              >
+                How to use Aleo Games?
+                <SuspenseImg src={FaqSVG} />
+              </FAQItemTitle>
+              <FAQItemDescription>
+                1. Install wallet <br />
+                2. Get testnet tokens <br />
+                3. Play and get your game recorded on the blockchain
+              </FAQItemDescription>
+            </FAQItem>
+            <FAQItem className={openAccordeon === '3' ? 'active' : ''}>
+              <FAQItemTitle
+                onClick={() => {
+                  if (openAccordeon === '3') {
+                    setOpenAccordeon('');
+                  } else {
+                    setOpenAccordeon('3');
+                  }
+                }}
+              >
+                On chain use <SuspenseImg src={FaqSVG} />
+              </FAQItemTitle>
+              <FAQItemDescription>
+                1. Install wallet <br />
+                2. Get testnet tokens <br />
+                3. Play and get your game recorded on the blockchain
+              </FAQItemDescription>
+            </FAQItem>
+            <FAQItem className={openAccordeon === '4' ? 'active' : ''}>
+              <FAQItemTitle
+                onClick={() => {
+                  if (openAccordeon === '4') {
+                    setOpenAccordeon('');
+                  } else {
+                    setOpenAccordeon('4');
+                  }
+                }}
+              >
+                Off chain use <SuspenseImg src={FaqSVG} />
+              </FAQItemTitle>
+              <FAQItemDescription>
+                1. Install wallet <br />
+                2. Connect to the website <br />
+                3. Enjoy games without paying any gas fees and waiting for
+                transactions to be executed
+              </FAQItemDescription>
+            </FAQItem>
+          </FAQBlock>
           <LiveFeed>
             {/* <Tab>Live Feed</Tab> */}
             <LiveFeedBlock>
