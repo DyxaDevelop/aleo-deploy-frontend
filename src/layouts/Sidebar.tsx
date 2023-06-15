@@ -16,6 +16,7 @@ import AccountSVG from '../assets/svg/profile.svg';
 import GamesSVG from '../assets/svg/games.svg';
 import VotingSVG from '../assets/svg/voting.svg';
 import LogoSVG from '../assets/svg/LOGO.svg';
+import AnsSVG from '../assets/svg/ansLogo.svg';
 import TwitterSVG from '../assets/svg/twitter.svg';
 import DiscordSVG from '../assets/svg/discord.svg';
 import GithubSVG from '../assets/svg/github.svg';
@@ -115,11 +116,16 @@ const sidebarItems = [
     link: '/voting',
     icon: VotingSVG,
   },
+  {
+    label: 'ANS',
+    link: '/ens',
+    icon: AnsSVG,
+  },
 ];
 
 const socialMedias = [
   {
-    link: 'twitter.com',
+    link: 'https://twitter.com/aleogameshq',
     icon: TwitterSVG,
   },
   {
@@ -127,7 +133,7 @@ const socialMedias = [
     icon: GithubSVG,
   },
   {
-    link: 'discord.com',
+    link: 'https://discord.com/invite/AleoHQ',
     icon: DiscordSVG,
   },
 ];
