@@ -6,6 +6,7 @@ import { Sidebar } from '../../layouts/Sidebar';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
 import chessGameSVG from '../../assets/svg/chessGame.svg';
 import soonGamesSVG from '../../assets/svg/soonGames.svg';
+import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -24,12 +25,12 @@ const GameBlock = styled.div(() => ({
   width: '235px',
   height: '324px',
   borderRadius: '10px',
-  backgroundImage: `url(${chessGameSVG})`,
+  // backgroundImage: `url(${chessGameSVG})`,
   backgroundRepeat: 'no-repeat',
 }));
 
 const GameBlockSoon = styled(GameBlock)(() => ({
-  backgroundImage: `url(${soonGamesSVG})`,
+  // backgroundImage: `url(${soonGamesSVG})`,
 }));
 
 const GameBlocksContainer = styled.div(() => ({
@@ -51,6 +52,7 @@ const PlayButton = styled(NavLink)(() => ({
   color: '#fff',
   marginBottom: '60px',
   cursor: 'pointer',
+  zIndex: 1,
   textDecoration: 'none',
 }));
 
@@ -60,10 +62,17 @@ export const Games = () => (
       <Container>
         <GameBlocksContainer>
           <GameBlock>
+            <SuspenseImg style={{ position: 'absolute' }} src={chessGameSVG} />
             <PlayButton to={'/games/chess'}>Play</PlayButton>
           </GameBlock>
-          <GameBlockSoon></GameBlockSoon>
-          <GameBlockSoon></GameBlockSoon>
+          <GameBlockSoon>
+            {' '}
+            <SuspenseImg style={{ position: 'absolute' }} src={soonGamesSVG} />
+          </GameBlockSoon>
+          <GameBlockSoon>
+            {' '}
+            <SuspenseImg style={{ position: 'absolute' }} src={soonGamesSVG} />
+          </GameBlockSoon>
         </GameBlocksContainer>
       </Container>
     </DefaultLayout>

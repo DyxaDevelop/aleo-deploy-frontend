@@ -33,10 +33,11 @@ const VoteItem = styled.div(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  gap: '40px',
 }));
 
 const VoteLeft = styled.div(() => ({
-  maxWidth: '40%',
+  maxWidth: '400px',
   height: '200px',
 }));
 

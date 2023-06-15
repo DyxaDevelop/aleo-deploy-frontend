@@ -272,7 +272,7 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <SuspenseImg src={xSVG} />
-                      Zalupa.eth
+                      Chess
                     </div>
                     <div className="row r-3">
                       <SuspenseImg src={HiddenSVG} />
@@ -285,7 +285,7 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <SuspenseImg src={xSVG} />
-                      Zalupa.eth
+                      Chess
                     </div>
                     <div className="row r-3">
                       <SuspenseImg src={HiddenSVG} />
@@ -298,7 +298,7 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <SuspenseImg src={xSVG} />
-                      Zalupa.eth
+                      Chess
                     </div>
                     <div className="row r-3">
                       <SuspenseImg src={HiddenSVG} />
@@ -311,7 +311,7 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <SuspenseImg src={xSVG} />
-                      Zalupa.eth
+                      Chess
                     </div>
                     <div className="row r-3">
                       <img src={HiddenSVG} />
@@ -324,7 +324,7 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <img src={xSVG} />
-                      Zalupa.eth
+                      Chess
                     </div>
                     <div className="row r-3">
                       <img src={HiddenSVG} />
@@ -337,7 +337,7 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <img src={xSVG} />
-                      Zalupa.eth
+                      Chess
                     </div>
                     <div className="row r-3">
                       <img src={HiddenSVG} />
@@ -350,7 +350,7 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <img src={xSVG} />
-                      Zalupa.eth
+                      Chess
                     </div>
                     <div className="row r-3">
                       <img src={HiddenSVG} />
@@ -363,7 +363,7 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <img src={xSVG} />
-                      Zalupa.eth
+                      Chess
                     </div>
                     <div className="row r-3">
                       <img src={HiddenSVG} />
@@ -376,7 +376,7 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <img src={xSVG} />
-                      Zalupa.eth
+                      Chess
                     </div>
                     <div className="row r-3">
                       <img src={HiddenSVG} />
@@ -389,7 +389,7 @@ export const Profile = () => (
                   <LiveFeedItem>
                     <div className="row r-1">
                       <img src={xSVG} />
-                      Zalupa.eth
+                      Chess
                     </div>
                     <div className="row r-3">
                       <img src={HiddenSVG} />
