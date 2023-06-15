@@ -116,6 +116,7 @@ const VoteInfo = styled.div(() => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
+  margin: 'auto',
 }));
 
 const VoteCheckBox = styled.div(() => ({
@@ -127,7 +128,6 @@ const VoteCheckBox = styled.div(() => ({
 
 const VoteRightInfo = styled.div(() => ({
   display: 'flex',
-  gap: '20px',
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: '14px',
