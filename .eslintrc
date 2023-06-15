@@ -1,130 +1,130 @@
-{
-  "extends": [
-    "airbnb-typescript",
-    "plugin:react/recommended"
-  ],
-  "plugins": [
-    "unused-imports",
-    "react",
-    "import"
-  ],
-  "rules": {
-    "no-plusplus": 0,
-    "function-paren-newline": 0,
-    "implicit-arrow-linebreak": 0,
-    "object-curly-newline": 0,
-    "import/prefer-default-export": 0,
-    "no-nested-ternary": 0,
-    "@typescript-eslint/indent": 0,
-    "react/no-array-index-key": 0,
-    "react/jsx-curly-newline": 0,
-    "operator-linebreak": 0,
-    "react/jsx-one-expression-per-line": 0,
-    "no-underscore-dangle": 0,
-    "react/jsx-wrap-multilines": 0,
-    "import/no-extraneous-dependencies": 0,
-    "import/no-named-as-default-member": 0,
-    "react/jsx-props-no-spreading": 0,
-    "no-trailing-spaces": 0,
-    "no-irregular-whitespace": 0,
-    "react/no-unescaped-entities": 0,
-    "no-console": [
-      "error",
-      {
-        "allow": [
-          "warn",
-          "error"
-        ]
-      }
-    ],
-    "no-confusing-arrow": 0,
-    "class-methods-use-this": 0,
-    "no-empty": [
-      "error",
-      {
-        "allowEmptyCatch": true
-      }
-    ],
-    "@typescript-eslint/no-unused-vars": "off",
-    "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error",
-    "react/prop-types": "off",
-    "jsx-a11y/click-events-have-key-events": "off",
-    "jsx-a11y/no-noninteractive-element-interactions": "off",
-    "unused-imports/no-unused-imports": "error",
-    "react/no-unused-prop-types": 0,
-    "react/require-default-props": 0,
-    "unused-imports/no-unused-vars": [
-      "warn",
-      {
-        "vars": "all",
-        "varsIgnorePattern": "^_",
-        "args": "after-used",
-        "argsIgnorePattern": "^_",
-        "ignoreRestSiblings": true
-      }
-    ],
-    "comma-dangle": "off",
-    "@typescript-eslint/comma-dangle": [
-      "error",
-      {
-        "arrays": "always-multiline",
-        "objects": "always-multiline",
-        "imports": "always-multiline",
-        "exports": "always-multiline",
-        "functions": "always-multiline",
-        "generics": "ignore",
-        "enums": "ignore",
-        "tuples": "ignore"
-      }
-    ],
-    "no-param-reassign": [
-      "error",
-      {
-        "props": true,
-        "ignorePropertyModificationsFor": [
-          "self",
-          "acc"
-        ]
-      }
-    ],
-    "func-names": 0,
-    "@typescript-eslint/no-empty-function": 0,
-    "prefer-destructuring": 0,
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": [
-          "variable"
-        ],
-        "format": [
-          "camelCase",
-          "PascalCase",
-          "UPPER_CASE",
-          "snake_case"
-        ],
-        "leadingUnderscore": "allow"
-      }
-    ],
-    "react/destructuring-assignment": 0
-  },
-  "env": {
-    "browser": true
-  },
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "paths": [
-          "src"
-        ]
-      }
-    },
-    "react": {
-      "version": "detect"
-    }
-  },
-  "root": true
-}
+// {
+//   "extends": [
+//     "airbnb-typescript",
+//     "plugin:react/recommended"
+//   ],
+//   "plugins": [
+//     // "unused-imports",
+//     "react",
+//     // "import"
+//   ],
+//   "rules": {
+//     "no-plusplus": 0,
+//     "function-paren-newline": 0,
+//     "implicit-arrow-linebreak": 0,
+//     "object-curly-newline": 0,
+//     "import/prefer-default-export": 0,
+//     "no-nested-ternary": 0,
+//     "@typescript-eslint/indent": 0,
+//     "react/no-array-index-key": 0,
+//     "react/jsx-curly-newline": 0,
+//     "operator-linebreak": 0,
+//     "react/jsx-one-expression-per-line": 0,
+//     "no-underscore-dangle": 0,
+//     "react/jsx-wrap-multilines": 0,
+//     "import/no-extraneous-dependencies": 0,
+//     "import/no-named-as-default-member": 0,
+//     "react/jsx-props-no-spreading": 0,
+//     "no-trailing-spaces": 0,
+//     "no-irregular-whitespace": 0,
+//     "react/no-unescaped-entities": 0,
+//     // "no-console": [
+//     //   "error",
+//     //   {
+//     //     "allow": [
+//     //       "warn",
+//     //       "error"
+//     //     ]
+//     //   }
+//     // ],
+//     "no-confusing-arrow": 0,
+//     "class-methods-use-this": 0,
+//     "no-empty": [
+//       "error",
+//       {
+//         "allowEmptyCatch": true
+//       }
+//     ],
+//     // "@typescript-eslint/no-unused-vars": "off",
+//     "react/jsx-uses-react": "error",
+//     "react/jsx-uses-vars": "error",
+//     "react/prop-types": "off",
+//     "jsx-a11y/click-events-have-key-events": "off",
+//     "jsx-a11y/no-noninteractive-element-interactions": "off",
+//     // "unused-imports/no-unused-imports": "error",
+//     // "react/no-unused-prop-types": 0,
+//     "react/require-default-props": 0,
+//     // "unused-imports/no-unused-vars": [
+//     //   "warn",
+//     //   {
+//     //     "vars": "all",
+//     //     "varsIgnorePattern": "^_",
+//     //     "args": "after-used",
+//     //     "argsIgnorePattern": "^_",
+//     //     "ignoreRestSiblings": true
+//     //   }
+//     // ],
+//     "comma-dangle": "off",
+//     "@typescript-eslint/comma-dangle": [
+//       "error",
+//       {
+//         "arrays": "always-multiline",
+//         "objects": "always-multiline",
+//         "imports": "always-multiline",
+//         "exports": "always-multiline",
+//         "functions": "always-multiline",
+//         "generics": "ignore",
+//         "enums": "ignore",
+//         "tuples": "ignore"
+//       }
+//     ],
+//     "no-param-reassign": [
+//       "error",
+//       {
+//         "props": true,
+//         "ignorePropertyModificationsFor": [
+//           "self",
+//           "acc"
+//         ]
+//       }
+//     ],
+//     "func-names": 0,
+//     "@typescript-eslint/no-empty-function": 0,
+//     "prefer-destructuring": 0,
+//     "@typescript-eslint/naming-convention": [
+//       "error",
+//       {
+//         "selector": [
+//           "variable"
+//         ],
+//         "format": [
+//           "camelCase",
+//           "PascalCase",
+//           "UPPER_CASE",
+//           "snake_case"
+//         ],
+//         "leadingUnderscore": "allow"
+//       }
+//     ],
+//     "react/destructuring-assignment": 0
+//   },
+//   "env": {
+//     "browser": true
+//   },
+//   "parserOptions": {
+//     "project": "./tsconfig.json"
+//   },
+//   "settings": {
+//     "import/resolver": {
+//       "node": {
+//         "paths": [
+//           "src"
+//         ]
+//       }
+//     },
+//     "react": {
+//       "version": "detect"
+//     }
+//   },
+//   "root": true
+// }
