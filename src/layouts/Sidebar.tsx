@@ -125,7 +125,7 @@ const sidebarItems = [
 
 const socialMedias = [
   {
-    link: 'twitter.com',
+    link: 'https://twitter.com/aleogameshq',
     icon: TwitterSVG,
   },
   {
@@ -133,7 +133,7 @@ const socialMedias = [
     icon: GithubSVG,
   },
   {
-    link: 'discord.com',
+    link: 'https://discord.com/invite/AleoHQ',
     icon: DiscordSVG,
   },
 ];
