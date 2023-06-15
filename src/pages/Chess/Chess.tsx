@@ -118,7 +118,6 @@ export const Chess = () => (
               </Description>
               <ButtonGroup>
                 <Button to={'/games/chess/board'}>Play on Aleo</Button>
-                <Button to={'/games/chess/board'}>Play off chain</Button>
               </ButtonGroup>
             </div>
           </ContentBlock>

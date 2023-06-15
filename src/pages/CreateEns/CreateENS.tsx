@@ -179,7 +179,7 @@ export const CreateENS = () => {
     <>
       <DefaultLayout>
         <Container>
-          <TitleBlock>Create your unique ENS!</TitleBlock>
+          <TitleBlock>Create your unique ANS!</TitleBlock>
           <InputBlock>
             <InputSearch
               value={inputValue}

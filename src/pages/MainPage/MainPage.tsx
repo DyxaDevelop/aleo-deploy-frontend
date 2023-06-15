@@ -123,20 +123,21 @@ const BlockSection = styled.div(() => ({
 const BlockItem = styled.div(() => ({
   padding: '15px 25px',
   display: 'flex',
-  justifyContent: 'space-between',
-  flexDirection: 'column',
+  alignItems: 'center',
   borderRadius: '12px',
   width: '580px',
-  height: '300px',
+  height: '200px',
   maxWidth: '40%',
-  background: 'rgba(255, 255, 255, 0.05)',
+  background:
+    'linear-gradient(98.8deg, rgba(255, 255, 255, 0.08) 0.34%, rgba(255, 255, 255, 0) 100%)',
+  backdropFilter: 'blur(5.52719px)',
 }));
 
 const BlockTitle = styled.div(() => ({
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 600,
-  fontSize: '30px',
+  fontSize: '28px',
   lineHeight: '40px',
   color: '#FFFFFF',
 }));
@@ -145,7 +146,7 @@ const BlockDesc = styled.div(() => ({
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 600,
-  fontSize: '30px',
+  fontSize: '16px',
   lineHeight: '40px',
   color: 'rgba(255, 255, 255, 0.5)',
 }));
@@ -154,17 +155,23 @@ const BlockNumber = styled.div(() => ({
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 600,
-  fontSize: '30px',
-  lineHeight: '40px',
-  color: '#04ABF7',
+  width: '20%',
+  marginRight: '20px',
+  textAlign: 'center',
+  fontSize: '100px',
+  lineHeight: '100px',
+  background: 'linear-gradient(90.36deg, #1056FA 0.21%, #00C7F8 101.74%)',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  backgroundClip: 'text',
+  textFillColor: 'transparent',
 }));
 
 const Button = styled.div(() => ({
-  width: '200px',
-  height: '60px',
+  width: 'fit-content',
   background: 'linear-gradient(90.36deg, #1056FA 0.21%, #00C7F8 101.74%)',
   borderRadius: '6px',
-  fontSize: '15px',
+  fontSize: '12px',
   color: '#fff',
   fontFamily: 'Inter',
   fontStyle: 'normal',
@@ -173,13 +180,23 @@ const Button = styled.div(() => ({
   justifyContent: 'center',
   alignItems: 'center',
   cursor: 'pointer',
+  padding: '9px 25px',
   '&:hover': {
     transition: '1s',
     background: 'linear-gradient(90.36deg, #1056FA 0.21%, #1056FA 101.74%)',
   },
 }));
 
-const Tab = styled.div(() => ({}));
+const Tab = styled.div(() => ({
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  fontSize: '26px',
+  lineHeight: '24px',
+  color: '#FFFFFF',
+  position: 'relative',
+  marginLeft: '25px',
+}));
 
 const LiveFeedBlock = styled.div(() => ({}));
 
@@ -267,7 +284,7 @@ const LiveFeedItem = styled.div(() => ({
   '& .r-5': {
     justifyContent: 'flex-end',
     paddingRight: '26px',
-    color: '#1FFF20',
+    color: '#02C4F7',
   },
 }));
 
@@ -342,6 +359,21 @@ const FAQItemDescription = styled.div(() => ({
   color: 'rgba(255, 255, 255, 0.9)',
 }));
 
+const BlockItemContent = styled.div(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
+const BlueCircle = styled.div(() => ({
+  width: '10px',
+  height: '10px',
+  position: 'absolute',
+  background: '#105AFA',
+  borderRadius: '50%',
+  top: '-7px',
+  left: '125px',
+}));
+
 export default function MainPage() {
   const [openAccordeon, setOpenAccordeon] = useState('');
   return (
@@ -374,58 +406,53 @@ export default function MainPage() {
           <BlockSection>
             <BlockItem>
               <BlockNumber>1</BlockNumber>
-              <BlockTitle>Install Leo wallet</BlockTitle>
-              <BlockDesc>
-                Install Leo Wallet to interact with
-                <br />
-                WEB3 applications on Aleo
-              </BlockDesc>
-              <Button>Install</Button>
+              <BlockItemContent>
+                <BlockTitle>Install Leo wallet</BlockTitle>
+                <BlockDesc>
+                  to interact with WEB3 applications on Aleo
+                </BlockDesc>
+                <Button>Install</Button>
+              </BlockItemContent>
             </BlockItem>
             <BlockItem>
               <BlockNumber>2</BlockNumber>
-              <BlockTitle>Get tokens from Faucet</BlockTitle>
-              <BlockDesc>
-                Get tokens from faucet <br />
-                to pay for gas fees
-              </BlockDesc>
-              <Button>Faucet</Button>
+              <BlockItemContent>
+                <BlockTitle>Get tokens</BlockTitle>
+                <BlockDesc>from faucet to pay for gas fees</BlockDesc>
+                <Button>Faucet</Button>
+              </BlockItemContent>
             </BlockItem>
             <BlockItem>
               <BlockNumber>3</BlockNumber>
-              <BlockTitle>Choose a game you want to play</BlockTitle>
-              <BlockDesc>
-                Choose a game you want <br />
-                to play and enjoy!
-              </BlockDesc>
-              <Button>Play</Button>
+              <BlockItemContent>
+                <BlockTitle>Choose a game</BlockTitle>
+                <BlockDesc>you want to play and enjoy!</BlockDesc>
+                <Button>Play</Button>
+              </BlockItemContent>
             </BlockItem>
             <BlockItem>
               <BlockNumber>4</BlockNumber>
-              <BlockTitle>Invite friends and make a bet</BlockTitle>
-              <BlockDesc>
-                Invite your friend <br />
-                to play 1 vs 1
-              </BlockDesc>
-              <Button>Invite</Button>
+              <BlockItemContent>
+                <BlockTitle>Invite </BlockTitle>
+                <BlockDesc>your friend to play 1 vs 1</BlockDesc>
+                <Button>Invite</Button>
+              </BlockItemContent>
             </BlockItem>
             <BlockItem>
               <BlockNumber>5</BlockNumber>
-              <BlockTitle>Create unique ENS</BlockTitle>
-              <BlockDesc>
-                Create your unique ENS <br />
-                name to be different
-              </BlockDesc>
-              <Button>Create ENS</Button>
+              <BlockItemContent>
+                <BlockTitle>Create unique ANS</BlockTitle>
+                <BlockDesc>to be different!</BlockDesc>
+                <Button>Create ENS</Button>
+              </BlockItemContent>
             </BlockItem>
             <BlockItem>
               <BlockNumber>6</BlockNumber>
-              <BlockTitle>Vote for future games</BlockTitle>
-              <BlockDesc>
-                Vote for games you want <br />
-                to see next on Aleo Games
-              </BlockDesc>
-              <Button>Vote</Button>
+              <BlockItemContent>
+                <BlockTitle>Vote </BlockTitle>
+                <BlockDesc>for future games</BlockDesc>
+                <Button>Vote</Button>
+              </BlockItemContent>
             </BlockItem>
           </BlockSection>
           <FAQBlock>
@@ -507,7 +534,9 @@ export default function MainPage() {
             </FAQItem>
           </FAQBlock>
           <LiveFeed>
-            {/* <Tab>Live Feed</Tab> */}
+            <Tab>
+              Live Feed <BlueCircle />
+            </Tab>
             <LiveFeedBlock>
               <LiveFeedTitle>
                 <div className="th t-1">Game</div>
@@ -519,7 +548,7 @@ export default function MainPage() {
               <LiveFeedItem>
                 <div className="row r-1">
                   <SuspenseImg src={xSVG} />
-                  Zalupa.eth
+                  Chess
                 </div>
                 <div className="row r-3">
                   <SuspenseImg src={HiddenSVG} />
@@ -532,7 +561,7 @@ export default function MainPage() {
               <LiveFeedItem>
                 <div className="row r-1">
                   <SuspenseImg src={xSVG} />
-                  Zalupa.eth
+                  Chess
                 </div>
                 <div className="row r-3">
                   <SuspenseImg src={HiddenSVG} />
@@ -545,7 +574,7 @@ export default function MainPage() {
               <LiveFeedItem>
                 <div className="row r-1">
                   <SuspenseImg src={xSVG} />
-                  Zalupa.eth
+                  Chess
                 </div>
                 <div className="row r-3">
                   <img src={HiddenSVG} />
@@ -558,7 +587,7 @@ export default function MainPage() {
               <LiveFeedItem>
                 <div className="row r-1">
                   <img src={xSVG} />
-                  Zalupa.eth
+                  Chess
                 </div>
                 <div className="row r-3">
                   <img src={HiddenSVG} />
@@ -571,7 +600,7 @@ export default function MainPage() {
               <LiveFeedItem>
                 <div className="row r-1">
                   <img src={xSVG} />
-                  Zalupa.eth
+                  Chess
                 </div>
                 <div className="row r-3">
                   <img src={HiddenSVG} />
@@ -584,7 +613,7 @@ export default function MainPage() {
               <LiveFeedItem>
                 <div className="row r-1">
                   <img src={xSVG} />
-                  Zalupa.eth
+                  Chess
                 </div>
                 <div className="row r-3">
                   <img src={HiddenSVG} />
@@ -597,7 +626,7 @@ export default function MainPage() {
               <LiveFeedItem>
                 <div className="row r-1">
                   <img src={xSVG} />
-                  Zalupa.eth
+                  Chess
                 </div>
                 <div className="row r-3">
                   <img src={HiddenSVG} />

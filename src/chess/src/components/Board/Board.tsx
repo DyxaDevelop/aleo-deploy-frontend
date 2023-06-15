@@ -15,6 +15,9 @@ import {
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import store from '../../redux/store';
 import { Link } from 'react-router-dom';
+import { Modal } from 'components/Modal/Modal';
+import winSVG from '../../../../assets/svg/win.svg';
+import confettiSVG from '../../../../assets/svg/confetti.svg';
 
 const Board: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -555,12 +558,13 @@ const Board: React.FC = () => {
     const color = gameWon[0].toUpperCase() + gameWon.slice(1);
 
     return (
-      <div className={styles.gameWon}>
-        <h2 className={styles.gameWonTitle}>{color} won</h2>
-        <Link to="/" className={styles.gameWonButton}>
-          Main page
-        </Link>
-      </div>
+      <Modal>
+        <div className={styles.gameWon}>
+          <h2 className={styles.gameWonTitle}>Congratulations!</h2>
+          <img src={confettiSVG} style={{ position: 'absolute' }} />
+          <img style={{ marginBottom: '-12px' }} src={winSVG} />
+        </div>
+      </Modal>
     );
   };
 
