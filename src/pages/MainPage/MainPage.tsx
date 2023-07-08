@@ -399,17 +399,6 @@ export default function MainPage() {
   let [transactionId, setTransactionId] = useState<string | undefined>();
   let [status, setStatus] = useState<string | undefined>();
 
-  const aleoTransaction = Transaction.createTransaction(
-    //@ts-ignore
-    publicKey,
-    WalletAdapterNetwork.Testnet,
-    'credits.aleo',
-    'transfer',
-    //@ts-ignore
-    inputs,
-    fee,
-  );
-
   useEffect(() => {
     let intervalId: NodeJS.Timeout | undefined;
 
