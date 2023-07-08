@@ -1,6 +1,6 @@
 import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import styled from '@emotion/styled';
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Sidebar } from '../../layouts/Sidebar';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
@@ -15,6 +15,12 @@ import githubWhiteSVG from '../../assets/svg/githubWhite.svg';
 import FaqSVG from '../../assets/svg/FaqArrow.svg';
 import { Loader } from 'components/Loader/Loader';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
+import {
+  Transaction,
+  WalletAdapterNetwork,
+} from '@demox-labs/aleo-wallet-adapter-base';
+import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
+import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -376,6 +382,85 @@ const BlueCircle = styled.div(() => ({
 
 export default function MainPage() {
   const [openAccordeon, setOpenAccordeon] = useState('');
+
+  function tryParseJSON(input: string): string | object {
+    try {
+      return JSON.parse(input);
+    } catch (error) {
+      return input;
+    }
+  }
+
+  const { publicKey, wallet, requestTransaction } = useWallet();
+  let [programId, setProgramId] = useState('');
+  let [functionName, setFunctionName] = useState('');
+  let [inputs, setInputs] = useState('');
+  let [fee, setFee] = useState<number | undefined>();
+  let [transactionId, setTransactionId] = useState<string | undefined>();
+  let [status, setStatus] = useState<string | undefined>();
+
+  const aleoTransaction = Transaction.createTransaction(
+    //@ts-ignore
+    publicKey,
+    WalletAdapterNetwork.Testnet,
+    'credits.aleo',
+    'transfer',
+    //@ts-ignore
+    inputs,
+    fee,
+  );
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | undefined;
+
+    if (transactionId) {
+      intervalId = setInterval(() => {
+        getTransactionStatus(transactionId!);
+      }, 1000);
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [transactionId]);
+
+  const handleSubmit = async () => {
+    const parsedInputs: any = [
+      'aleo1mw58n80vnavqeznxxs448pdqjfl4d8aa0eaj9cxl2sc2gxjspvqsz6yhz0',
+      '12400000',
+      //@ts-ignore
+    ].map((elem) => tryParseJSON(elem));
+
+    const aleoTransaction = Transaction.createTransaction(
+      //@ts-ignore
+      publicKey,
+      WalletAdapterNetwork.Testnet,
+      'predator_22.aleo',
+      'mint',
+      parsedInputs,
+      35000,
+    );
+    //@ts-ignore
+    const txId =
+      (await (wallet?.adapter as LeoWalletAdapter).requestTransaction(
+        aleoTransaction,
+      )) || '';
+    //@ts-ignore
+    setTransactionId(txId);
+  };
+
+  const getTransactionStatus = async (txId: string) => {
+    const status = await (wallet?.adapter as LeoWalletAdapter)
+      //@ts-ignore
+      .transactionStatus(txId);
+    setStatus(status);
+  };
+
+  useEffect(() => {
+    handleSubmit();
+  }, []);
   return (
     <>
       <DefaultLayout>
