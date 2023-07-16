@@ -1,6 +1,6 @@
 import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import styled from '@emotion/styled';
-import React, { Suspense } from 'react';
+import React, { Suspense, useLayoutEffect, useRef, useState } from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
 import { Sidebar } from '../../layouts/Sidebar';
 import profileAvatarSVG from '../../assets/svg/profileAvatar.svg';
@@ -10,6 +10,7 @@ import HiddenSVG from '../../assets/svg/hidden.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 import { Modal } from 'components/Modal/Modal';
 import walletImage from '../../assets/svg/walletImage.svg';
+import { Footer } from 'layouts/Footer';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -19,6 +20,9 @@ const Container = styled.div(() => ({
   alignItems: 'center',
   flexDirection: 'column',
   paddingTop: '150px',
+  '@media (max-width: 768px)': {
+    paddingTop: '70px',
+  },
 }));
 
 const TitleBlock = styled.div(() => ({
@@ -30,6 +34,9 @@ const TitleBlock = styled.div(() => ({
   fontSize: '40px',
   textFillColor: 'transparent',
   marginBottom: '30px',
+  '@media (max-width: 768px)': {
+    display: 'none',
+  },
 }));
 
 const ContentBlock = styled.div(() => ({
@@ -37,6 +44,29 @@ const ContentBlock = styled.div(() => ({
   width: '900px',
   margin: 'auto',
   gap: '15px',
+  '@media (max-width: 768px)': {
+    flexDirection: 'column',
+    maxWidth: '100%',
+    padding: '20px',
+  },
+}));
+
+const UseDesktop = styled.div(() => ({
+  display: 'none',
+
+  '@media (max-width: 768px)': {
+    background: 'linear-gradient(90.36deg, #1056FA 0.21%, #00C7F8 101.74%)',
+    backgroundClip: 'text',
+    fontFamily: 'Inter',
+    fontStyle: 'normal',
+    fontWeight: '700',
+    fontSize: '40px',
+    textFillColor: 'transparent',
+    marginBottom: '16px',
+    width: '100%',
+    textAlign: 'center',
+    display: 'block',
+  },
 }));
 
 const LeftBlock = styled.div(() => ({
@@ -44,6 +74,9 @@ const LeftBlock = styled.div(() => ({
   flexDirection: 'column',
   width: '40%',
   gap: '15px',
+  '@media (max-width: 768px)': {
+    width: '100%',
+  },
 }));
 
 const RightBlock = styled.div(() => ({
@@ -51,6 +84,10 @@ const RightBlock = styled.div(() => ({
   width: '60%',
   flexDirection: 'column',
   gap: '15px',
+  '@media (max-width: 768px)': {
+    width: '100%',
+    maxWidth: '100%',
+  },
 }));
 
 const ENSBlock = styled.div(() => ({
@@ -223,188 +260,193 @@ const LiveFeedItem = styled.div(() => ({
   },
 }));
 
-export const Profile = () => (
-  <>
-    <DefaultLayout>
-      <Container>
-        <TitleBlock>Your personal profile</TitleBlock>
-        <ContentBlock>
-          <LeftBlock>
-            <ENSBlock>
-              <div>
-                <span>Your ENS/address</span>
-                <ENS to={'/ens'}>Create your ENS</ENS>
-              </div>
-              <ContentDynamic>
-                <img src={profileAvatarSVG} />
-              </ContentDynamic>
-            </ENSBlock>
-            <ClaimVotes>
-              <span>Claim Votes</span>
-              <ContentDynamic>
-                <Button>Claim</Button>
-              </ContentDynamic>
-            </ClaimVotes>
-            <AvailableVotes>
-              <span>Available votes</span>
-              <ContentDynamic>50</ContentDynamic>
-            </AvailableVotes>
-            <ClaimVotes>
-              <span>Token Minting</span>
-              <ContentDynamic>
-                <Button>Mint</Button>
-              </ContentDynamic>
-            </ClaimVotes>
-            <Balance>
-              <span>Your balance</span>
-              <ContentDynamic>100$</ContentDynamic>
-            </Balance>
-          </LeftBlock>
-          <RightBlock>
-            <TotalWinnings>
-              <span>Total winnings</span>
-              <span style={{ color: '#02C4F7' }}>1,000$</span>
-            </TotalWinnings>
-            <LastGames>
-              <LiveFeed>
-                {/* <Tab>Live Feed</Tab> */}
-                <LiveFeedBlock>
-                  <LiveFeedItem>
-                    <div className="row r-1">
-                      <SuspenseImg src={xSVG} />
-                      Chess
-                    </div>
-                    <div className="row r-3">
-                      <SuspenseImg src={HiddenSVG} />
-                      Hidden
-                    </div>
-                    <div className="row r-3">23:26</div>
-                    <div className="row r-4">2.59950002</div>
-                    <div className="row r-5">2.82695627</div>
-                  </LiveFeedItem>
-                  <LiveFeedItem>
-                    <div className="row r-1">
-                      <SuspenseImg src={xSVG} />
-                      Chess
-                    </div>
-                    <div className="row r-3">
-                      <SuspenseImg src={HiddenSVG} />
-                      Hidden
-                    </div>
-                    <div className="row r-3">23:26</div>
-                    <div className="row r-4">2.59950002</div>
-                    <div className="row r-5">2.82695627</div>
-                  </LiveFeedItem>
-                  <LiveFeedItem>
-                    <div className="row r-1">
-                      <SuspenseImg src={xSVG} />
-                      Chess
-                    </div>
-                    <div className="row r-3">
-                      <SuspenseImg src={HiddenSVG} />
-                      Hidden
-                    </div>
-                    <div className="row r-3">23:26</div>
-                    <div className="row r-4">2.59950002</div>
-                    <div className="row r-5">2.82695627</div>
-                  </LiveFeedItem>
-                  <LiveFeedItem>
-                    <div className="row r-1">
-                      <SuspenseImg src={xSVG} />
-                      Chess
-                    </div>
-                    <div className="row r-3">
-                      <img src={HiddenSVG} />
-                      Hidden
-                    </div>
-                    <div className="row r-3">23:26</div>
-                    <div className="row r-4">2.59950002</div>
-                    <div className="row r-5">2.82695627</div>
-                  </LiveFeedItem>
-                  <LiveFeedItem>
-                    <div className="row r-1">
-                      <img src={xSVG} />
-                      Chess
-                    </div>
-                    <div className="row r-3">
-                      <img src={HiddenSVG} />
-                      Hidden
-                    </div>
-                    <div className="row r-3">23:26</div>
-                    <div className="row r-4">2.59950002</div>
-                    <div className="row r-5">2.82695627</div>
-                  </LiveFeedItem>
-                  <LiveFeedItem>
-                    <div className="row r-1">
-                      <img src={xSVG} />
-                      Chess
-                    </div>
-                    <div className="row r-3">
-                      <img src={HiddenSVG} />
-                      Hidden
-                    </div>
-                    <div className="row r-3">23:26</div>
-                    <div className="row r-4">2.59950002</div>
-                    <div className="row r-5">2.82695627</div>
-                  </LiveFeedItem>
-                  <LiveFeedItem>
-                    <div className="row r-1">
-                      <img src={xSVG} />
-                      Chess
-                    </div>
-                    <div className="row r-3">
-                      <img src={HiddenSVG} />
-                      Hidden
-                    </div>
-                    <div className="row r-3">23:26</div>
-                    <div className="row r-4">2.59950002</div>
-                    <div className="row r-5">2.82695627</div>
-                  </LiveFeedItem>
-                  <LiveFeedItem>
-                    <div className="row r-1">
-                      <img src={xSVG} />
-                      Chess
-                    </div>
-                    <div className="row r-3">
-                      <img src={HiddenSVG} />
-                      Hidden
-                    </div>
-                    <div className="row r-3">23:26</div>
-                    <div className="row r-4">2.59950002</div>
-                    <div className="row r-5">2.82695627</div>
-                  </LiveFeedItem>
-                  <LiveFeedItem>
-                    <div className="row r-1">
-                      <img src={xSVG} />
-                      Chess
-                    </div>
-                    <div className="row r-3">
-                      <img src={HiddenSVG} />
-                      Hidden
-                    </div>
-                    <div className="row r-3">23:26</div>
-                    <div className="row r-4">2.59950002</div>
-                    <div className="row r-5">2.82695627</div>
-                  </LiveFeedItem>
-                  <LiveFeedItem>
-                    <div className="row r-1">
-                      <img src={xSVG} />
-                      Chess
-                    </div>
-                    <div className="row r-3">
-                      <img src={HiddenSVG} />
-                      Hidden
-                    </div>
-                    <div className="row r-3">23:26</div>
-                    <div className="row r-4">2.59950002</div>
-                    <div className="row r-5">2.82695627</div>
-                  </LiveFeedItem>
-                </LiveFeedBlock>
-              </LiveFeed>
-            </LastGames>
-          </RightBlock>
-        </ContentBlock>
-      </Container>
-    </DefaultLayout>
-  </>
-);
+export const Profile = () => {
+
+  return (
+    <>
+      <DefaultLayout>
+        <Container>
+          <TitleBlock>Your personal profile</TitleBlock>
+          <UseDesktop>Use Desktop</UseDesktop>
+          <ContentBlock>
+            <LeftBlock>
+              <ENSBlock>
+                <div>
+                  <span>Your ENS/address</span>
+                  <ENS to={'/ens'}>Create your ENS</ENS>
+                </div>
+                <ContentDynamic>
+                  <img src={profileAvatarSVG} />
+                </ContentDynamic>
+              </ENSBlock>
+              <ClaimVotes>
+                <span>Claim Votes</span>
+                <ContentDynamic>
+                  <Button>Claim</Button>
+                </ContentDynamic>
+              </ClaimVotes>
+              <AvailableVotes>
+                <span>Available votes</span>
+                <ContentDynamic>50</ContentDynamic>
+              </AvailableVotes>
+              <ClaimVotes>
+                <span>Token Minting</span>
+                <ContentDynamic>
+                  <Button>Mint</Button>
+                </ContentDynamic>
+              </ClaimVotes>
+              <Balance>
+                <span>Your balance</span>
+                <ContentDynamic>100$</ContentDynamic>
+              </Balance>
+            </LeftBlock>
+            <RightBlock>
+              <TotalWinnings>
+                <span>Total winnings</span>
+                <span style={{ color: '#02C4F7' }}>1,000$</span>
+              </TotalWinnings>
+              <LastGames>
+                <LiveFeed>
+                  {/* <Tab>Live Feed</Tab> */}
+                  <LiveFeedBlock>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <SuspenseImg src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <SuspenseImg src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <SuspenseImg src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <SuspenseImg src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <SuspenseImg src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <SuspenseImg src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <SuspenseImg src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <img src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <img src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <img src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <img src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <img src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <img src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <img src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <img src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <img src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <img src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <img src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <img src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <img src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                  </LiveFeedBlock>
+                </LiveFeed>
+              </LastGames>
+            </RightBlock>
+          </ContentBlock>
+        </Container>
+        <Footer />
+      </DefaultLayout>
+    </>
+  );
+};

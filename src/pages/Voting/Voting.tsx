@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
+import { Footer } from 'layouts/Footer';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -9,6 +10,10 @@ const Container = styled.div(() => ({
   alignItems: 'center',
   flexDirection: 'column',
   paddingTop: '150px',
+  '@media (max-width: 768px)': {
+    padding: '20px',
+    paddingTop: '70px',
+  },
 }));
 
 const TitleBlock = styled.div(() => ({
@@ -20,6 +25,10 @@ const TitleBlock = styled.div(() => ({
   fontSize: '40px',
   textFillColor: 'transparent',
   marginBottom: '30px',
+  '@media (max-width: 768px)': {
+    fontSize: '30px',
+    textAlign: 'center',
+  },
 }));
 
 const VoteItem = styled.div(() => ({
@@ -34,6 +43,12 @@ const VoteItem = styled.div(() => ({
   alignItems: 'center',
   justifyContent: 'center',
   gap: '40px',
+  '@media (max-width: 768px)': {
+    flexDirection: 'column',
+    width: '100%',
+    padding: '20px',
+    height: 'fit-content',
+  },
 }));
 
 const VoteLeft = styled.div(() => ({
@@ -49,6 +64,9 @@ const Title = styled.div(() => ({
   lineHeight: '32px',
   marginBottom: '20px',
   fontSize: '25px',
+  '@media (max-width: 768px)': {
+    textAlign: 'center',
+  },
 }));
 
 const Description = styled.div(() => ({
@@ -64,6 +82,9 @@ const VoteRight = styled.div(() => ({
   width: '50%',
   border: '1px solid #2D2D2D',
   borderRadius: '8px',
+  '@media (max-width: 768px)': {
+    width: '100%',
+  },
 }));
 
 const Result = styled.div(() => ({
@@ -93,6 +114,9 @@ const VoteBlock = styled.div(() => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  '@media (max-width: 768px)': {
+    fontSize: '12px',
+  },
 }));
 
 const VoteProgress = styled.div((props: any) => ({
@@ -103,6 +127,9 @@ const VoteProgress = styled.div((props: any) => ({
   }%, rgba(34, 89, 171, 0) ${props.value + 20}%)`,
   borderRadius: '6px',
   marginBottom: '10px',
+  '@media (max-width: 768px)': {
+    width: '50%',
+  },
 }));
 
 const VoteProgressContainer = styled.div((props: any) => ({
@@ -110,6 +137,10 @@ const VoteProgressContainer = styled.div((props: any) => ({
   height: '6px',
   background: `#26282F`,
   borderRadius: '6px',
+  '@media (max-width: 768px)': {
+    minWidth: '100px',
+    maxWidth: '130px',
+  },
 }));
 
 const VoteInfo = styled.div(() => ({
@@ -117,6 +148,9 @@ const VoteInfo = styled.div(() => ({
   flexDirection: 'column',
   justifyContent: 'center',
   margin: 'auto',
+  '@media (max-width: 768px)': {
+    fontSize: '12px',
+  },
 }));
 
 const VoteCheckBox = styled.div(() => ({
@@ -133,6 +167,10 @@ const VoteRightInfo = styled.div(() => ({
   fontSize: '14px',
   lineHeight: '20px',
   color: '#A3A3A3',
+  '@media (max-width: 768px)': {
+    fontSize: '12px',
+    textAlign: 'center',
+  },
 }));
 
 const VoteRightInfoTitle = styled.div(() => ({
@@ -142,6 +180,10 @@ const VoteRightInfoTitle = styled.div(() => ({
   lineHeight: '20px',
   color: '#fff',
   marginBottom: '12px',
+  '@media (max-width: 768px)': {
+    fontSize: '12px',
+    textAlign: 'center',
+  },
 }));
 
 const VotingBlock = styled.div(() => ({
@@ -220,6 +262,7 @@ export const Voting = () => (
           </VoteRight>
         </VoteItem>
       </Container>
+      <Footer />
     </DefaultLayout>
   </>
 );

@@ -13,8 +13,10 @@ import twitterWhiteSVG from '../../assets/svg/twitterWhite.svg';
 import discordWhiteSVG from '../../assets/svg/discordWhite.svg';
 import githubWhiteSVG from '../../assets/svg/githubWhite.svg';
 import FaqSVG from '../../assets/svg/FaqArrow.svg';
+import MobileSectionSVG from '../../assets/svg/mobileMainPage.svg';
 import { Loader } from 'components/Loader/Loader';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
+import LogoSVG from '../../assets/svg/newLogoMobile.svg';
 import {
   Transaction,
   WalletAdapterNetwork,
@@ -29,6 +31,9 @@ const Container = styled.div(() => ({
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
+  '@media (max-width: 768px)': {
+    width: '100%',
+  },
   // '& ::-webkit-scrollbar': {
   //   width: '5px',
   //   background: 'transparent',
@@ -50,6 +55,16 @@ const FirstSection = styled.div(() => ({
   display: 'flex',
   alignItems: 'center',
   paddingRight: '50px',
+
+  '@media (max-width: 768px)': {
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    paddingTop: '50px',
+    flexDirection: 'row-reverse',
+    '& img': {
+      maxWidth: '150px',
+    },
+  },
 }));
 
 const FirstSectionText = styled.div(() => ({
@@ -63,6 +78,35 @@ const FirstSectionText = styled.div(() => ({
     alignItems: 'center',
     letterSpacing: '-1.82px',
   },
+  '@media (max-width: 768px)': {
+    '& p': {
+      display: 'none',
+      color: '#A3A3A3',
+      fontStyle: 'normal',
+      fontWeight: '500',
+      fontSize: '10px',
+      lineHeight: '20px',
+      alignItems: 'center',
+      letterSpacing: '0',
+    },
+  },
+}));
+
+const MobileDesc = styled.p(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    display: 'flex',
+    color: '#A3A3A3',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: '10px',
+    lineHeight: '20px',
+    alignItems: 'center',
+    letterSpacing: '0',
+    padding: '0 25px',
+    marginTop: '20px',
+    textAlign: 'justify',
+  },
 }));
 
 const FirstSectionTextTitle = styled.span(() => ({
@@ -73,6 +117,11 @@ const FirstSectionTextTitle = styled.span(() => ({
   lineHeight: '57px',
   letterSpacing: '-2.06968px',
   color: '#fff',
+  '@media (max-width: 768px)': {
+    fontSize: '18px',
+    lineHeight: '22px',
+    letterSpacing: '0px',
+  },
 }));
 
 const Aleo = styled(FirstSectionTextTitle)(() => ({
@@ -97,6 +146,14 @@ const SecondSection = styled.div(() => ({
   boxSizing: 'border-box',
   '& img': {
     maxWidth: '50%',
+    '@media (max-width: 768px)': {
+      maxWidth: '30%',
+    },
+  },
+  '@media (max-width: 768px)': {
+    paddingLeft: '20px',
+    paddingRight: '20px',
+    justifyContent: 'space-around',
   },
 }));
 
@@ -109,6 +166,33 @@ const SecondSectionText = styled.span(() => ({
   letterSpacing: '-1.5078px',
   marginTop: '100px',
   color: '#fff',
+  '@media (max-width: 768px)': {
+    fontSize: '18px',
+    lineHeight: '22px',
+    letterSpacing: '0px',
+    marginTop: '50px',
+  },
+}));
+
+const FAQTitle = styled.span(() => ({
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: '800',
+  fontSize: '82px',
+  lineHeight: '99px',
+  letterSpacing: '-1.5078px',
+  marginTop: '100px',
+  color: '#fff',
+  '@media (max-width: 768px)': {
+    fontSize: '30px',
+    lineHeight: '22px',
+    letterSpacing: '0px',
+    marginTop: '50px',
+    marginBottom: '20px',
+  },
+  background: 'linear-gradient(126.81deg, #1055FA -3.23%, #00D0F6 111.59%)',
+  backgroundClip: 'text',
+  textFillColor: 'transparent',
 }));
 
 const Platform = styled(SecondSectionText)(() => ({
@@ -124,6 +208,15 @@ const BlockSection = styled.div(() => ({
   gap: '80px',
   justifyContent: 'center',
   marginTop: '100px',
+  '@media (max-width: 768px)': {
+    width: '100%',
+    paddingLeft: '20px',
+    paddingRight: '20px',
+    marginTop: '30px',
+    '& img': {
+      width: '100%',
+    },
+  },
 }));
 
 const BlockItem = styled.div(() => ({
@@ -137,6 +230,9 @@ const BlockItem = styled.div(() => ({
   background:
     'linear-gradient(98.8deg, rgba(255, 255, 255, 0.08) 0.34%, rgba(255, 255, 255, 0) 100%)',
   backdropFilter: 'blur(5.52719px)',
+  '@media (max-width: 768px)': {
+    display: 'none',
+  },
 }));
 
 const BlockTitle = styled.div(() => ({
@@ -224,12 +320,21 @@ const FooterContainer = styled.div(() => ({
   paddingTop: '82px',
   display: 'flex',
   justifyContent: 'space-between',
+  '@media (max-width: 768px)': {
+    width: '100%',
+    flexDirection: 'column',
+  },
 }));
 
 const LinksFooter = styled.div(() => ({
   display: 'flex',
   alignItems: 'center',
   gap: '20px',
+  '@media (max-width: 768px)': {
+    '& img': {
+      height: '35px',
+    },
+  },
 }));
 
 const LiveFeedTitle = styled.div(() => ({
@@ -245,6 +350,11 @@ const LiveFeedTitle = styled.div(() => ({
     width: '20%',
     paddingTop: '32px',
     paddingBottom: '32px',
+    '&.mobileHide': {
+      '@media (max-width: 768px)': {
+        display: 'none',
+      },
+    },
   },
   '& .t-5': {
     justifyContent: 'flex-end',
@@ -258,6 +368,10 @@ const LiveFeed = styled.div(() => ({
   width: '100%',
   boxSizing: 'border-box',
   marginTop: '50px',
+  '@media (max-width: 768px)': {
+    paddingLeft: '20px',
+    paddingRight: '20px',
+  },
 }));
 
 const LiveFeedItem = styled.div(() => ({
@@ -277,6 +391,9 @@ const LiveFeedItem = styled.div(() => ({
   },
   '& .r-2, .r-3, .r-4': {
     color: '#B1BAD3',
+    '@media (max-width: 768px)': {
+      display: 'none',
+    },
   },
   '& .row': {
     gap: '4px',
@@ -285,6 +402,11 @@ const LiveFeedItem = styled.div(() => ({
     width: '20%',
     paddingTop: '28px',
     paddingBottom: '28px',
+    '&.mobileHide': {
+      '@media (max-width: 768px)': {
+        display: 'none',
+      },
+    },
   },
 
   '& .r-5': {
@@ -301,6 +423,9 @@ const Foooter = styled.div(() => ({
   marginTop: 250,
   borderTopLeftRadius: '12px',
   borderTopRightRadius: '12px',
+  '@media (max-width: 768px)': {
+    display: 'none',
+  },
 }));
 
 const FooterLogoBlock = styled.div(() => ({
@@ -321,12 +446,19 @@ const FooterRightLinks = styled.div(() => ({
 
 const FAQBlock = styled.div(() => ({
   width: '70%',
+  display: 'flex',
+  flexDirection: 'column',
   fontStyle: 'normal',
   fontWeight: 600,
   fontSize: '18px',
   lineHeight: '22px',
   color: '#AAABAE',
   marginTop: 50,
+  '@media (max-width: 768px)': {
+    width: '100%',
+    paddingLeft: '20px',
+    paddingRight: '20px',
+  },
 }));
 
 const FAQItem = styled.div(() => ({
@@ -357,12 +489,18 @@ const FAQItemTitle = styled.div(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   cursor: 'pointer',
+  '@media (max-width: 768px)': {
+    fontSize: '16px',
+  },
 }));
 
 const FAQItemDescription = styled.div(() => ({
   display: 'none',
   padding: '20px',
   color: 'rgba(255, 255, 255, 0.9)',
+  '@media (max-width: 768px)': {
+    fontSize: '14px',
+  },
 }));
 
 const BlockItemContent = styled.div(() => ({
@@ -380,76 +518,129 @@ const BlueCircle = styled.div(() => ({
   left: '125px',
 }));
 
+const MobileSection = styled.img(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    display: 'block',
+  },
+}));
+
+const FooterMobile = styled.div(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    padding: '50px 0',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1E2027',
+    width: '100%',
+    marginTop: 100,
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
+  },
+}));
+
+const FooterContainerMobile = styled.div(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '40px',
+  },
+}));
+
+const FooterLogo = styled.img(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    display: 'block',
+    height: '60px',
+  },
+}));
+
+const FooterItemMobile = styled.div(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    gap: '15px',
+    color: '#8E8F93',
+    fontWeight: 'bold',
+  },
+}));
+
 export default function MainPage() {
   const [openAccordeon, setOpenAccordeon] = useState('');
 
-  function tryParseJSON(input: string): string | object {
-    try {
-      return JSON.parse(input);
-    } catch (error) {
-      return input;
-    }
-  }
+  // function tryParseJSON(input: string): string | object {
+  //   try {
+  //     return JSON.parse(input);
+  //   } catch (error) {
+  //     return input;
+  //   }
+  // }
 
-  const { publicKey, wallet, requestTransaction } = useWallet();
-  let [programId, setProgramId] = useState('');
-  let [functionName, setFunctionName] = useState('');
-  let [inputs, setInputs] = useState('');
-  let [fee, setFee] = useState<number | undefined>();
-  let [transactionId, setTransactionId] = useState<string | undefined>();
-  let [status, setStatus] = useState<string | undefined>();
+  // const { publicKey, wallet, requestTransaction } = useWallet();
+  // let [programId, setProgramId] = useState('');
+  // let [functionName, setFunctionName] = useState('');
+  // let [inputs, setInputs] = useState('');
+  // let [fee, setFee] = useState<number | undefined>();
+  // let [transactionId, setTransactionId] = useState<string | undefined>();
+  // let [status, setStatus] = useState<string | undefined>();
 
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout | undefined;
+  // useEffect(() => {
+  //   let intervalId: NodeJS.Timeout | undefined;
 
-    if (transactionId) {
-      intervalId = setInterval(() => {
-        getTransactionStatus(transactionId!);
-      }, 1000);
-    }
+  //   if (transactionId) {
+  //     intervalId = setInterval(() => {
+  //       getTransactionStatus(transactionId!);
+  //     }, 1000);
+  //   }
 
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [transactionId]);
+  //   return () => {
+  //     if (intervalId) {
+  //       clearInterval(intervalId);
+  //     }
+  //   };
+  // }, [transactionId]);
 
-  const handleSubmit = async () => {
-    const parsedInputs: any = [
-      'aleo1mw58n80vnavqeznxxs448pdqjfl4d8aa0eaj9cxl2sc2gxjspvqsz6yhz0',
-      '12400000',
-      //@ts-ignore
-    ].map((elem) => tryParseJSON(elem));
+  // const handleSubmit = async () => {
+  //   const parsedInputs: any = [
+  //     'aleo1mw58n80vnavqeznxxs448pdqjfl4d8aa0eaj9cxl2sc2gxjspvqsz6yhz0',
+  //     '5000u64',
+  //     //@ts-ignore
+  //   ].map((elem) => tryParseJSON(elem));
 
-    const aleoTransaction = Transaction.createTransaction(
-      //@ts-ignore
-      publicKey,
-      WalletAdapterNetwork.Testnet,
-      'predator_22.aleo',
-      'mint',
-      parsedInputs,
-      35000,
-    );
-    //@ts-ignore
-    const txId =
-      (await (wallet?.adapter as LeoWalletAdapter).requestTransaction(
-        aleoTransaction,
-      )) || '';
-    //@ts-ignore
-    setTransactionId(txId);
-  };
+  //   const aleoTransaction = Transaction.createTransaction(
+  //     //@ts-ignore
+  //     publicKey,
+  //     WalletAdapterNetwork.Testnet,
+  //     'predator_22.aleo',
+  //     'mint',
+  //     parsedInputs,
+  //     35000,
+  //   );
+  //   //@ts-ignore
+  //   const txId =
+  //     (await (wallet?.adapter as LeoWalletAdapter).requestTransaction(
+  //       aleoTransaction,
+  //     )) || '';
+  //   //@ts-ignore
+  //   setTransactionId(txId);
+  // };
 
-  const getTransactionStatus = async (txId: string) => {
-    const status = await (wallet?.adapter as LeoWalletAdapter)
-      //@ts-ignore
-      .transactionStatus(txId);
-    setStatus(status);
-  };
+  // const getTransactionStatus = async (txId: string) => {
+  //   const status = await (wallet?.adapter as LeoWalletAdapter)
+  //     //@ts-ignore
+  //     .transactionStatus(txId);
+  //   setStatus(status);
+  // };
 
-  useEffect(() => {
-    handleSubmit();
-  }, []);
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, []);
   return (
     <>
       <DefaultLayout>
@@ -470,6 +661,11 @@ export default function MainPage() {
               </p>
             </FirstSectionText>
           </FirstSection>
+          <MobileDesc>
+            On Aleo Games you can choose game you want to play, invite your
+            friends, make bets, claim tickets and use them to vote for future
+            games, create your unique ENS. Everything is recorded on blockchain!
+          </MobileDesc>
           <SecondSection>
             <SecondSectionText>
               <Platform>What is</Platform>
@@ -478,6 +674,7 @@ export default function MainPage() {
             <SuspenseImg src={SecondScreenSVG} />
           </SecondSection>
           <BlockSection>
+            <MobileSection src={MobileSectionSVG} />
             <BlockItem>
               <BlockNumber>1</BlockNumber>
               <BlockItemContent>
@@ -530,7 +727,7 @@ export default function MainPage() {
             </BlockItem>
           </BlockSection>
           <FAQBlock>
-            <Platform>FAQ</Platform>
+            <FAQTitle style={{ fontSize: '30px!important' }}>FAQ</FAQTitle>
             <FAQItem className={openAccordeon === '1' ? 'active' : ''}>
               <FAQItemTitle
                 onClick={() => {
@@ -614,9 +811,9 @@ export default function MainPage() {
             <LiveFeedBlock>
               <LiveFeedTitle>
                 <div className="th t-1">Game</div>
-                <div className="th t-2">User</div>
-                <div className="th t-3">Time</div>
-                <div className="th t-4">Bid amount</div>
+                <div className="th t-2 mobileHide ">User</div>
+                <div className="th t-3 mobileHide">Time</div>
+                <div className="th t-4 mobileHide">Bid amount</div>
                 <div className="th t-5">Payment</div>
               </LiveFeedTitle>
               <LiveFeedItem>
@@ -624,12 +821,12 @@ export default function MainPage() {
                   <SuspenseImg src={xSVG} />
                   Chess
                 </div>
-                <div className="row r-3">
+                <div className="row r-3 mobileHide">
                   <SuspenseImg src={HiddenSVG} />
                   Hidden
                 </div>
-                <div className="row r-3">23:26</div>
-                <div className="row r-4">2.59950002</div>
+                <div className="row r-3 mobileHide">23:26</div>
+                <div className="row r-4 mobileHide">2.59950002</div>
                 <div className="row r-5">2.82695627</div>
               </LiveFeedItem>
               <LiveFeedItem>
@@ -637,12 +834,12 @@ export default function MainPage() {
                   <SuspenseImg src={xSVG} />
                   Chess
                 </div>
-                <div className="row r-3">
+                <div className="row r-3 mobileHide">
                   <SuspenseImg src={HiddenSVG} />
                   Hidden
                 </div>
-                <div className="row r-3">23:26</div>
-                <div className="row r-4">2.59950002</div>
+                <div className="row r-3 mobileHide">23:26</div>
+                <div className="row r-4 mobileHide">2.59950002</div>
                 <div className="row r-5">2.82695627</div>
               </LiveFeedItem>
               <LiveFeedItem>
@@ -650,12 +847,12 @@ export default function MainPage() {
                   <SuspenseImg src={xSVG} />
                   Chess
                 </div>
-                <div className="row r-3">
+                <div className="row r-3 mobileHide">
                   <img src={HiddenSVG} />
                   Hidden
                 </div>
-                <div className="row r-3">23:26</div>
-                <div className="row r-4">2.59950002</div>
+                <div className="row r-3 mobileHide">23:26</div>
+                <div className="row r-4 mobileHide">2.59950002</div>
                 <div className="row r-5">2.82695627</div>
               </LiveFeedItem>
               <LiveFeedItem>
@@ -663,12 +860,12 @@ export default function MainPage() {
                   <img src={xSVG} />
                   Chess
                 </div>
-                <div className="row r-3">
+                <div className="row r-3 mobileHide">
                   <img src={HiddenSVG} />
                   Hidden
                 </div>
-                <div className="row r-3">23:26</div>
-                <div className="row r-4">2.59950002</div>
+                <div className="row r-3 mobileHide">23:26</div>
+                <div className="row r-4 mobileHide">2.59950002</div>
                 <div className="row r-5">2.82695627</div>
               </LiveFeedItem>
               <LiveFeedItem>
@@ -676,12 +873,12 @@ export default function MainPage() {
                   <img src={xSVG} />
                   Chess
                 </div>
-                <div className="row r-3">
+                <div className="row r-3 mobileHide">
                   <img src={HiddenSVG} />
                   Hidden
                 </div>
-                <div className="row r-3">23:26</div>
-                <div className="row r-4">2.59950002</div>
+                <div className="row r-3 mobileHide">23:26</div>
+                <div className="row r-4 mobileHide">2.59950002</div>
                 <div className="row r-5">2.82695627</div>
               </LiveFeedItem>
               <LiveFeedItem>
@@ -689,12 +886,12 @@ export default function MainPage() {
                   <img src={xSVG} />
                   Chess
                 </div>
-                <div className="row r-3">
+                <div className="row r-3 mobileHide">
                   <img src={HiddenSVG} />
                   Hidden
                 </div>
-                <div className="row r-3">23:26</div>
-                <div className="row r-4">2.59950002</div>
+                <div className="row r-3 mobileHide">23:26</div>
+                <div className="row r-4 mobileHide">2.59950002</div>
                 <div className="row r-5">2.82695627</div>
               </LiveFeedItem>
               <LiveFeedItem>
@@ -702,12 +899,12 @@ export default function MainPage() {
                   <img src={xSVG} />
                   Chess
                 </div>
-                <div className="row r-3">
+                <div className="row r-3 mobileHide">
                   <img src={HiddenSVG} />
                   Hidden
                 </div>
-                <div className="row r-3">23:26</div>
-                <div className="row r-4">2.59950002</div>
+                <div className="row r-3 mobileHide">23:26</div>
+                <div className="row r-4 mobileHide">2.59950002</div>
                 <div className="row r-5">2.82695627</div>
               </LiveFeedItem>
             </LiveFeedBlock>
@@ -747,14 +944,35 @@ export default function MainPage() {
             </FooterRightLinks>
           </FooterContainer>
         </Foooter>
+        <FooterMobile>
+          <FooterContainerMobile>
+            <FooterItemMobile>
+              <span>
+                <LinksFooter>
+                  <img src={twitterWhiteSVG} />
+                  <img src={githubWhiteSVG} />
+                  <img src={discordWhiteSVG} />
+                </LinksFooter>
+              </span>
+            </FooterItemMobile>
+            <FooterItemMobile>
+              <span>Aleo.org</span>
+              <span>Home</span>
+              <span>Our Blog</span>
+            </FooterItemMobile>
+            <FooterItemMobile>
+              <span>For Developers</span>
+              <span>Aleo Studio</span>
+              <span>Aleo Explorer</span>
+              <span>Aleo Package Manager</span>
+              <span>Aleo Developer Docs</span>
+            </FooterItemMobile>
+            <FooterItemMobile>
+              <FooterLogo src={LogoSVG} />
+            </FooterItemMobile>
+          </FooterContainerMobile>
+        </FooterMobile>
       </DefaultLayout>
-      {/* <DefaultLayout>
-      <header className="App-header">
-        Pipeline test
-        <WalletMultiButton />
-      </header>
-      Test main
-    </DefaultLayout> */}
     </>
   );
 }

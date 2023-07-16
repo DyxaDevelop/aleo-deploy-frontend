@@ -4,6 +4,7 @@ import walletImage from '../../assets/svg/walletImage.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
 import { Modal } from 'components/Modal/Modal';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 const ConnectModal = styled.div(() => ({
   width: '430px',
@@ -34,9 +35,21 @@ const ImgModal = styled.div(() => ({
 
 export const PrivateRoute = (props: any) => {
   const { publicKey, signMessage } = useWallet();
-  if (!publicKey) {
+  const ref = useRef(null);
+
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    //@ts-ignore
+    setWidth(ref.current.offsetWidth);
+    //@ts-ignore
+    setHeight(ref.current.offsetHeight);
+  }, []);
+
+  if (!publicKey && width && width > 600) {
     return (
-      <>
+      <div ref={ref}>
         <Modal>
           <ConnectModal>
             <ContentModal>
@@ -49,8 +62,8 @@ export const PrivateRoute = (props: any) => {
           </ConnectModal>
         </Modal>
         {props.children}
-      </>
+      </div>
     );
   }
-  return <>{props.children}</>;
+  return <div ref={ref}>{props.children}</div>;
 };
