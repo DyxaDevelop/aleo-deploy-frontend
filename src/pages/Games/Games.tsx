@@ -7,6 +7,7 @@ import { DefaultLayout } from '../../layouts/DefaultLayout';
 import chessGameSVG from '../../assets/svg/chessGame.svg';
 import soonGamesSVG from '../../assets/svg/soonGames.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
+import { Footer } from 'layouts/Footer';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -16,6 +17,9 @@ const Container = styled.div(() => ({
   alignItems: 'center',
   flexDirection: 'column',
   paddingTop: '150px',
+  '@media (max-width: 768px)': {
+    paddingTop: '70px',
+  },
 }));
 
 const GameBlock = styled.div(() => ({
@@ -38,6 +42,12 @@ const GameBlocksContainer = styled.div(() => ({
   justifyContent: 'space-between',
   width: '80%',
   margin: 'auto',
+  '@media (max-width: 768px)': {
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '60px',
+  },
 }));
 
 const PlayButton = styled(NavLink)(() => ({
@@ -54,6 +64,29 @@ const PlayButton = styled(NavLink)(() => ({
   cursor: 'pointer',
   zIndex: 1,
   textDecoration: 'none',
+  '@media (max-width: 768px)': {
+    display: 'none',
+  },
+}));
+
+const PlayButtonMobile = styled.div(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    display: 'block',
+    width: 'fit-content',
+    background: '#242424',
+    fontWeight: 600,
+    fontSize: '14px',
+    lineHeight: '13px',
+    padding: '12px 35px',
+    boxShadow: '0px 4.33506px 4.33506px rgba(0, 0, 0, 0.25)',
+    borderRadius: '6px',
+    color: '#fff',
+    marginBottom: '60px',
+    cursor: 'pointer',
+    zIndex: 1,
+    textDecoration: 'none',
+  },
 }));
 
 export const Games = () => (
@@ -64,6 +97,7 @@ export const Games = () => (
           <GameBlock>
             <SuspenseImg style={{ position: 'absolute' }} src={chessGameSVG} />
             <PlayButton to={'/games/chess'}>Play</PlayButton>
+            <PlayButtonMobile>Play</PlayButtonMobile>
           </GameBlock>
           <GameBlockSoon>
             {' '}
@@ -75,6 +109,7 @@ export const Games = () => (
           </GameBlockSoon>
         </GameBlocksContainer>
       </Container>
+      <Footer />
     </DefaultLayout>
   </>
 );

@@ -21,6 +21,9 @@ import { Header } from './Header';
 const Container = styled.div(() => ({
   paddingLeft: '170px',
   backgroundColor: '#12141D',
+  '@media (max-width: 768px)': {
+    paddingLeft: '0px',
+  },
 }));
 
 export const DefaultLayout = ({ children }: any) => {

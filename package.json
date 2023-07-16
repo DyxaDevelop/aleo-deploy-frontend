@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@demox-labs/aleo-wallet-adapter-base": "^0.0.13",
-    "@demox-labs/aleo-wallet-adapter-leo": "^0.0.12",
-    "@demox-labs/aleo-wallet-adapter-react": "^0.0.13",
-    "@demox-labs/aleo-wallet-adapter-reactui": "^0.0.25",
+    "@demox-labs/aleo-wallet-adapter-base": "^0.0.15",
+    "@demox-labs/aleo-wallet-adapter-leo": "^0.0.15",
+    "@demox-labs/aleo-wallet-adapter-react": "^0.0.15",
+    "@demox-labs/aleo-wallet-adapter-reactui": "^0.0.27",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.3",
@@ -31,8 +31,10 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
+    "react-use-websocket": "^4.3.1",
     "sass": "^1.62.1",
     "typescript": "^4.9.5",
+    "uuid": "^9.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -61,5 +63,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.2"
   }
 }

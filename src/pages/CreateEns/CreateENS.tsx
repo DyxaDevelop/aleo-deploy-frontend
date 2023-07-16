@@ -8,6 +8,7 @@ import logoSVG from '../../assets/svg/logoForENS.svg';
 import searchSVG from '../../assets/svg/searchIcon.svg';
 import { IconButton } from '@mui/material';
 import { Show } from 'components/Show/Show';
+import { Footer } from 'layouts/Footer';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -28,6 +29,24 @@ const TitleBlock = styled.div(() => ({
   fontSize: '40px',
   textFillColor: 'transparent',
   marginBottom: '30px',
+  '@media (max-width: 768px)': {
+    display: 'none',
+  },
+}));
+
+const TitleBlockMobile = styled.div(() => ({
+  display: 'none',
+  background: 'linear-gradient(90.36deg, #1056FA 0.21%, #00C7F8 101.74%)',
+  backgroundClip: 'text',
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: '700',
+  fontSize: '20px',
+  textFillColor: 'transparent',
+  marginBottom: '30px',
+  '@media (max-width: 768px)': {
+    display: 'block',
+  },
 }));
 
 const InputSearch = styled.input(() => ({
@@ -44,6 +63,29 @@ const InputSearch = styled.input(() => ({
   color: '#8E8F93',
   marginBottom: '20px',
   border: '0.5px solid #333338',
+  '@media (max-width: 768px)': {
+    display: 'none',
+  },
+}));
+
+const InputSearchMobile = styled(InputSearch)(() => ({
+  display: 'none',
+  width: '100%',
+  background:
+    'linear-gradient(98.8deg, rgba(255, 255, 255, 0.08) 0.34%, rgba(255, 255, 255, 0) 100%)',
+  backdropFilter: ' blur(9.20405px)',
+  borderRadius: '25px',
+  outline: '0',
+  height: '44px',
+  paddingLeft: '28px',
+  fontWeight: 600,
+  fontZize: '12px',
+  color: '#8E8F93',
+  marginBottom: '20px',
+  border: '0.5px solid #333338',
+  '@media (max-width: 768px)': {
+    display: 'block',
+  },
 }));
 
 const Button = styled.div(() => ({
@@ -180,6 +222,7 @@ export const CreateENS = () => {
       <DefaultLayout>
         <Container>
           <TitleBlock>Create your unique ANS!</TitleBlock>
+          <TitleBlockMobile>Create your unique on PC!</TitleBlockMobile>
           <InputBlock>
             <InputSearch
               value={inputValue}
@@ -188,6 +231,7 @@ export const CreateENS = () => {
               type="text"
               placeholder="Search"
             />
+            <InputSearchMobile />
             <ImgStyle src={searchSVG} />
           </InputBlock>
           <Show visible={inputValue.length > 0}>
@@ -228,6 +272,7 @@ export const CreateENS = () => {
             </EnsBlock>
           </Show>
         </Container>
+        <Footer />
       </DefaultLayout>
     </>
   );
