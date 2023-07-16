@@ -1,8 +1,20 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 require('@demox-labs/aleo-wallet-adapter-reactui/styles.css');
 import { NavLink } from 'react-router-dom';
 import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
+import { Show } from 'components/Show/Show';
+import BurgerSVG from '../assets/svg/burgerMenu.svg';
+import WalletSVG from '../assets/svg/wallet.svg';
+import AccountSVG from '../assets/svg/profile.svg';
+import GamesSVG from '../assets/svg/games.svg';
+import VotingSVG from '../assets/svg/voting.svg';
+import CloseMenuSVG from '../assets/svg/closeMenu.svg';
+import AnsSVG from '../assets/svg/ansLogo.svg';
+import TwitterSVG from '../assets/svg/twitter.svg';
+import DiscordSVG from '../assets/svg/discord.svg';
+import GithubSVG from '../assets/svg/github.svg';
+import LogoSVG from '../assets/svg/newLogoMobile.svg';
 
 const Container = styled.div(() => ({
   backgroundColor: '#12141C',
@@ -13,16 +25,213 @@ const Container = styled.div(() => ({
   justifyContent: 'flex-end',
   paddingTop: '20px',
   paddingRight: '50px',
-  zIndex: 1,
+  zIndex: 2,
   boxSizing: 'border-box',
+  '@media (max-width: 768px)': {
+    display: 'none',
+  },
 }));
+
+const ContainerMobile = styled.div(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    backgroundColor: '#12141C',
+    width: '100%',
+    height: '50px',
+    position: 'fixed',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingRight: '20px',
+    zIndex: 2,
+    boxSizing: 'border-box',
+  },
+}));
+
+const LogoBlock = styled.div(() => ({
+  marginRight: 'auto',
+  paddingLeft: 20,
+  height: '35px',
+  '& img': {
+    height: '35px',
+  },
+  // '@media (max-width: 768px)': {
+  //   display: 'none',
+  // },
+}));
+
+const DesktopMessage = styled.div(() => ({
+  width: '140px',
+  textAlign: 'center',
+  fontSize: '12px',
+  color: '#F6F6F6',
+  padding: '2px 6px',
+  border: '1px solid #F6F6F6',
+  borderRadius: '4px',
+  marginRight: '20px',
+}));
+
+const BurgerMenu = styled.img(() => ({
+  width: '30px',
+  '@media (max-width: 768px)': {},
+}));
+
+const CloseMenu = styled.img(() => ({
+  width: '20px',
+  position: 'absolute',
+  top: 30,
+  right: 30,
+  '@media (max-width: 768px)': {},
+}));
+
+const OpenedBurgerMenu = styled.div(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    position: 'fixed',
+    width: '100%',
+    paddingTop: '100px',
+    height: '100%',
+    background:
+      'linear-gradient(134deg, rgba(0, 0, 0, 0.60) 0%, rgba(17, 16, 97, 0.00) 100%)',
+    backdropFilter: 'blur(7.414539337158203px)',
+    top: 0,
+    left: 0,
+    zIndex: 5,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+}));
+
+const ItemText = styled.p(() => ({}));
+
+const Item = styled(NavLink)(() => ({
+  display: 'flex',
+  width: '130px',
+  textDecoration: 'none',
+  gap: '25px',
+  alignItems: 'center',
+  color: '#B5B5B5',
+  paddingTop: '14px',
+  paddingBottom: '14px',
+  fontWeight: 600,
+  lineHeight: '11px',
+  letterSpacing: '-0.415435px',
+  paddingLeft: '0px',
+  fontSize: '20px',
+  marginBottom: '15px',
+}));
+
+const ImgBlock = styled.div(() => ({
+  width: '35px',
+  display: 'flex',
+  alignItems: 'center',
+}));
+
+const Links = styled.div(() => ({
+  marginTop: '100px',
+  marginBottom: '150px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '30px',
+  '& img': {
+    width: '45px',
+  },
+}));
+
+const sidebarItems = [
+  {
+    label: 'Wallet',
+    link: '/wallet',
+    icon: WalletSVG,
+  },
+  {
+    label: 'Account',
+    link: '/account',
+    icon: AccountSVG,
+  },
+  {
+    label: 'Games',
+    link: '/games',
+    icon: GamesSVG,
+  },
+  {
+    label: 'Voting',
+    link: '/voting',
+    icon: VotingSVG,
+  },
+  {
+    label: 'ANS',
+    link: '/ens',
+    icon: AnsSVG,
+  },
+];
+
+const socialMedias = [
+  {
+    link: 'https://twitter.com/aleogameshq',
+    icon: TwitterSVG,
+  },
+  {
+    link: 'github.com',
+    icon: GithubSVG,
+  },
+  {
+    link: 'https://discord.com/invite/AleoHQ',
+    icon: DiscordSVG,
+  },
+];
 
 const WalletMultiButtonStyled = styled(WalletMultiButton)(() => ({}));
 
 export const Header = () => {
+  const [isMenuBurgerOpened, setIsMenuBurgerOpened] = useState(false);
   return (
-    <Container>
-      <WalletMultiButton />
-    </Container>
+    <>
+      <Show visible={isMenuBurgerOpened}>
+        <OpenedBurgerMenu>
+          <CloseMenu
+            onClick={() => setIsMenuBurgerOpened(false)}
+            src={CloseMenuSVG}
+          />
+          {sidebarItems.map((elem) => {
+            return (
+              <Item to={elem.link}>
+                <ImgBlock>
+                  <img src={elem.icon} />
+                </ImgBlock>
+                <ItemText>{elem.label}</ItemText>
+              </Item>
+            );
+          })}
+          <Links>
+            {socialMedias.map((elem) => {
+              return (
+                <NavLink to={elem.link}>
+                  <img src={elem.icon} />
+                </NavLink>
+              );
+            })}
+          </Links>
+        </OpenedBurgerMenu>
+      </Show>
+      <ContainerMobile>
+        <LogoBlock>
+          <NavLink to={'/'}>
+            <img src={LogoSVG} />
+          </NavLink>
+        </LogoBlock>
+        {/* <LangBlock></LangBlock> */}
+        <DesktopMessage>Desktop Wallet Only</DesktopMessage>
+        <BurgerMenu
+          onClick={() => setIsMenuBurgerOpened(true)}
+          src={BurgerSVG}
+        />
+      </ContainerMobile>
+      <Container>
+        <WalletMultiButton />
+      </Container>
+    </>
   );
 };

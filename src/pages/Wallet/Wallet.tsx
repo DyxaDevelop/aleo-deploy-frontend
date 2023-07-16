@@ -7,6 +7,7 @@ import { DefaultLayout } from '../../layouts/DefaultLayout';
 import walletImage from '../../assets/svg/walletImage.svg';
 import logoForENS from '../../assets/svg/logoForENS.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
+import { Footer } from 'layouts/Footer';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -16,6 +17,9 @@ const Container = styled.div(() => ({
   alignItems: 'center',
   flexDirection: 'column',
   paddingTop: '150px',
+  '@media (max-width: 768px)': {
+    paddingTop: '70px',
+  },
 }));
 
 const BalanceBlock = styled.div(() => ({
@@ -32,8 +36,15 @@ const BalanceBlock = styled.div(() => ({
   '& img': {
     width: '180px',
     marginBottom: '30px',
+    '@media (max-width: 768px)': {
+      marginBottom: '14px',
+    },
   },
   marginBottom: '20px',
+  '@media (max-width: 768px)': {
+    width: '90%',
+    height: '135px',
+  },
 }));
 
 const BalanceBlockInside = styled.div(() => ({
@@ -41,6 +52,45 @@ const BalanceBlockInside = styled.div(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  '& div': {
+    '@media (max-width: 768px)': {
+      fontSize: '12px',
+    },
+  },
+  '@media (max-width: 768px)': {
+    width: '100%',
+    justifyContent: 'flex-end',
+  },
+}));
+
+const BalanceBlockBalance = styled.div(() => ({
+  width: '45%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  '& div': {
+    '@media (max-width: 768px)': {
+      fontSize: '12px',
+    },
+  },
+  '@media (max-width: 768px)': {
+    width: '100%',
+  },
+}));
+
+const BalanceCount = styled.div(() => ({
+  fontSize: '30px',
+  '@media (max-width: 768px)': {
+    display: 'none',
+  },
+}));
+
+const BalanceCountMobile = styled.div(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    display: 'block',
+    fontSize: '16px!important',
+  },
 }));
 
 const AssetItem = styled.div(() => ({
@@ -50,6 +100,9 @@ const AssetItem = styled.div(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  '@media (max-width: 768px)': {
+    width: '90%',
+  },
 }));
 
 const AssetInfo = styled.div(() => ({
@@ -90,6 +143,7 @@ const AssetName = styled.div(() => ({
 const AssetAmount = styled.div(() => ({
   display: 'flex',
   gap: '40px',
+  paddingRight: '10px',
 }));
 
 const AssetItemInactive = styled(AssetItem)(() => ({
@@ -110,13 +164,14 @@ export const Wallet = () => (
           <BalanceBlockInside>
             <div>
               <div>Your Total Balance</div>
-              <div style={{ fontSize: '30px' }}>$ 11,000.22</div>
+              <BalanceCount>$ 11,000.22</BalanceCount>
+              <BalanceCountMobile>Use Desktop Wallet</BalanceCountMobile>
             </div>
             <SuspenseImg src={walletImage} />
           </BalanceBlockInside>
         </BalanceBlock>
         <AssetItem>
-          <BalanceBlockInside>
+          <BalanceBlockBalance>
             <AssetInfo>
               <AssetLogo>
                 <SuspenseImg src={logoForENS} />
@@ -128,15 +183,15 @@ export const Wallet = () => (
             </AssetInfo>
             <AssetAmount>
               <AssetName>
-                11,000
+                ????
                 <span>ALEO</span>
               </AssetName>
               <AssetName>
-                100
+                ???
                 <span>USD</span>
               </AssetName>
             </AssetAmount>
-          </BalanceBlockInside>
+          </BalanceBlockBalance>
         </AssetItem>
         <AssetItemInactive>Soon...</AssetItemInactive>
         <AssetItemInactive>Soon...</AssetItemInactive>
@@ -144,6 +199,7 @@ export const Wallet = () => (
         <AssetItemInactive>Soon...</AssetItemInactive>
         <AssetItemInactive>Soon...</AssetItemInactive>
       </Container>
+      <Footer />
     </DefaultLayout>
   </>
 );

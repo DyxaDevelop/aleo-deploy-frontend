@@ -1,5 +1,8 @@
-import React, { useMemo } from 'react';
-import { WalletProvider } from '@demox-labs/aleo-wallet-adapter-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  WalletProvider,
+  useWallet,
+} from '@demox-labs/aleo-wallet-adapter-react';
 import {
   WalletModalProvider,
   // WalletMultiButton,
@@ -7,6 +10,7 @@ import {
 import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
 import {
   DecryptPermission,
+  Transaction,
   WalletAdapterNetwork,
 } from '@demox-labs/aleo-wallet-adapter-base';
 // import styled from '@emotion/styled';
@@ -15,6 +19,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './chess/src/redux/store';
 import './index.css';
+import { useWebSocket } from 'react-use-websocket/dist/lib/use-websocket';
 require('@demox-labs/aleo-wallet-adapter-reactui/styles.css');
 
 // const WalletMultiButtonStyled = styled(WalletMultiButton)(() => ({
@@ -22,6 +27,7 @@ require('@demox-labs/aleo-wallet-adapter-reactui/styles.css');
 // }));
 
 function App() {
+  const { publicKey, wallet, requestTransaction } = useWallet();
   const wallets = useMemo(
     () => [
       new LeoWalletAdapter({
@@ -30,6 +36,7 @@ function App() {
     ],
     [],
   );
+
   return (
     <div className="App">
       {' '}

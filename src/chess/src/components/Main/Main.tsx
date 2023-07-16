@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styles from './Main.module.scss';
 import RadioButton from '../RadioButton/RadioButton';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   resetGame,
   selectColor,
@@ -11,12 +11,25 @@ import {
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { Colors } from '../../types';
 import { useNavigate } from 'react-router-dom';
+import { useWebSocket } from 'react-use-websocket/dist/lib/use-websocket';
+import { v4 as uuidv4 } from 'uuid';
+
+let randomUuid = uuidv4();
 
 const Main: React.FC = () => {
+  useLocation();
   const navigate = useNavigate();
   const color = useAppSelector(selectColor);
   const isGameStarted = useAppSelector(selectIsGameStarted);
   const dispatch = useAppDispatch();
+
+  const WS_URL = 'ws://168.119.178.26:8000/ws/chess/saf142124sfaasf/';
+
+  useWebSocket(WS_URL, {
+    onOpen: () => {
+      console.log('WebSocket connection established.');
+    },
+  });
 
   const radioChanged = (id: string) => {
     dispatch(setColor(id as Colors));

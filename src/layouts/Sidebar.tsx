@@ -1,14 +1,4 @@
-import React, { useMemo } from 'react';
-import { WalletProvider } from '@demox-labs/aleo-wallet-adapter-react';
-import {
-  WalletModalProvider,
-  WalletMultiButton,
-} from '@demox-labs/aleo-wallet-adapter-reactui';
-import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
-import {
-  DecryptPermission,
-  WalletAdapterNetwork,
-} from '@demox-labs/aleo-wallet-adapter-base';
+import React, { useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 require('@demox-labs/aleo-wallet-adapter-reactui/styles.css');
 import WalletSVG from '../assets/svg/wallet.svg';
@@ -21,6 +11,7 @@ import TwitterSVG from '../assets/svg/twitter.svg';
 import DiscordSVG from '../assets/svg/discord.svg';
 import GithubSVG from '../assets/svg/github.svg';
 import { NavLink, useLocation } from 'react-router-dom';
+import { Show } from 'components/Show/Show';
 
 const Container = styled.div(() => ({
   backgroundColor: '#171922',
@@ -34,6 +25,18 @@ const Container = styled.div(() => ({
   display: 'flex',
   flexDirection: 'column',
   zIndex: 10,
+  '@media (max-width: 768px)': {
+    display: 'none',
+  },
+}));
+
+const MobileContainer = styled.div(() => ({
+  display: 'none',
+  '@media (max-width: 768px)': {
+    display: 'flex',
+    width: '100%',
+    height: '50px',
+  },
 }));
 
 const LogoBlock = styled.div(() => ({
@@ -133,16 +136,42 @@ const socialMedias = [
     icon: GithubSVG,
   },
   {
-    link: 'https://discord.com/invite/AleoHQ',
+    link: 'https://discord.gg/aleohq',
     icon: DiscordSVG,
   },
 ];
 
 export const Sidebar = () => {
   const location = useLocation();
+  const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
   console.log(location.pathname);
   return (
     <Container>
+      <Show visible={isMobileMenuOpened}>
+        {/* <MobileMenuLayout>
+          <Close></Close>
+          {sidebarItems.map((elem) => {
+            if (location.pathname === elem.link) {
+              return (
+                <MobileItem to={elem.link}>
+                  <MobileImgBlock>
+                    <img src={elem.icon} />
+                  </MobileImgBlock>
+                  <ItemText>{elem.label}</ItemText>
+                </MobileItem>
+              );
+            }
+            return (
+              <MobileItem to={elem.link}>
+                <MobileImgBlock>
+                  <img src={elem.icon} />
+                </MobileImgBlock>
+                <ItemText>{elem.label}</ItemText>
+              </MobileItem>
+            );
+          })}
+        </MobileMenuLayout> */}
+      </Show>
       <LogoBlock>
         <NavLink to={'/'}>
           <img src={LogoSVG} />
@@ -179,6 +208,16 @@ export const Sidebar = () => {
           );
         })}
       </Links>
+      <MobileContainer>
+        <LogoBlock>
+          <NavLink to={'/'}>
+            <img src={LogoSVG} />
+          </NavLink>
+        </LogoBlock>
+        {/* <LangBlock></LangBlock> */}
+        {/* <DesktopMessage>Desktop Wallet Only</DesktopMessage>
+        <BurgerMenu></BurgerMenu> */}
+      </MobileContainer>
     </Container>
   );
 };
