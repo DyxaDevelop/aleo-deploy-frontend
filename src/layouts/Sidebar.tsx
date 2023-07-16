@@ -1,14 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { WalletProvider } from '@demox-labs/aleo-wallet-adapter-react';
-import {
-  WalletModalProvider,
-  WalletMultiButton,
-} from '@demox-labs/aleo-wallet-adapter-reactui';
-import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
-import {
-  DecryptPermission,
-  WalletAdapterNetwork,
-} from '@demox-labs/aleo-wallet-adapter-base';
 import styled from '@emotion/styled';
 require('@demox-labs/aleo-wallet-adapter-reactui/styles.css');
 import WalletSVG from '../assets/svg/wallet.svg';
@@ -146,7 +136,7 @@ const socialMedias = [
     icon: GithubSVG,
   },
   {
-    link: 'https://discord.com/invite/AleoHQ',
+    link: 'https://discord.gg/aleohq',
     icon: DiscordSVG,
   },
 ];

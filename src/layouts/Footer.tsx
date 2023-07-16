@@ -130,9 +130,13 @@ export const Footer = () => {
             <br />
             Become Private.
             <LinksFooter>
-              <img src={twitterWhiteSVG} />
+              <NavLink to="https://twitter.com/aleogameshq">
+                <img src={twitterWhiteSVG} />
+              </NavLink>
               <img src={githubWhiteSVG} />
-              <img src={discordWhiteSVG} />
+              <NavLink to="https://discord.gg/aleohq">
+                <img src={discordWhiteSVG} />
+              </NavLink>
             </LinksFooter>
             <BottomFooterText>
               © Aleo Systems Inc • Your Privacy is{' '}
@@ -161,9 +165,13 @@ export const Footer = () => {
           <FooterItemMobile>
             <span>
               <LinksFooter>
-                <img src={twitterWhiteSVG} />
+                <NavLink to="https://twitter.com/aleogameshq">
+                  <img src={twitterWhiteSVG} />
+                </NavLink>
                 <img src={githubWhiteSVG} />
-                <img src={discordWhiteSVG} />
+                <NavLink to="https://discord.gg/aleohq">
+                  <img src={discordWhiteSVG} />
+                </NavLink>
               </LinksFooter>
             </span>
           </FooterItemMobile>

@@ -18,6 +18,9 @@ const Container = styled.div(() => ({
   alignItems: 'center',
   flexDirection: 'column',
   paddingTop: '150px',
+  '@media (max-width: 768px)': {
+    marginBottom: '300px',
+  },
 }));
 
 const TitleBlock = styled.div(() => ({
@@ -222,7 +225,7 @@ export const CreateENS = () => {
       <DefaultLayout>
         <Container>
           <TitleBlock>Create your unique ANS!</TitleBlock>
-          <TitleBlockMobile>Create your unique on PC!</TitleBlockMobile>
+          <TitleBlockMobile>Create on PC!</TitleBlockMobile>
           <InputBlock>
             <InputSearch
               value={inputValue}

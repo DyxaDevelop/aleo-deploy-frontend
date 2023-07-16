@@ -226,6 +226,24 @@ const LiveFeed = styled.div(() => ({
   gap: '10px',
   overflow: 'hidden',
   maxHeight: '100%',
+  position: 'relative',
+}));
+
+const LiveFeedSoon = styled.div(() => ({
+  position: 'absolute',
+  fontWeight: 700,
+  fontSize: '16px',
+  color: '#fff',
+  lineHeight: '30px',
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '8px',
+  background:
+    'linear-gradient(134deg, rgba(0, 0, 0, 0.60) 0%, rgba(17, 16, 97, 0.00) 100%)',
+  backdropFilter: 'blur(2.414539337158203px)',
 }));
 
 const LiveFeedItem = styled.div(() => ({
@@ -261,7 +279,6 @@ const LiveFeedItem = styled.div(() => ({
 }));
 
 export const Profile = () => {
-
   return (
     <>
       <DefaultLayout>
@@ -287,7 +304,7 @@ export const Profile = () => {
               </ClaimVotes>
               <AvailableVotes>
                 <span>Available votes</span>
-                <ContentDynamic>50</ContentDynamic>
+                <ContentDynamic>???</ContentDynamic>
               </AvailableVotes>
               <ClaimVotes>
                 <span>Token Minting</span>
@@ -297,16 +314,17 @@ export const Profile = () => {
               </ClaimVotes>
               <Balance>
                 <span>Your balance</span>
-                <ContentDynamic>100$</ContentDynamic>
+                <ContentDynamic>???$</ContentDynamic>
               </Balance>
             </LeftBlock>
             <RightBlock>
               <TotalWinnings>
                 <span>Total winnings</span>
-                <span style={{ color: '#02C4F7' }}>1,000$</span>
+                <span style={{ color: '#02C4F7' }}>???$</span>
               </TotalWinnings>
               <LastGames>
                 <LiveFeed>
+                  <LiveFeedSoon>Live feed coming soon...</LiveFeedSoon>
                   {/* <Tab>Live Feed</Tab> */}
                   <LiveFeedBlock>
                     <LiveFeedItem>
