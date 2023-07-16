@@ -779,9 +779,8 @@ export default function MainPage() {
                 On chain use <SuspenseImg src={FaqSVG} />
               </FAQItemTitle>
               <FAQItemDescription>
-                1. Install wallet <br />
-                2. Get testnet tokens <br />
-                3. Play and get your game recorded on the blockchain
+                Due to the fact that aleo is still under development, some
+                features of the site may be slow. Hope for your understanding
               </FAQItemDescription>
             </FAQItem>
             <FAQItem className={openAccordeon === '4' ? 'active' : ''}>
@@ -797,10 +796,9 @@ export default function MainPage() {
                 Off chain use <SuspenseImg src={FaqSVG} />
               </FAQItemTitle>
               <FAQItemDescription>
-                1. Install wallet <br />
-                2. Connect to the website <br />
-                3. Enjoy games without paying any gas fees and waiting for
-                transactions to be executed
+                Our task was to show the capabilities of the Aleo blockchain,
+                but if you do not want to install a wallet, you can look at the
+                capabilities of our designer
               </FAQItemDescription>
             </FAQItem>
           </FAQBlock>
