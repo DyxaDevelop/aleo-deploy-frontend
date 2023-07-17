@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-const ModalWrap = styled.div(({ theme }) => ({
+const ModalWrap = styled.div(({}) => ({
   position: 'fixed',
   width: '100%',
   height: '100%',
