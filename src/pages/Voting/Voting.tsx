@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
 import { Footer } from 'layouts/Footer';
+import { useEffect, useState } from 'react';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -119,12 +120,12 @@ const VoteBlock = styled.div(() => ({
   },
 }));
 
-const VoteProgress = styled.div((props: any) => ({
+const VoteProgress = styled.div<{value: number}>(({value}) => ({
   width: '240px',
   height: '6px',
   background: `linear-gradient(90deg, #0C6BFA 0%, #1663D6 ${
-    props.value
-  }%, rgba(34, 89, 171, 0) ${props.value + 20}%)`,
+    value
+  }%, rgba(34, 89, 171, 0) ${value + 20}%)`,
   borderRadius: '6px',
   marginBottom: '10px',
   '@media (max-width: 768px)': {
@@ -133,6 +134,7 @@ const VoteProgress = styled.div((props: any) => ({
 }));
 
 const VoteProgressContainer = styled.div((props: any) => ({
+  position: 'relative',
   width: '240px',
   height: '6px',
   background: `#26282F`,
@@ -193,8 +195,31 @@ const VotingBlock = styled.div(() => ({
   marginBottom: '10px',
 }));
 
-export const Voting = () => (
-  <>
+export const Voting = () => { //VoteBlockИ также советую в массив запихнуть
+
+  const [paramAnimation, setParamAnimation] = useState(0)
+
+  const VoteProgressAnimation = styled.div(() => ({
+    height: '6px',
+    borderRadius: '6px',
+    background: `#26282F`,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: `${paramAnimation}px`
+  }));
+
+  useEffect(() => {
+    if (paramAnimation < 240) {
+      const timeout = setTimeout(() => {
+        setParamAnimation(prevIndex => prevIndex + 3);
+      }, 10);
+  
+      return () => clearTimeout(timeout);
+    }
+  }, [paramAnimation])
+
+  return <>
     <DefaultLayout>
       <Container>
         <TitleBlock>DAO Proposals</TitleBlock>
@@ -218,6 +243,7 @@ export const Voting = () => (
                   </div>
                   <VotingBlock>
                     <VoteProgressContainer>
+                    <VoteProgressAnimation />
                       <VoteProgress value={60} />
                     </VoteProgressContainer>{' '}
                     <VoteCheckBox />
@@ -230,6 +256,7 @@ export const Voting = () => (
                   </div>
                   <VotingBlock>
                     <VoteProgressContainer>
+                    <VoteProgressAnimation />
                       <VoteProgress value={30} />
                     </VoteProgressContainer>{' '}
                     <VoteCheckBox />
@@ -242,6 +269,7 @@ export const Voting = () => (
                   </div>
                   <VotingBlock>
                     <VoteProgressContainer>
+                    <VoteProgressAnimation />
                       <VoteProgress value={10} />
                     </VoteProgressContainer>{' '}
                     <VoteCheckBox />
@@ -265,4 +293,4 @@ export const Voting = () => (
       <Footer />
     </DefaultLayout>
   </>
-);
+}
