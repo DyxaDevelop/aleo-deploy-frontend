@@ -1,10 +1,20 @@
 import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import styled from '@emotion/styled';
-import React, { Suspense, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Sidebar } from '../../layouts/Sidebar';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
 import FirstScreenSVG from '../../assets/svg/firstScreen.svg';
+
+import Nosorog from '../../assets/svg/animationCoins/nosorog_platform.svg'
+
+import OneCoin from '../../assets/svg/animationCoins/coin_1.svg'
+import TwoCoin from '../../assets/svg/animationCoins/coin_2.svg'
+import ThreeCoin from '../../assets/svg/animationCoins/coin_3.svg'
+import FourCoin from '../../assets/svg/animationCoins/coin_4.svg'
+import SixCoin from '../../assets/svg/animationCoins/coin_6.svg'
+
 import SecondScreenSVG from '../../assets/svg/secondScreen.svg';
 import xSVG from '../../assets/svg/x.svg';
 import HiddenSVG from '../../assets/svg/hidden.svg';
@@ -65,6 +75,23 @@ const FirstSection = styled.div(() => ({
       maxWidth: '150px',
     },
   },
+}));
+
+const FirstSectionAnimation = styled.div(() => ({
+  zIndex: 1,
+  minWidth: '527px',
+  height: '527px',
+  position: 'relative'
+}));
+
+const FirstSectionImg = styled.div(() => ({
+  zIndex: 1,
+  position: 'absolute',
+  top: 0,
+	bottom: 0,
+	left: 0,
+	right: 0,
+	margin: 'auto'
 }));
 
 const FirstSectionText = styled.div(() => ({
@@ -488,6 +515,7 @@ const FAQItem = styled.div(() => ({
   marginBottom: '12px',
   '& img': {
     transform: 'rotate(180deg)',
+    transition: '0.3s all ease-in-out'
   },
   '&.active': {
     '& div': {
@@ -496,10 +524,8 @@ const FAQItem = styled.div(() => ({
     '& img': {
       transform: 'rotate(0deg)',
     },
-    '& div:last-child': {
-      display: 'block',
-    },
   },
+  cursor: 'pointer',
 }));
 
 const FAQItemTitle = styled.div(() => ({
@@ -509,19 +535,22 @@ const FAQItemTitle = styled.div(() => ({
   borderRadius: '6px',
   display: 'flex',
   justifyContent: 'space-between',
-  cursor: 'pointer',
+  transition: 'ease-in 0.1s',
+  width: ' 100%',
+  '&:hover': {
+    opacity: '1',
+  },
   '@media (max-width: 768px)': {
     fontSize: '16px',
   },
 }));
 
-const FAQItemDescription = styled.div(() => ({
-  display: 'none',
-  padding: '20px',
+const FAQItemDescription = styled.div<{isOpened: boolean}>(({isOpened}) => ({
+  transition: '0.3s all ease, 0.2s opacity ease',
+  maxHeight: isOpened ? '100vh' : '0',
+  opacity: isOpened ? '1' : '0',
+  padding: isOpened ? '20px' : '0 20px',
   color: 'rgba(255, 255, 255, 0.9)',
-  '@media (max-width: 768px)': {
-    fontSize: '14px',
-  },
 }));
 
 const BlockItemContent = styled.div(() => ({
@@ -593,7 +622,58 @@ const FooterItemMobile = styled.div(() => ({
 }));
 
 export default function MainPage() {
-  const [openAccordeon, setOpenAccordeon] = useState('');
+  const [openAccordeon, setOpenAccordeon] = useState<string>('');
+  const [imagePos, setImagePos] = useState({ x: 0, y: 0 });
+  
+  const handleMouseMove = useCallback((event: MouseEvent) => {
+    setImagePos({ x: event.clientX, y: event.clientY })
+  }, [setImagePos]);
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [handleMouseMove]); 
+
+  const FirstSectionCoins = styled.div<{top: string; left: string; coefficient: number; denominatorOne: number; denominatorTwo: number}>(({top, left, coefficient, denominatorOne, denominatorTwo}) => ({
+    top,
+    left,
+    zIndex: 0,
+    position: 'absolute',
+    transform: `translate3d(${(imagePos.x * coefficient) / denominatorOne}px, ${(imagePos.y * coefficient) / denominatorTwo}px, 0px)`
+  }))
+
+  const coins = useMemo(() => {
+    return [
+      {img: OneCoin, top: '90px', left: '50px', coefficient: 0.18, denominatorOne: 20,  denominatorTwo: 20},
+      {img: TwoCoin, top: '73px', left: '322px', coefficient: 0.2, denominatorOne: 12,  denominatorTwo: 10},
+      {img: ThreeCoin, top: '275px', left: '85px', coefficient: 0.18, denominatorOne: 20,  denominatorTwo: 20},
+      {img: FourCoin, top: '115px', left: '385px', coefficient: 0.15, denominatorOne: 25,  denominatorTwo: 10},
+      {img: FourCoin, top: '15px', left: '145px', coefficient: 0.25, denominatorOne: 10,  denominatorTwo: 20},
+      {img: SixCoin, top: '180px', left: '345px', coefficient: 0.22, denominatorOne: 13,  denominatorTwo: 18},
+    ]
+  },[])
+
+  const firstAnimation = {
+    hidden: {
+      x: 300,
+      opacity: 0
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { delay: 0.2}
+    }
+  }
+
+  const onClickFAQItemTitle = (value: string) => () => { //здесь я юзанул каррирование, для того чтобы прокидывать значение аккордиона, код сократился
+    if (openAccordeon === value) {                       //в колбэк это оборачивать нет смысла, можешь погуглить почему
+      setOpenAccordeon('');                              //советую FAQItemЫ засунуть в массив и обернуть мемо (как я сделал это выше с монетами) и отобразить через map,
+    } else {                                             // таким образом ты сократишь код, и еще вопрос: а чего ты стили в другой файл не вынес? так же удобнее (на мой взгляд)
+      setOpenAccordeon(value);
+    }
+  }
 
   // function tryParseJSON(input: string): string | object {
   //   try {
@@ -663,24 +743,36 @@ export default function MainPage() {
   //   handleSubmit();
   // }, []);
   return (
-    <>
-      <DefaultLayout>
+    <DefaultLayout>
         {/* <Loader /> */}
         <Container>
-          <FirstSection>
-            <SuspenseImg src={FirstScreenSVG} />
-            <FirstSectionText>
-              <FirstSectionTextTitle>
-                <Aleo>Aleo Games</Aleo> — 1st platform with multiple games on
-                <Web3> Aleo</Web3>, bets, DAO voting and ENS
-              </FirstSectionTextTitle>
-              <p>
-                On Aleo Games you can choose game you want to play, invite your
-                friends, make bets, claim tickets and use them to vote for
-                future games, create your unique ENS. Everything is recorded on
-                blockchain!
-              </p>
-            </FirstSectionText>
+        <FirstSection>
+            <FirstSectionAnimation>
+              <FirstSectionImg>
+                <SuspenseImg src={Nosorog} />
+              </FirstSectionImg>
+              {coins.map(elem => {
+                return <FirstSectionCoins top={elem.top} left={elem.left} coefficient={elem.coefficient} denominatorOne={elem.denominatorOne} denominatorTwo={elem.denominatorTwo}>
+                    <SuspenseImg src={elem.img} />
+                </FirstSectionCoins>
+              })}
+            </FirstSectionAnimation>
+            <motion.div initial='hidden' whileInView='visible'>
+              <motion.div variants={firstAnimation}>
+                <FirstSectionText>
+                  <FirstSectionTextTitle>
+                    <Aleo>Aleo Games</Aleo> — 1st platform with multiple games on
+                    <Web3> Aleo</Web3>, bets, DAO voting and ENS
+                  </FirstSectionTextTitle>
+                  <p>
+                    On Aleo Games you can choose game you want to play, invite your
+                    friends, make bets, claim tickets and use them to vote for
+                    future games, create your unique ENS. Everything is recorded on
+                    blockchain!
+                  </p>
+                </FirstSectionText>
+              </motion.div>
+            </motion.div>
           </FirstSection>
           <MobileDesc>
             On Aleo Games you can choose game you want to play, invite your
@@ -748,40 +840,29 @@ export default function MainPage() {
             </BlockItem>
           </BlockSection>
           <FAQBlock>
-            <FAQTitle style={{ fontSize: '30px!important' }}>FAQ</FAQTitle>
+            <Platform>FAQ</Platform>
             <FAQItem className={openAccordeon === '1' ? 'active' : ''}>
               <FAQItemTitle
-                onClick={() => {
-                  if (openAccordeon === '1') {
-                    setOpenAccordeon('');
-                  } else {
-                    setOpenAccordeon('1');
-                  }
-                }}
+                onClick={onClickFAQItemTitle('1')}
               >
                 What is Aleo Games? <SuspenseImg src={FaqSVG} />
               </FAQItemTitle>
-              <FAQItemDescription>
+               <FAQItemDescription isOpened={openAccordeon === '1'}>
                 Aleo Games is a gaming platform made on Aleo to show blockchain
                 in use. <br /> Here you can create your ENS profile, choose a
                 game to play, invite your friends, place the bets and have a fun
                 time!
               </FAQItemDescription>
+           
             </FAQItem>
             <FAQItem className={openAccordeon === '2' ? 'active' : ''}>
               <FAQItemTitle
-                onClick={() => {
-                  if (openAccordeon === '2') {
-                    setOpenAccordeon('');
-                  } else {
-                    setOpenAccordeon('2');
-                  }
-                }}
+                onClick={onClickFAQItemTitle('2')}
               >
                 How to use Aleo Games?
                 <SuspenseImg src={FaqSVG} />
               </FAQItemTitle>
-              <FAQItemDescription>
+              <FAQItemDescription isOpened={openAccordeon === '2'}>
                 1. Install wallet <br />
                 2. Get testnet tokens <br />
                 3. Play and get your game recorded on the blockchain
@@ -789,37 +870,27 @@ export default function MainPage() {
             </FAQItem>
             <FAQItem className={openAccordeon === '3' ? 'active' : ''}>
               <FAQItemTitle
-                onClick={() => {
-                  if (openAccordeon === '3') {
-                    setOpenAccordeon('');
-                  } else {
-                    setOpenAccordeon('3');
-                  }
-                }}
+                onClick={onClickFAQItemTitle('3')}
               >
                 On chain use <SuspenseImg src={FaqSVG} />
               </FAQItemTitle>
-              <FAQItemDescription>
-                Due to the fact that aleo is still under development, some
-                features of the site may be slow. Hope for your understanding
+              <FAQItemDescription isOpened={openAccordeon === '3'}>
+                1. Install wallet <br />
+                2. Get testnet tokens <br />
+                3. Play and get your game recorded on the blockchain
               </FAQItemDescription>
             </FAQItem>
             <FAQItem className={openAccordeon === '4' ? 'active' : ''}>
               <FAQItemTitle
-                onClick={() => {
-                  if (openAccordeon === '4') {
-                    setOpenAccordeon('');
-                  } else {
-                    setOpenAccordeon('4');
-                  }
-                }}
+                onClick={onClickFAQItemTitle('4')}
               >
                 Off chain use <SuspenseImg src={FaqSVG} />
               </FAQItemTitle>
-              <FAQItemDescription>
-                Our task was to show the capabilities of the Aleo blockchain,
-                but if you do not want to install a wallet, you can look at the
-                capabilities of our designer
+              <FAQItemDescription isOpened={openAccordeon === '4'}>
+                1. Install wallet <br />
+                2. Connect to the website <br />
+                3. Enjoy games without paying any gas fees and waiting for
+                transactions to be executed
               </FAQItemDescription>
             </FAQItem>
           </FAQBlock>
@@ -992,7 +1063,6 @@ export default function MainPage() {
             </FooterItemMobile>
           </FooterContainerMobile>
         </FooterMobile>
-      </DefaultLayout>
-    </>
+   </DefaultLayout>
   );
 }
