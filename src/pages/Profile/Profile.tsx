@@ -168,8 +168,8 @@ const TotalWinnings = styled.div(() => ({
 const LastGames = styled.div(() => ({
   background: '#1A1C24',
   borderRadius: '8px',
-  height: 'calc(100% - 83px)',
-  padding: '16px',
+  height: 'calc(100% - 93px)',
+  overflow: 'hidden',
 }));
 
 const Button = styled.div(() => ({
@@ -242,8 +242,10 @@ const LiveFeedSoon = styled.div(() => ({
   alignItems: 'center',
   borderRadius: '8px',
   background:
-    'linear-gradient(134deg, rgba(0, 0, 0, 0.60) 0%, rgba(17, 16, 97, 0.00) 100%)',
-  backdropFilter: 'blur(2.414539337158203px)',
+    'linear-gradient(134deg, rgba(0, 0, 0, 0.50) 0%, rgba(255, 255, 255, 0) 100%)',
+  // background:
+  //   'linear-gradient(98.8deg, rgba(255, 255, 255, 0.08) 0.34%, rgba(255, 255, 255, 0) 100%)',
+  backdropFilter: 'blur(1.52719px)',
 }));
 
 const LiveFeedItem = styled.div(() => ({
@@ -369,6 +371,19 @@ export const Profile = () => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <SuspenseImg src={xSVG} />
+                        Chess
+                      </div>
+                      <div className="row r-3">
+                        <img src={HiddenSVG} />
+                        Hidden
+                      </div>
+                      <div className="row r-3">23:26</div>
+                      <div className="row r-4">2.59950002</div>
+                      <div className="row r-5">2.82695627</div>
+                    </LiveFeedItem>
+                    <LiveFeedItem>
+                      <div className="row r-1">
+                        <img src={xSVG} />
                         Chess
                       </div>
                       <div className="row r-3">

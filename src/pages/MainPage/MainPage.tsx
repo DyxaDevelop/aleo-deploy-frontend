@@ -368,10 +368,30 @@ const LiveFeed = styled.div(() => ({
   width: '100%',
   boxSizing: 'border-box',
   marginTop: '50px',
+  position: 'relative',
   '@media (max-width: 768px)': {
     paddingLeft: '20px',
     paddingRight: '20px',
   },
+}));
+
+const LiveFeedSoon = styled.div(() => ({
+  position: 'absolute',
+  fontWeight: 700,
+  fontSize: '18px',
+  color: '#fff',
+  lineHeight: '30px',
+  width: '100%',
+  height: '83%',
+  bottom: '0',
+  left: 0,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '8px',
+  background:
+    'linear-gradient(134deg, rgba(17, 16, 97, 0.00) 0%, rgba(17, 16, 97, 0.00) 100%)',
+  backdropFilter: 'blur(2.414539337158203px)',
 }));
 
 const LiveFeedItem = styled.div(() => ({
@@ -381,6 +401,7 @@ const LiveFeedItem = styled.div(() => ({
   fontWeight: 600,
   fontZize: '20px',
   lineHeight: '16px',
+  backgroundColor: '#20242f',
   '&:nth-child(even)': {
     backgroundColor: '#222732',
     borderRadius: '12px',
@@ -803,6 +824,7 @@ export default function MainPage() {
             </FAQItem>
           </FAQBlock>
           <LiveFeed>
+            <LiveFeedSoon>Live feed coming soon...</LiveFeedSoon>
             <Tab>
               Live Feed <BlueCircle />
             </Tab>
