@@ -9,6 +9,7 @@ import searchSVG from '../../assets/svg/searchIcon.svg';
 import { IconButton } from '@mui/material';
 import { Show } from 'components/Show/Show';
 import { Footer } from 'layouts/Footer';
+import Typewriter from 'components/TypeWriter/TypeWriter';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -224,7 +225,7 @@ export const CreateENS = () => {
     <>
       <DefaultLayout>
         <Container>
-          <TitleBlock>Create your unique ANS!</TitleBlock>
+          <Typewriter text='Create your unique ANS!' delay={70}></Typewriter>
           <TitleBlockMobile>Create on PC!</TitleBlockMobile>
           <InputBlock>
             <InputSearch
