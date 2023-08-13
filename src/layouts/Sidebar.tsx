@@ -12,6 +12,7 @@ import DiscordSVG from '../assets/svg/discord.svg';
 import GithubSVG from '../assets/svg/github.svg';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Show } from 'components/Show/Show';
+import { LanguageHOC } from 'hoc/langHoc';
 
 const Container = styled.div(() => ({
   backgroundColor: '#171922',
@@ -141,10 +142,37 @@ const socialMedias = [
   },
 ];
 
-export const Sidebar = () => {
+export const SidebarPure = ({ lang }: any) => {
   const location = useLocation();
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
   console.log(location.pathname);
+  const sidebarItems = [
+    {
+      label: lang.WALLET,
+      link: '/wallet',
+      icon: WalletSVG,
+    },
+    {
+      label: lang.ACC,
+      link: '/account',
+      icon: AccountSVG,
+    },
+    {
+      label: lang.GAME,
+      link: '/games',
+      icon: GamesSVG,
+    },
+    {
+      label: lang.VOTE,
+      link: '/voting',
+      icon: VotingSVG,
+    },
+    {
+      label: 'ANS',
+      link: '/ens',
+      icon: AnsSVG,
+    },
+  ];
   return (
     <Container>
       <Show visible={isMobileMenuOpened}>
@@ -221,3 +249,5 @@ export const Sidebar = () => {
     </Container>
   );
 };
+
+export const Sidebar = LanguageHOC(SidebarPure, 'menu');

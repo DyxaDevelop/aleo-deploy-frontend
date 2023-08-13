@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 require('@demox-labs/aleo-wallet-adapter-reactui/styles.css');
 import { NavLink } from 'react-router-dom';
@@ -15,6 +15,11 @@ import TwitterSVG from '../assets/svg/twitter.svg';
 import DiscordSVG from '../assets/svg/discord.svg';
 import GithubSVG from '../assets/svg/github.svg';
 import LogoSVG from '../assets/svg/newLogoMobile.svg';
+import WorldSVG from '../assets/svg/world.svg';
+import TopArrowSVG from '../assets/svg/topArrow.svg';
+import BottomArrowSVG from '../assets/svg/bottomArrow.svg';
+import { UserLangContext } from 'App';
+import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 
 const Container = styled.div(() => ({
   backgroundColor: '#12141C',
@@ -129,6 +134,63 @@ const ImgBlock = styled.div(() => ({
   alignItems: 'center',
 }));
 
+const LangBlock = styled.div(() => ({
+  width: '50px',
+  height: '45px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '20px',
+  marginRight: '100px',
+  color: '#fff',
+  '& img': {
+    width: '25px',
+  },
+  '@media (max-width: 768px)': {
+    fontSize: '12px',
+    gap: '4px',
+    marginRight: '40px',
+  },
+}));
+
+const LangBlockMenu = styled.div(() => ({
+  position: 'absolute',
+  width: '50px',
+  right: '208px',
+  top: '38px',
+  height: '45px',
+  display: 'flex',
+  alignItems: 'flex-start',
+  marginRight: '100px',
+  color: '#A3A3A3',
+  '& img': {
+    width: '25px',
+  },
+
+  '@media (max-width: 768px)': {
+    width: '20px',
+    top: '19px',
+    right: '190px',
+  },
+}));
+
+const LangItems = styled.div(() => ({
+  backgroundColor: '#12141D',
+  paddingLeft: '15px',
+  paddingBottom: '5px',
+  borderRadius: '15px',
+  marginTop: '-4px',
+  textOverflow: 'ellipsis',
+  '& span': {
+    '&:hover': {
+      color: '#fff',
+    },
+  },
+  '@media (max-width: 768px)': {
+    fontSize: '12px',
+    paddingLeft: '4px',
+  },
+}));
+
 const Links = styled.div(() => ({
   marginTop: '100px',
   marginBottom: '150px',
@@ -183,10 +245,31 @@ const socialMedias = [
   },
 ];
 
+const langs = {
+  chi: '中国人',
+  eng: 'English',
+  ge: 'Deutsch',
+  isp: 'Español',
+  rb: 'Беларускі',
+  ru: 'Русский',
+  ua: 'Українська',
+};
+
 const WalletMultiButtonStyled = styled(WalletMultiButton)(() => ({}));
 
 export const Header = () => {
+  //@ts-ignore
+  const { lang, setLang } = useContext(UserLangContext);
+
+  const onHandleClickChange = (value: any) => {
+    setLang(value);
+    localStorage.setItem('lang', value);
+    setShowMenu(false);
+  };
+
   const [isMenuBurgerOpened, setIsMenuBurgerOpened] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <>
       <Show visible={isMenuBurgerOpened}>
@@ -222,7 +305,82 @@ export const Header = () => {
             <img src={LogoSVG} />
           </NavLink>
         </LogoBlock>
-        {/* <LangBlock></LangBlock> */}
+        <Show visible={!showMenu}>
+          <LangBlock
+            onClick={() => {
+              setShowMenu(true);
+            }}
+          >
+            <SuspenseImg src={WorldSVG} />
+            {/*@ts-ignore*/}
+            <spa style={{ display: 'flex' }}>{langs[lang]}</spa>
+            <SuspenseImg src={TopArrowSVG} />
+          </LangBlock>
+        </Show>
+        <Show visible={showMenu}>
+          <LangBlockMenu>
+            <SuspenseImg src={WorldSVG} />
+            <LangItems>
+              <span
+                onClick={() => {
+                  onHandleClickChange('eng');
+                }}
+              >
+                {' '}
+                English <br />
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('chi');
+                }}
+              >
+                {' '}
+                中国人
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('ge');
+                }}
+              >
+                {' '}
+                Deutsch
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('isp');
+                }}
+              >
+                {' '}
+                Español
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('ru');
+                }}
+              >
+                {' '}
+                Русский
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('ua');
+                }}
+              >
+                {' '}
+                Українська
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('rb');
+                }}
+              >
+                {' '}
+                Беларускі
+              </span>
+            </LangItems>
+            <SuspenseImg src={BottomArrowSVG} />
+          </LangBlockMenu>
+        </Show>
         <DesktopMessage>Desktop Wallet Only</DesktopMessage>
         <BurgerMenu
           onClick={() => setIsMenuBurgerOpened(true)}
@@ -230,6 +388,83 @@ export const Header = () => {
         />
       </ContainerMobile>
       <Container>
+        <Show visible={!showMenu}>
+          <LangBlock
+            onClick={() => {
+              setShowMenu(true);
+            }}
+          >
+            <SuspenseImg src={WorldSVG} />
+            {/*@ts-ignore*/}
+            <spa style={{ display: 'flex' }}>{langs[lang]}</spa>
+            <SuspenseImg src={TopArrowSVG} />
+          </LangBlock>
+        </Show>
+        <Show visible={showMenu}>
+          <LangBlockMenu>
+            <SuspenseImg src={WorldSVG} />
+            <LangItems>
+              <span
+                onClick={() => {
+                  onHandleClickChange('eng');
+                }}
+              >
+                {' '}
+                English <br />
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('chi');
+                }}
+              >
+                {' '}
+                中国人
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('ge');
+                }}
+              >
+                {' '}
+                Deutsch
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('isp');
+                }}
+              >
+                {' '}
+                Español
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('ru');
+                }}
+              >
+                {' '}
+                Русский
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('ua');
+                }}
+              >
+                {' '}
+                Українська
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('rb');
+                }}
+              >
+                {' '}
+                Беларускі
+              </span>
+            </LangItems>
+            <SuspenseImg src={BottomArrowSVG} />
+          </LangBlockMenu>
+        </Show>
+
         <WalletMultiButton />
       </Container>
     </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import {
   WalletProvider,
   useWallet,
@@ -22,11 +22,27 @@ import './index.css';
 import { useWebSocket } from 'react-use-websocket/dist/lib/use-websocket';
 require('@demox-labs/aleo-wallet-adapter-reactui/styles.css');
 
+localStorage.getItem('lang');
+
+export const UserLangContext = createContext('');
+
 // const WalletMultiButtonStyled = styled(WalletMultiButton)(() => ({
 //   // background: 'linear-gradient(90.36deg, #1056FA 0.21%, #00C7F8 101.74%)',
 // }));
 
+const langs = [
+  { chi: 'Chinese' },
+  { eng: 'English' },
+  { ge: 'Germany' },
+  { isp: 'Spanish' },
+  { rb: 'Bellarussian' },
+  { ru: 'Russian' },
+  { ua: 'Ukrainian' },
+];
+
 function App() {
+  const [lang, setLang] = useState(localStorage.getItem('lang') || 'eng');
+
   const { publicKey, wallet, requestTransaction } = useWallet();
   const wallets = useMemo(
     () => [
@@ -41,19 +57,22 @@ function App() {
     <div className="App">
       {' '}
       <Provider store={store}>
-        <BrowserRouter>
-          <WalletProvider
-            wallets={wallets}
-            decryptPermission={DecryptPermission.UponRequest}
-            // @ts-ignore
-            network={WalletAdapterNetwork.Localnet}
-            autoConnect
-          >
-            <WalletModalProvider>
-              <AppRoutes />
-            </WalletModalProvider>
-          </WalletProvider>
-        </BrowserRouter>
+        {/*@ts-ignore*/}
+        <UserLangContext.Provider value={{ lang, setLang }}>
+          <BrowserRouter>
+            <WalletProvider
+              wallets={wallets}
+              decryptPermission={DecryptPermission.UponRequest}
+              // @ts-ignore
+              network={WalletAdapterNetwork.Localnet}
+              autoConnect
+            >
+              <WalletModalProvider>
+                <AppRoutes />
+              </WalletModalProvider>
+            </WalletProvider>
+          </BrowserRouter>
+        </UserLangContext.Provider>
       </Provider>
     </div>
   );

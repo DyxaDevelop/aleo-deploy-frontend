@@ -1,0 +1,12 @@
+{
+    "DAO": "DAO ofrece",
+    "VOTE": "Vote por el ajedrez",
+    "VOTE_TEXT": "El ajedrez es un juego de mesa para dos jugadores, blanco y negro, cada uno de los cuales controla un ejército de piezas de ajedrez de su propio color, con el objetivo de dar jaque mate al rey del adversario.",
+    "RESULT": "Resultado",
+    "YES": "Sí",
+    "No": "No",
+    "Abstain": "Me abstendré",
+    "VOTES_US": "Se han utilizado los votos:",
+    "START_D": "Fecha de inicio:",
+    "END_D": "Fecha de finalización:"
+}

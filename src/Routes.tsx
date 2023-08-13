@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Board from './chess/src/components/Board/Board';
-import Main from './chess/src/components/Main/Main';
+import { MainPage } from './pages/MainPage/MainPage';
 import './chess/src/reset.css';
 import './chess/src/index.css';
 import { Wallet } from 'pages/Wallet/Wallet';
@@ -16,11 +16,11 @@ import { CreateENS } from 'pages/CreateEns/CreateENS';
 import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute';
 
 //@ts-ignore
-const MainPage = lazy(() => import('./pages/MainPage/MainPage'));
+// const MainPage = lazy(() => import('./pages/MainPage/MainPage'));
 // const LoginPage = lazy(() => import('./pages/LoginPage'));
 // const UploadPage = lazy(() => import('./pages/UploadPage'));
 
-const LoaderContainer = styled.div(() => ({
+export const LoaderContainer = styled.div(() => ({
   width: '100%',
   height: '100vh',
   display: 'flex',
@@ -32,11 +32,11 @@ export const AppRoutes = () => (
   <>
     <Suspense
       fallback={
-        <DefaultLayout>
-          <LoaderContainer>
-            <Loader />
-          </LoaderContainer>
-        </DefaultLayout>
+        // <DefaultLayout>
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+        // </DefaultLayout>
       }
     >
       <Routes>

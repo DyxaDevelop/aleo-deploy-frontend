@@ -1,19 +1,24 @@
 import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Sidebar } from '../../layouts/Sidebar';
+import React, {
+  Suspense,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
+
+import Nosorog from '../../assets/svg/animationCoins/nosorog_platform.svg';
+
+import OneCoin from '../../assets/svg/animationCoins/coin_1.svg';
+import TwoCoin from '../../assets/svg/animationCoins/coin_2.svg';
+import ThreeCoin from '../../assets/svg/animationCoins/coin_3.svg';
+import FourCoin from '../../assets/svg/animationCoins/coin_4.svg';
+import SixCoin from '../../assets/svg/animationCoins/coin_6.svg';
 import FirstScreenSVG from '../../assets/svg/firstScreen.svg';
-
-import Nosorog from '../../assets/svg/animationCoins/nosorog_platform.svg'
-
-import OneCoin from '../../assets/svg/animationCoins/coin_1.svg'
-import TwoCoin from '../../assets/svg/animationCoins/coin_2.svg'
-import ThreeCoin from '../../assets/svg/animationCoins/coin_3.svg'
-import FourCoin from '../../assets/svg/animationCoins/coin_4.svg'
-import SixCoin from '../../assets/svg/animationCoins/coin_6.svg'
 
 import SecondScreenSVG from '../../assets/svg/secondScreen.svg';
 import xSVG from '../../assets/svg/x.svg';
@@ -24,15 +29,9 @@ import discordWhiteSVG from '../../assets/svg/discordWhite.svg';
 import githubWhiteSVG from '../../assets/svg/githubWhite.svg';
 import FaqSVG from '../../assets/svg/FaqArrow.svg';
 import MobileSectionSVG from '../../assets/svg/mobileMainPage.svg';
-import { Loader } from 'components/Loader/Loader';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 import LogoSVG from '../../assets/svg/newLogoMobile.svg';
-import {
-  Transaction,
-  WalletAdapterNetwork,
-} from '@demox-labs/aleo-wallet-adapter-base';
-import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
-import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
+import { LanguageHOC } from 'hoc/langHoc';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -67,6 +66,22 @@ const FirstSection = styled.div(() => ({
   paddingRight: '50px',
 
   '@media (max-width: 768px)': {
+    display: 'none',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    paddingTop: '50px',
+    flexDirection: 'row-reverse',
+    '& img': {
+      maxWidth: '150px',
+    },
+  },
+}));
+
+const FirstSectionMobile = styled.div(() => ({
+  display: 'none',
+
+  '@media (max-width: 768px)': {
+    display: 'flex',
     paddingRight: '20px',
     paddingLeft: '20px',
     paddingTop: '50px',
@@ -81,17 +96,17 @@ const FirstSectionAnimation = styled.div(() => ({
   zIndex: 1,
   minWidth: '527px',
   height: '527px',
-  position: 'relative'
+  position: 'relative',
 }));
 
 const FirstSectionImg = styled.div(() => ({
   zIndex: 1,
   position: 'absolute',
   top: 0,
-	bottom: 0,
-	left: 0,
-	right: 0,
-	margin: 'auto'
+  bottom: 0,
+  left: 0,
+  right: 0,
+  margin: 'auto',
 }));
 
 const FirstSectionText = styled.div(() => ({
@@ -515,7 +530,7 @@ const FAQItem = styled.div(() => ({
   marginBottom: '12px',
   '& img': {
     transform: 'rotate(180deg)',
-    transition: '0.3s all ease-in-out'
+    transition: '0.3s all ease-in-out',
   },
   '&.active': {
     '& div': {
@@ -545,13 +560,15 @@ const FAQItemTitle = styled.div(() => ({
   },
 }));
 
-const FAQItemDescription = styled.div<{isOpened: boolean}>(({isOpened}) => ({
-  transition: '0.3s all ease, 0.2s opacity ease',
-  maxHeight: isOpened ? '100vh' : '0',
-  opacity: isOpened ? '1' : '0',
-  padding: isOpened ? '20px' : '0 20px',
-  color: 'rgba(255, 255, 255, 0.9)',
-}));
+const FAQItemDescription = styled.div<{ isOpened: boolean }>(
+  ({ isOpened }) => ({
+    transition: '0.3s all ease, 0.2s opacity ease',
+    maxHeight: isOpened ? '100vh' : '0',
+    opacity: isOpened ? '1' : '0',
+    padding: isOpened ? '20px' : '0 20px',
+    color: 'rgba(255, 255, 255, 0.9)',
+  }),
+);
 
 const BlockItemContent = styled.div(() => ({
   display: 'flex',
@@ -621,59 +638,116 @@ const FooterItemMobile = styled.div(() => ({
   },
 }));
 
-export default function MainPage() {
+export const MainPagePure = ({ lang }: any) => {
+  console.log(lang);
   const [openAccordeon, setOpenAccordeon] = useState<string>('');
   const [imagePos, setImagePos] = useState({ x: 0, y: 0 });
-  
-  const handleMouseMove = useCallback((event: MouseEvent) => {
-    setImagePos({ x: event.clientX, y: event.clientY })
-  }, [setImagePos]);
+
+  const handleMouseMove = useCallback(
+    (event: MouseEvent) => {
+      setImagePos({ x: event.clientX, y: event.clientY });
+    },
+    [setImagePos],
+  );
 
   useEffect(() => {
     window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [handleMouseMove]); 
+  }, [handleMouseMove]);
 
-  const FirstSectionCoins = styled.div<{top: string; left: string; coefficient: number; denominatorOne: number; denominatorTwo: number}>(({top, left, coefficient, denominatorOne, denominatorTwo}) => ({
+  const FirstSectionCoins = styled.div<{
+    top: string;
+    left: string;
+    coefficient: number;
+    denominatorOne: number;
+    denominatorTwo: number;
+  }>(({ top, left, coefficient, denominatorOne, denominatorTwo }) => ({
     top,
     left,
     zIndex: 0,
     position: 'absolute',
-    transform: `translate3d(${(imagePos.x * coefficient) / denominatorOne}px, ${(imagePos.y * coefficient) / denominatorTwo}px, 0px)`
-  }))
+    transform: `translate3d(${(imagePos.x * coefficient) / denominatorOne}px, ${
+      (imagePos.y * coefficient) / denominatorTwo
+    }px, 0px)`,
+    '@media (max-width: 768px)': {
+      display: 'none',
+    },
+  }));
 
   const coins = useMemo(() => {
     return [
-      {img: OneCoin, top: '90px', left: '50px', coefficient: 0.18, denominatorOne: 20,  denominatorTwo: 20},
-      {img: TwoCoin, top: '73px', left: '322px', coefficient: 0.2, denominatorOne: 12,  denominatorTwo: 10},
-      {img: ThreeCoin, top: '275px', left: '85px', coefficient: 0.18, denominatorOne: 20,  denominatorTwo: 20},
-      {img: FourCoin, top: '115px', left: '385px', coefficient: 0.15, denominatorOne: 25,  denominatorTwo: 10},
-      {img: FourCoin, top: '15px', left: '145px', coefficient: 0.25, denominatorOne: 10,  denominatorTwo: 20},
-      {img: SixCoin, top: '180px', left: '345px', coefficient: 0.22, denominatorOne: 13,  denominatorTwo: 18},
-    ]
-  },[])
+      {
+        img: OneCoin,
+        top: '90px',
+        left: '50px',
+        coefficient: 0.18,
+        denominatorOne: 20,
+        denominatorTwo: 20,
+      },
+      {
+        img: TwoCoin,
+        top: '73px',
+        left: '322px',
+        coefficient: 0.2,
+        denominatorOne: 12,
+        denominatorTwo: 10,
+      },
+      {
+        img: ThreeCoin,
+        top: '275px',
+        left: '85px',
+        coefficient: 0.18,
+        denominatorOne: 20,
+        denominatorTwo: 20,
+      },
+      {
+        img: FourCoin,
+        top: '115px',
+        left: '385px',
+        coefficient: 0.15,
+        denominatorOne: 25,
+        denominatorTwo: 10,
+      },
+      {
+        img: FourCoin,
+        top: '15px',
+        left: '145px',
+        coefficient: 0.25,
+        denominatorOne: 10,
+        denominatorTwo: 20,
+      },
+      {
+        img: SixCoin,
+        top: '180px',
+        left: '345px',
+        coefficient: 0.22,
+        denominatorOne: 13,
+        denominatorTwo: 18,
+      },
+    ];
+  }, []);
 
   const firstAnimation = {
     hidden: {
       x: 300,
-      opacity: 0
+      opacity: 0,
     },
     visible: {
       x: 0,
       opacity: 1,
-      transition: { delay: 0.2}
-    }
-  }
+      transition: { delay: 0.2 },
+    },
+  };
 
-  const onClickFAQItemTitle = (value: string) => () => { //здесь я юзанул каррирование, для того чтобы прокидывать значение аккордиона, код сократился
-    if (openAccordeon === value) {                       //в колбэк это оборачивать нет смысла, можешь погуглить почему
-      setOpenAccordeon('');                              //советую FAQItemЫ засунуть в массив и обернуть мемо (как я сделал это выше с монетами) и отобразить через map,
-    } else {                                             // таким образом ты сократишь код, и еще вопрос: а чего ты стили в другой файл не вынес? так же удобнее (на мой взгляд)
+  const onClickFAQItemTitle = (value: string) => () => {
+    if (openAccordeon === value) {
+      setOpenAccordeon('');
+    } else {
       setOpenAccordeon(value);
     }
-  }
+  };
 
   // function tryParseJSON(input: string): string | object {
   //   try {
@@ -744,325 +818,328 @@ export default function MainPage() {
   // }, []);
   return (
     <DefaultLayout>
-        {/* <Loader /> */}
-        <Container>
+      {/* <Loader /> */}
+      <Container>
         <FirstSection>
-            <FirstSectionAnimation>
-              <FirstSectionImg>
-                <SuspenseImg src={Nosorog} />
-              </FirstSectionImg>
-              {coins.map(elem => {
-                return <FirstSectionCoins top={elem.top} left={elem.left} coefficient={elem.coefficient} denominatorOne={elem.denominatorOne} denominatorTwo={elem.denominatorTwo}>
-                    <SuspenseImg src={elem.img} />
+          <FirstSectionAnimation>
+            <FirstSectionImg>
+              <SuspenseImg src={Nosorog} />
+            </FirstSectionImg>
+            {coins.map((elem) => {
+              return (
+                <FirstSectionCoins
+                  top={elem.top}
+                  left={elem.left}
+                  coefficient={elem.coefficient}
+                  denominatorOne={elem.denominatorOne}
+                  denominatorTwo={elem.denominatorTwo}
+                >
+                  <SuspenseImg src={elem.img} />
                 </FirstSectionCoins>
-              })}
-            </FirstSectionAnimation>
-            <motion.div initial='hidden' whileInView='visible'>
-              <motion.div variants={firstAnimation}>
-                <FirstSectionText>
-                  <FirstSectionTextTitle>
-                    <Aleo>Aleo Games</Aleo> — 1st platform with multiple games on
-                    <Web3> Aleo</Web3>, bets, DAO voting and ENS
-                  </FirstSectionTextTitle>
-                  <p>
-                    On Aleo Games you can choose game you want to play, invite your
-                    friends, make bets, claim tickets and use them to vote for
-                    future games, create your unique ENS. Everything is recorded on
-                    blockchain!
-                  </p>
-                </FirstSectionText>
-              </motion.div>
+              );
+            })}
+          </FirstSectionAnimation>
+          <motion.div initial="hidden" whileInView="visible">
+            <motion.div variants={firstAnimation}>
+              <FirstSectionText>
+                <FirstSectionTextTitle>
+                  <Aleo>{lang.ALEO_IS}</Aleo> {lang.ALEO_IS2}
+                  <Web3> {lang.ALEO_IS3}</Web3>
+                  {lang.ALEO_IS4}
+                  {lang.ALEO_IS4}
+                </FirstSectionTextTitle>
+                <p>{lang.ON_ALEO}</p>
+              </FirstSectionText>
             </motion.div>
-          </FirstSection>
-          <MobileDesc>
-            On Aleo Games you can choose game you want to play, invite your
-            friends, make bets, claim tickets and use them to vote for future
-            games, create your unique ENS. Everything is recorded on blockchain!
-          </MobileDesc>
-          <SecondSection>
-            <SecondSectionText>
-              <Platform>What is</Platform>
-              <br /> Aleo Games
-            </SecondSectionText>
-            <SuspenseImg src={SecondScreenSVG} />
-          </SecondSection>
-          <BlockSection>
-            <MobileSection src={MobileSectionSVG} />
-            <BlockItem>
-              <BlockNumber>1</BlockNumber>
-              <BlockItemContent>
-                <BlockTitle>Install Leo wallet</BlockTitle>
-                <BlockDesc>
-                  to interact with WEB3 applications on Aleo
-                </BlockDesc>
-                <Button>Install</Button>
-              </BlockItemContent>
-            </BlockItem>
-            <BlockItem>
-              <BlockNumber>2</BlockNumber>
-              <BlockItemContent>
-                <BlockTitle>Get tokens</BlockTitle>
-                <BlockDesc>from faucet to pay for gas fees</BlockDesc>
-                <Button>Faucet</Button>
-              </BlockItemContent>
-            </BlockItem>
-            <BlockItem>
-              <BlockNumber>3</BlockNumber>
-              <BlockItemContent>
-                <BlockTitle>Choose a game</BlockTitle>
-                <BlockDesc>you want to play and enjoy!</BlockDesc>
-                <Button>Play</Button>
-              </BlockItemContent>
-            </BlockItem>
-            <BlockItem>
-              <BlockNumber>4</BlockNumber>
-              <BlockItemContent>
-                <BlockTitle>Invite </BlockTitle>
-                <BlockDesc>your friend to play 1 vs 1</BlockDesc>
-                <Button>Invite</Button>
-              </BlockItemContent>
-            </BlockItem>
-            <BlockItem>
-              <BlockNumber>5</BlockNumber>
-              <BlockItemContent>
-                <BlockTitle>Create unique ANS</BlockTitle>
-                <BlockDesc>to be different!</BlockDesc>
-                <Button>Create ENS</Button>
-              </BlockItemContent>
-            </BlockItem>
-            <BlockItem>
-              <BlockNumber>6</BlockNumber>
-              <BlockItemContent>
-                <BlockTitle>Vote </BlockTitle>
-                <BlockDesc>for future games</BlockDesc>
-                <Button>Vote</Button>
-              </BlockItemContent>
-            </BlockItem>
-          </BlockSection>
-          <FAQBlock>
-            <Platform>FAQ</Platform>
-            <FAQItem className={openAccordeon === '1' ? 'active' : ''}>
-              <FAQItemTitle
-                onClick={onClickFAQItemTitle('1')}
-              >
-                What is Aleo Games? <SuspenseImg src={FaqSVG} />
-              </FAQItemTitle>
-               <FAQItemDescription isOpened={openAccordeon === '1'}>
-                Aleo Games is a gaming platform made on Aleo to show blockchain
-                in use. <br /> Here you can create your ENS profile, choose a
-                game to play, invite your friends, place the bets and have a fun
-                time!
-              </FAQItemDescription>
-           
-            </FAQItem>
-            <FAQItem className={openAccordeon === '2' ? 'active' : ''}>
-              <FAQItemTitle
-                onClick={onClickFAQItemTitle('2')}
-              >
-                How to use Aleo Games?
-                <SuspenseImg src={FaqSVG} />
-              </FAQItemTitle>
-              <FAQItemDescription isOpened={openAccordeon === '2'}>
-                1. Install wallet <br />
-                2. Get testnet tokens <br />
-                3. Play and get your game recorded on the blockchain
-              </FAQItemDescription>
-            </FAQItem>
-            <FAQItem className={openAccordeon === '3' ? 'active' : ''}>
-              <FAQItemTitle
-                onClick={onClickFAQItemTitle('3')}
-              >
-                On chain use <SuspenseImg src={FaqSVG} />
-              </FAQItemTitle>
-              <FAQItemDescription isOpened={openAccordeon === '3'}>
-                1. Install wallet <br />
-                2. Get testnet tokens <br />
-                3. Play and get your game recorded on the blockchain
-              </FAQItemDescription>
-            </FAQItem>
-            <FAQItem className={openAccordeon === '4' ? 'active' : ''}>
-              <FAQItemTitle
-                onClick={onClickFAQItemTitle('4')}
-              >
-                Off chain use <SuspenseImg src={FaqSVG} />
-              </FAQItemTitle>
-              <FAQItemDescription isOpened={openAccordeon === '4'}>
-                1. Install wallet <br />
-                2. Connect to the website <br />
-                3. Enjoy games without paying any gas fees and waiting for
-                transactions to be executed
-              </FAQItemDescription>
-            </FAQItem>
-          </FAQBlock>
-          <LiveFeed>
-            <LiveFeedSoon>Live feed coming soon...</LiveFeedSoon>
-            <Tab>
-              Live Feed <BlueCircle />
-            </Tab>
-            <LiveFeedBlock>
-              <LiveFeedTitle>
-                <div className="th t-1">Game</div>
-                <div className="th t-2 mobileHide ">User</div>
-                <div className="th t-3 mobileHide">Time</div>
-                <div className="th t-4 mobileHide">Bid amount</div>
-                <div className="th t-5">Payment</div>
-              </LiveFeedTitle>
-              <LiveFeedItem>
-                <div className="row r-1">
-                  <SuspenseImg src={xSVG} />
-                  Chess
-                </div>
-                <div className="row r-3 mobileHide">
-                  <SuspenseImg src={HiddenSVG} />
-                  Hidden
-                </div>
-                <div className="row r-3 mobileHide">23:26</div>
-                <div className="row r-4 mobileHide">2.59950002</div>
-                <div className="row r-5">2.82695627</div>
-              </LiveFeedItem>
-              <LiveFeedItem>
-                <div className="row r-1">
-                  <SuspenseImg src={xSVG} />
-                  Chess
-                </div>
-                <div className="row r-3 mobileHide">
-                  <SuspenseImg src={HiddenSVG} />
-                  Hidden
-                </div>
-                <div className="row r-3 mobileHide">23:26</div>
-                <div className="row r-4 mobileHide">2.59950002</div>
-                <div className="row r-5">2.82695627</div>
-              </LiveFeedItem>
-              <LiveFeedItem>
-                <div className="row r-1">
-                  <SuspenseImg src={xSVG} />
-                  Chess
-                </div>
-                <div className="row r-3 mobileHide">
-                  <img src={HiddenSVG} />
-                  Hidden
-                </div>
-                <div className="row r-3 mobileHide">23:26</div>
-                <div className="row r-4 mobileHide">2.59950002</div>
-                <div className="row r-5">2.82695627</div>
-              </LiveFeedItem>
-              <LiveFeedItem>
-                <div className="row r-1">
-                  <img src={xSVG} />
-                  Chess
-                </div>
-                <div className="row r-3 mobileHide">
-                  <img src={HiddenSVG} />
-                  Hidden
-                </div>
-                <div className="row r-3 mobileHide">23:26</div>
-                <div className="row r-4 mobileHide">2.59950002</div>
-                <div className="row r-5">2.82695627</div>
-              </LiveFeedItem>
-              <LiveFeedItem>
-                <div className="row r-1">
-                  <img src={xSVG} />
-                  Chess
-                </div>
-                <div className="row r-3 mobileHide">
-                  <img src={HiddenSVG} />
-                  Hidden
-                </div>
-                <div className="row r-3 mobileHide">23:26</div>
-                <div className="row r-4 mobileHide">2.59950002</div>
-                <div className="row r-5">2.82695627</div>
-              </LiveFeedItem>
-              <LiveFeedItem>
-                <div className="row r-1">
-                  <img src={xSVG} />
-                  Chess
-                </div>
-                <div className="row r-3 mobileHide">
-                  <img src={HiddenSVG} />
-                  Hidden
-                </div>
-                <div className="row r-3 mobileHide">23:26</div>
-                <div className="row r-4 mobileHide">2.59950002</div>
-                <div className="row r-5">2.82695627</div>
-              </LiveFeedItem>
-              <LiveFeedItem>
-                <div className="row r-1">
-                  <img src={xSVG} />
-                  Chess
-                </div>
-                <div className="row r-3 mobileHide">
-                  <img src={HiddenSVG} />
-                  Hidden
-                </div>
-                <div className="row r-3 mobileHide">23:26</div>
-                <div className="row r-4 mobileHide">2.59950002</div>
-                <div className="row r-5">2.82695627</div>
-              </LiveFeedItem>
-            </LiveFeedBlock>
-          </LiveFeed>
-        </Container>
-        <Foooter>
-          <FooterContainer>
-            <FooterLogoBlock>
-              <img style={{ width: 177 }} src={logoSVG} />
-              Where Applications
-              <br />
-              Become Private.
+          </motion.div>
+        </FirstSection>
+        <FirstSectionMobile>
+          <SuspenseImg src={FirstScreenSVG} />
+          <FirstSectionText>
+            <FirstSectionTextTitle>
+              <Aleo>{lang.ALEO_IS}</Aleo> {lang.ALEO_IS2}
+              <Web3> {lang.ALEO_IS3}</Web3>
+              {lang.ALEO_IS4}
+            </FirstSectionTextTitle>
+            <p>
+              On Aleo Games you can choose game you want to play, invite your
+              friends, make bets, claim tickets and use them to vote for future
+              games, create your unique ENS. Everything is recorded on
+              blockchain!
+            </p>
+          </FirstSectionText>
+        </FirstSectionMobile>
+        <MobileDesc>{lang.ON_ALEO}</MobileDesc>
+        <SecondSection>
+          <SecondSectionText>
+            <Platform>{lang.WHAT_ALEO}</Platform>
+            <br /> {lang.WHAT_ALEO2}
+          </SecondSectionText>
+          <SuspenseImg src={SecondScreenSVG} />
+        </SecondSection>
+        <BlockSection>
+          <MobileSection src={MobileSectionSVG} />
+          <BlockItem>
+            <BlockNumber>1</BlockNumber>
+            <BlockItemContent>
+              <BlockTitle>{lang.INSTALL_LEO_WALLET}</BlockTitle>
+              <BlockDesc>{lang.INSTALL_LEO_WALLET2}</BlockDesc>
+              <Button>{lang.INSTALL_LEO_WALLET3}</Button>
+            </BlockItemContent>
+          </BlockItem>
+          <BlockItem>
+            <BlockNumber>2</BlockNumber>
+            <BlockItemContent>
+              <BlockTitle>{lang.GET_TOKENS}</BlockTitle>
+              <BlockDesc>{lang.GET_TOKENS2}</BlockDesc>
+              <Button>{lang.GET_TOKENS3}</Button>
+            </BlockItemContent>
+          </BlockItem>
+          <BlockItem>
+            <BlockNumber>3</BlockNumber>
+            <BlockItemContent>
+              <BlockTitle>{lang.CHOOSE_GAME}</BlockTitle>
+              <BlockDesc>{lang.CHOOSE_GAME2}</BlockDesc>
+              <Button>{lang.CHOOSE_GAME3}</Button>
+            </BlockItemContent>
+          </BlockItem>
+          <BlockItem>
+            <BlockNumber>4</BlockNumber>
+            <BlockItemContent>
+              <BlockTitle>{lang.INVITE1} </BlockTitle>
+              <BlockDesc>{lang.INVITE2}</BlockDesc>
+              <Button>{lang.INVITE3}</Button>
+            </BlockItemContent>
+          </BlockItem>
+          <BlockItem>
+            <BlockNumber>5</BlockNumber>
+            <BlockItemContent>
+              <BlockTitle>{lang.CREATE_ENS1}</BlockTitle>
+              <BlockDesc>{lang.CREATE_ENS2}</BlockDesc>
+              <Button>{lang.CREATE_ENS3}</Button>
+            </BlockItemContent>
+          </BlockItem>
+          <BlockItem>
+            <BlockNumber>6</BlockNumber>
+            <BlockItemContent>
+              <BlockTitle>{lang.VOTE1} </BlockTitle>
+              <BlockDesc>{lang.VOTE2} </BlockDesc>
+              <Button>{lang.VOTE3} </Button>
+            </BlockItemContent>
+          </BlockItem>
+        </BlockSection>
+        <FAQBlock>
+          <Platform>{lang.FAQ}</Platform>
+          <FAQItem className={openAccordeon === '1' ? 'active' : ''}>
+            <FAQItemTitle onClick={onClickFAQItemTitle('1')}>
+              {lang.WHAT_ALEO10} <SuspenseImg src={FaqSVG} />
+            </FAQItemTitle>
+            <FAQItemDescription isOpened={openAccordeon === '1'}>
+              {lang.WHAT_ALEO1}
+            </FAQItemDescription>
+          </FAQItem>
+          <FAQItem className={openAccordeon === '2' ? 'active' : ''}>
+            <FAQItemTitle onClick={onClickFAQItemTitle('2')}>
+              {lang.HOW_USE}
+              <SuspenseImg src={FaqSVG} />
+            </FAQItemTitle>
+            <FAQItemDescription isOpened={openAccordeon === '2'}>
+              {lang.WHAT_DO_1} <br />
+              {lang.WHAT_DO_2} <br />
+              {lang.WHAT_DO_3}
+            </FAQItemDescription>
+          </FAQItem>
+          <FAQItem className={openAccordeon === '3' ? 'active' : ''}>
+            <FAQItemTitle onClick={onClickFAQItemTitle('3')}>
+              {lang.ONCHAIN} <SuspenseImg src={FaqSVG} />
+            </FAQItemTitle>
+            <FAQItemDescription isOpened={openAccordeon === '3'}>
+              {lang.ONCHAIN2} <br />
+            </FAQItemDescription>
+          </FAQItem>
+          <FAQItem className={openAccordeon === '4' ? 'active' : ''}>
+            <FAQItemTitle onClick={onClickFAQItemTitle('4')}>
+              {lang.OFFCHAIN} <SuspenseImg src={FaqSVG} />
+            </FAQItemTitle>
+            <FAQItemDescription isOpened={openAccordeon === '4'}>
+              {lang.OFFCHAIN2} <br />
+            </FAQItemDescription>
+          </FAQItem>
+        </FAQBlock>
+        <LiveFeed>
+          <LiveFeedSoon>Live feed coming soon...</LiveFeedSoon>
+          <Tab>
+            {lang.LIVE_FEED}
+            {/* <BlueCircle /> */}
+          </Tab>
+          <LiveFeedBlock>
+            <LiveFeedTitle>
+              <div className="th t-1">{lang.GAME} </div>
+              <div className="th t-2 mobileHide "> {lang.USER}</div>
+              <div className="th t-3 mobileHide"> {lang.TIME}</div>
+              <div className="th t-4 mobileHide"> {lang.BID_A}</div>
+              <div className="th t-5"> {lang.PAY}</div>
+            </LiveFeedTitle>
+            <LiveFeedItem>
+              <div className="row r-1">
+                <SuspenseImg src={xSVG} />
+                {lang.GAME2}
+              </div>
+              <div className="row r-3 mobileHide">
+                <SuspenseImg src={HiddenSVG} />
+                Hidden
+              </div>
+              <div className="row r-3 mobileHide">23:26</div>
+              <div className="row r-4 mobileHide">2.59950002</div>
+              <div className="row r-5">2.82695627</div>
+            </LiveFeedItem>
+            <LiveFeedItem>
+              <div className="row r-1">
+                <SuspenseImg src={xSVG} />
+                Chess
+              </div>
+              <div className="row r-3 mobileHide">
+                <SuspenseImg src={HiddenSVG} />
+                Hidden
+              </div>
+              <div className="row r-3 mobileHide">23:26</div>
+              <div className="row r-4 mobileHide">2.59950002</div>
+              <div className="row r-5">2.82695627</div>
+            </LiveFeedItem>
+            <LiveFeedItem>
+              <div className="row r-1">
+                <SuspenseImg src={xSVG} />
+                Chess
+              </div>
+              <div className="row r-3 mobileHide">
+                <img src={HiddenSVG} />
+                Hidden
+              </div>
+              <div className="row r-3 mobileHide">23:26</div>
+              <div className="row r-4 mobileHide">2.59950002</div>
+              <div className="row r-5">2.82695627</div>
+            </LiveFeedItem>
+            <LiveFeedItem>
+              <div className="row r-1">
+                <img src={xSVG} />
+                Chess
+              </div>
+              <div className="row r-3 mobileHide">
+                <img src={HiddenSVG} />
+                Hidden
+              </div>
+              <div className="row r-3 mobileHide">23:26</div>
+              <div className="row r-4 mobileHide">2.59950002</div>
+              <div className="row r-5">2.82695627</div>
+            </LiveFeedItem>
+            <LiveFeedItem>
+              <div className="row r-1">
+                <img src={xSVG} />
+                Chess
+              </div>
+              <div className="row r-3 mobileHide">
+                <img src={HiddenSVG} />
+                Hidden
+              </div>
+              <div className="row r-3 mobileHide">23:26</div>
+              <div className="row r-4 mobileHide">2.59950002</div>
+              <div className="row r-5">2.82695627</div>
+            </LiveFeedItem>
+            <LiveFeedItem>
+              <div className="row r-1">
+                <img src={xSVG} />
+                Chess
+              </div>
+              <div className="row r-3 mobileHide">
+                <img src={HiddenSVG} />
+                Hidden
+              </div>
+              <div className="row r-3 mobileHide">23:26</div>
+              <div className="row r-4 mobileHide">2.59950002</div>
+              <div className="row r-5">2.82695627</div>
+            </LiveFeedItem>
+            <LiveFeedItem>
+              <div className="row r-1">
+                <img src={xSVG} />
+                Chess
+              </div>
+              <div className="row r-3 mobileHide">
+                <img src={HiddenSVG} />
+                Hidden
+              </div>
+              <div className="row r-3 mobileHide">23:26</div>
+              <div className="row r-4 mobileHide">2.59950002</div>
+              <div className="row r-5">2.82695627</div>
+            </LiveFeedItem>
+          </LiveFeedBlock>
+        </LiveFeed>
+      </Container>
+      <Foooter>
+        <FooterContainer>
+          <FooterLogoBlock>
+            <img style={{ width: 177 }} src={logoSVG} />
+            Where Applications
+            <br />
+            Become Private.
+            <LinksFooter>
+              <img src={twitterWhiteSVG} />
+              <img src={githubWhiteSVG} />
+              <img src={discordWhiteSVG} />
+            </LinksFooter>
+            <BottomFooterText>
+              © Aleo Systems Inc • Your Privacy is{' '}
+              <span style={{ color: '#fff' }}>Protected</span>
+            </BottomFooterText>
+          </FooterLogoBlock>
+          <FooterRightLinks>
+            <FooterRightLinksBlock>
+              <span style={{ color: '#fff' }}>Aleo.org</span>
+              <span style={{ color: '#fff' }}>Home</span>
+              <span>Our Blog</span>
+              <span>Opportunities</span>
+            </FooterRightLinksBlock>
+            <FooterRightLinksBlock>
+              <span style={{ color: '#fff' }}>For Developers</span>
+              <span>Aleo Studio</span>
+              <span>Aleo Explorer</span>
+              <span>Aleo Package Manager</span>
+              <span> Aleo Developer Docs</span>
+            </FooterRightLinksBlock>
+          </FooterRightLinks>
+        </FooterContainer>
+      </Foooter>
+      <FooterMobile>
+        <FooterContainerMobile>
+          <FooterItemMobile>
+            <span>
               <LinksFooter>
                 <img src={twitterWhiteSVG} />
                 <img src={githubWhiteSVG} />
                 <img src={discordWhiteSVG} />
               </LinksFooter>
-              <BottomFooterText>
-                © Aleo Systems Inc • Your Privacy is{' '}
-                <span style={{ color: '#fff' }}>Protected</span>
-              </BottomFooterText>
-            </FooterLogoBlock>
-            <FooterRightLinks>
-              <FooterRightLinksBlock>
-                <span style={{ color: '#fff' }}>Aleo.org</span>
-                <span style={{ color: '#fff' }}>Home</span>
-                <span>Our Blog</span>
-                <span>Opportunities</span>
-              </FooterRightLinksBlock>
-              <FooterRightLinksBlock>
-                <span style={{ color: '#fff' }}>For Developers</span>
-                <span>Aleo Studio</span>
-                <span>Aleo Explorer</span>
-                <span>Aleo Package Manager</span>
-                <span> Aleo Developer Docs</span>
-              </FooterRightLinksBlock>
-            </FooterRightLinks>
-          </FooterContainer>
-        </Foooter>
-        <FooterMobile>
-          <FooterContainerMobile>
-            <FooterItemMobile>
-              <span>
-                <LinksFooter>
-                  <img src={twitterWhiteSVG} />
-                  <img src={githubWhiteSVG} />
-                  <img src={discordWhiteSVG} />
-                </LinksFooter>
-              </span>
-            </FooterItemMobile>
-            <FooterItemMobile>
-              <span>Aleo.org</span>
-              <span>Home</span>
-              <span>Our Blog</span>
-            </FooterItemMobile>
-            <FooterItemMobile>
-              <span>For Developers</span>
-              <span>Aleo Studio</span>
-              <span>Aleo Explorer</span>
-              <span>Aleo Package Manager</span>
-              <span>Aleo Developer Docs</span>
-            </FooterItemMobile>
-            <FooterItemMobile>
-              <FooterLogo src={LogoSVG} />
-            </FooterItemMobile>
-          </FooterContainerMobile>
-        </FooterMobile>
-   </DefaultLayout>
+            </span>
+          </FooterItemMobile>
+          <FooterItemMobile>
+            <span>Aleo.org</span>
+            <span>Home</span>
+            <span>Our Blog</span>
+          </FooterItemMobile>
+          <FooterItemMobile>
+            <span>For Developers</span>
+            <span>Aleo Studio</span>
+            <span>Aleo Explorer</span>
+            <span>Aleo Package Manager</span>
+            <span>Aleo Developer Docs</span>
+          </FooterItemMobile>
+          <FooterItemMobile>
+            <FooterLogo src={LogoSVG} />
+          </FooterItemMobile>
+        </FooterContainerMobile>
+      </FooterMobile>
+    </DefaultLayout>
   );
-}
+};
+
+const MainPageCached = React.memo(MainPagePure);
+
+export const MainPage = LanguageHOC(MainPageCached, 'main');
