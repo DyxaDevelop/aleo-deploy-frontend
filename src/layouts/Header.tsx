@@ -178,7 +178,7 @@ const LangItems = styled.div(() => ({
   paddingLeft: '15px',
   paddingBottom: '5px',
   borderRadius: '15px',
-  marginTop: '-4px',
+  marginTop: '-8px',
   textOverflow: 'ellipsis',
   '& span': {
     '&:hover': {
@@ -188,6 +188,7 @@ const LangItems = styled.div(() => ({
   '@media (max-width: 768px)': {
     fontSize: '12px',
     paddingLeft: '4px',
+    marginTop: '-4px',
   },
 }));
 
@@ -311,15 +312,15 @@ export const Header = () => {
               setShowMenu(true);
             }}
           >
-            <SuspenseImg src={WorldSVG} />
+            <img src={WorldSVG} />
             {/*@ts-ignore*/}
             <spa style={{ display: 'flex' }}>{langs[lang]}</spa>
-            <SuspenseImg src={TopArrowSVG} />
+            <img src={TopArrowSVG} />
           </LangBlock>
         </Show>
         <Show visible={showMenu}>
           <LangBlockMenu>
-            <SuspenseImg src={WorldSVG} />
+            <img src={WorldSVG} />
             <LangItems>
               <span
                 onClick={() => {
@@ -378,7 +379,7 @@ export const Header = () => {
                 Беларускі
               </span>
             </LangItems>
-            <SuspenseImg src={BottomArrowSVG} />
+            <img src={BottomArrowSVG} />
           </LangBlockMenu>
         </Show>
         <DesktopMessage>Desktop Wallet Only</DesktopMessage>
@@ -394,15 +395,15 @@ export const Header = () => {
               setShowMenu(true);
             }}
           >
-            <SuspenseImg src={WorldSVG} />
+            <img src={WorldSVG} />
             {/*@ts-ignore*/}
             <spa style={{ display: 'flex' }}>{langs[lang]}</spa>
-            <SuspenseImg src={TopArrowSVG} />
+            <img src={TopArrowSVG} />
           </LangBlock>
         </Show>
         <Show visible={showMenu}>
           <LangBlockMenu>
-            <SuspenseImg src={WorldSVG} />
+            <img src={WorldSVG} />
             <LangItems>
               <span
                 onClick={() => {
@@ -461,7 +462,7 @@ export const Header = () => {
                 Беларускі
               </span>
             </LangItems>
-            <SuspenseImg src={BottomArrowSVG} />
+            <img src={BottomArrowSVG} />
           </LangBlockMenu>
         </Show>
 
