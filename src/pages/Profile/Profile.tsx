@@ -2,7 +2,6 @@ import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import styled from '@emotion/styled';
 import React, { Suspense, useLayoutEffect, useRef, useState } from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
-import { Sidebar } from '../../layouts/Sidebar';
 import profileAvatarSVG from '../../assets/svg/profileAvatar.svg';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
 import xSVG from '../../assets/svg/x.svg';
@@ -11,6 +10,7 @@ import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 import { Modal } from 'components/Modal/Modal';
 import walletImage from '../../assets/svg/walletImage.svg';
 import { Footer } from 'layouts/Footer';
+import { LanguageHOC } from 'hoc/langHoc';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -280,48 +280,48 @@ const LiveFeedItem = styled.div(() => ({
   },
 }));
 
-export const Profile = () => {
+export const ProfilePure = ({ lang }: any) => {
   return (
     <>
       <DefaultLayout>
         <Container>
-          <TitleBlock>Your personal profile</TitleBlock>
+          <TitleBlock>{lang.UR_PRFL}</TitleBlock>
           <UseDesktop>Use Desktop</UseDesktop>
           <ContentBlock>
             <LeftBlock>
               <ENSBlock>
                 <div>
-                  <span>Your ENS/address</span>
-                  <ENS to={'/ens'}>Create your ENS</ENS>
+                  <span>{lang.UR_ENS}</span>
+                  <ENS to={'/ens'}>{lang.CR_ENS}</ENS>
                 </div>
                 <ContentDynamic>
                   <img src={profileAvatarSVG} />
                 </ContentDynamic>
               </ENSBlock>
               <ClaimVotes>
-                <span>Claim Votes</span>
+                <span>{lang.CLM_VOTES}</span>
                 <ContentDynamic>
-                  <Button>Claim</Button>
+                  <Button>{lang.CLM}</Button>
                 </ContentDynamic>
               </ClaimVotes>
               <AvailableVotes>
-                <span>Available votes</span>
+                <span>{lang.AVLB_VOTES}</span>
                 <ContentDynamic>???</ContentDynamic>
               </AvailableVotes>
               <ClaimVotes>
-                <span>Token Minting</span>
+                <span>{lang.TOK_MINT}</span>
                 <ContentDynamic>
-                  <Button>Mint</Button>
+                  <Button>{lang.MINT}</Button>
                 </ContentDynamic>
               </ClaimVotes>
               <Balance>
-                <span>Your balance</span>
+                <span>{lang.UR_BALANCE}</span>
                 <ContentDynamic>???$</ContentDynamic>
               </Balance>
             </LeftBlock>
             <RightBlock>
               <TotalWinnings>
-                <span>Total winnings</span>
+                <span>{lang.TTL_WIN}</span>
                 <span style={{ color: '#02C4F7' }}>???$</span>
               </TotalWinnings>
               <LastGames>
@@ -332,11 +332,11 @@ export const Profile = () => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <SuspenseImg src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <SuspenseImg src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
@@ -483,3 +483,5 @@ export const Profile = () => {
     </>
   );
 };
+
+export const Profile = LanguageHOC(ProfilePure, 'profile');

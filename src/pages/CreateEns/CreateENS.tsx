@@ -10,6 +10,7 @@ import { IconButton } from '@mui/material';
 import { Show } from 'components/Show/Show';
 import { Footer } from 'layouts/Footer';
 import Typewriter from 'components/TypeWriter/TypeWriter';
+import { LanguageHOC } from 'hoc/langHoc';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -206,7 +207,7 @@ const ImgStyle = styled.img(() => ({
   top: '16px',
 }));
 
-export const CreateENS = () => {
+export const CreateENSPure = ({ lang }: any) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [monthValue, setMonthValue] = useState<number>(1);
 
@@ -225,7 +226,7 @@ export const CreateENS = () => {
     <>
       <DefaultLayout>
         <Container>
-          <Typewriter text='Create your unique ANS!' delay={70}></Typewriter>
+          <Typewriter text={lang.CR_ANS} delay={70}></Typewriter>
           <TitleBlockMobile>Create on PC!</TitleBlockMobile>
           <InputBlock>
             <InputSearch
@@ -246,13 +247,13 @@ export const CreateENS = () => {
                 {inputValue}.aleo
               </Name>
               <Length>
-                Lenght: <b>{inputValue.length} characters</b>
+                {lang.LENG}: <b>{inputValue.length} characters</b>
               </Length>
               <Rarity>
-                Rarity: <b>Rare</b>
+                {lang.RARE}: <b>Rare</b>
               </Rarity>
               <Month>
-                Month:
+                {lang.MONTH}:
                 <IconButton onClick={() => handleMonthValue(-1)} size="small">
                   <InputBTN>-</InputBTN>
                 </IconButton>
@@ -271,8 +272,10 @@ export const CreateENS = () => {
                   <InputBTN>+</InputBTN>
                 </IconButton>
               </Month>
-              <Price>Price: {(0.12 * monthValue).toFixed(2)} ALEO</Price>
-              <Button>Buy Now</Button>
+              <Price>
+                {lang.PRICE}: {(0.12 * monthValue).toFixed(2)} ALEO
+              </Price>
+              <Button>{lang.BUY_N}</Button>
             </EnsBlock>
           </Show>
         </Container>
@@ -281,3 +284,5 @@ export const CreateENS = () => {
     </>
   );
 };
+
+export const CreateENS = LanguageHOC(CreateENSPure, 'ans');

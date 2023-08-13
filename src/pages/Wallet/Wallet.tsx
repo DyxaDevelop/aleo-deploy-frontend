@@ -8,6 +8,7 @@ import walletImage from '../../assets/svg/walletImage.svg';
 import logoForENS from '../../assets/svg/logoForENS.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 import { Footer } from 'layouts/Footer';
+import { LanguageHOC } from 'hoc/langHoc';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -156,14 +157,14 @@ const AssetItemInactive = styled(AssetItem)(() => ({
   fontWeight: 700,
 }));
 
-export const Wallet = () => (
+export const WalletPure = ({ lang }: any) => (
   <>
     <DefaultLayout>
       <Container>
         <BalanceBlock>
           <BalanceBlockInside>
             <div>
-              <div>Your Total Balance</div>
+              <div>{lang.YOUR_BAL}</div>
               <BalanceCount>$ 11,000.22</BalanceCount>
               <BalanceCountMobile>Use Desktop Wallet</BalanceCountMobile>
             </div>
@@ -203,3 +204,5 @@ export const Wallet = () => (
     </DefaultLayout>
   </>
 );
+
+export const Wallet = LanguageHOC(WalletPure, 'wallet');

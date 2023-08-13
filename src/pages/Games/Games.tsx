@@ -8,6 +8,7 @@ import chessGameSVG from '../../assets/svg/chessGame.svg';
 import soonGamesSVG from '../../assets/svg/soonGames.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 import { Footer } from 'layouts/Footer';
+import { LanguageHOC } from 'hoc/langHoc';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -89,15 +90,15 @@ const PlayButtonMobile = styled.div(() => ({
   },
 }));
 
-export const Games = () => (
+export const GamesPure = ({ lang }: any) => (
   <>
     <DefaultLayout>
       <Container>
         <GameBlocksContainer>
           <GameBlock>
             <SuspenseImg style={{ position: 'absolute' }} src={chessGameSVG} />
-            <PlayButton to={'/games/chess'}>Play</PlayButton>
-            <PlayButtonMobile>Play</PlayButtonMobile>
+            <PlayButton to={'/games/chess'}>{lang.PLAY}</PlayButton>
+            <PlayButtonMobile>{lang.PLAY}</PlayButtonMobile>
           </GameBlock>
           <GameBlockSoon>
             {' '}
@@ -113,3 +114,5 @@ export const Games = () => (
     </DefaultLayout>
   </>
 );
+
+export const Games = LanguageHOC(GamesPure, 'games');

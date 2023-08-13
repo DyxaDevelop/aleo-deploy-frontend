@@ -23,13 +23,13 @@ const Main: React.FC = () => {
   const isGameStarted = useAppSelector(selectIsGameStarted);
   const dispatch = useAppDispatch();
 
-  const WS_URL = 'ws://168.119.178.26:8000/ws/chess/saf142124sfaasf/';
+  // const WS_URL = 'ws://168.119.178.26:8000/ws/chess/saf142124sfaasf/';
 
-  useWebSocket(WS_URL, {
-    onOpen: () => {
-      console.log('WebSocket connection established.');
-    },
-  });
+  // useWebSocket(WS_URL, {
+  //   onOpen: () => {
+  //     console.log('WebSocket connection established.');
+  //   },
+  // });
 
   const radioChanged = (id: string) => {
     dispatch(setColor(id as Colors));

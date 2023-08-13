@@ -9,6 +9,7 @@ import soonGamesSVG from '../../assets/svg/soonGames.svg';
 import leftArrow from '../../assets/svg/leftArrow.svg';
 import xIcon from '../../assets/svg/xIcon.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
+import { LanguageHOC } from 'hoc/langHoc';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -90,7 +91,7 @@ const Button = styled(NavLink)(() => ({
   textDecoration: 'none',
 }));
 
-export const Chess = () => (
+export const ChessPure = ({ lang }: any) => (
   <>
     <DefaultLayout>
       <Container>
@@ -106,28 +107,20 @@ export const Chess = () => (
           <SuspenseImg src={chessBoardSVG} />
           <ContentBlock>
             <div style={{ margin: 'auto' }}>
-              <Title>Aleo chess </Title>
+              <Title>{lang.ALEO_C}</Title>
               <Description>
-                We are excited to announce the launch of our first beta test
-                game on the Aleo platform! To mark this important milestone, we
-                have a special offer for our first 8,000 players who reach level
-                10: they will share a pool of 25кк tokens. Join our game and
-                become one of the first participants in the decentralized gaming
-                revolution on the{' '}
+                {lang.ALEO_C2}
                 <span style={{ color: '#fff' }}>Aleo platform!</span>
               </Description>
               <ButtonGroup>
-                <Button to={'/games/chess/board'}>Play on Aleo</Button>
+                <Button to={'/games/chess/board'}>{lang.CHESS_P}</Button>
               </ButtonGroup>
             </div>
           </ContentBlock>
-          {/* <GameBlock>
-            <PlayButton to={'/games/chess'}>PLAY</PlayButton>
-          </GameBlock>
-          <GameBlockSoon></GameBlockSoon>
-          <GameBlockSoon></GameBlockSoon> */}
         </GameBlocksContainer>
       </Container>
     </DefaultLayout>
   </>
 );
+
+export const Chess = LanguageHOC(ChessPure, 'ingames');

@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
 import { Footer } from 'layouts/Footer';
 import { useEffect, useState } from 'react';
+import { LanguageHOC } from 'hoc/langHoc';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -120,12 +121,12 @@ const VoteBlock = styled.div(() => ({
   },
 }));
 
-const VoteProgress = styled.div<{value: number}>(({value}) => ({
+const VoteProgress = styled.div<{ value: number }>(({ value }) => ({
   width: '240px',
   height: '6px',
-  background: `linear-gradient(90deg, #0C6BFA 0%, #1663D6 ${
-    value
-  }%, rgba(34, 89, 171, 0) ${value + 20}%)`,
+  background: `linear-gradient(90deg, #0C6BFA 0%, #1663D6 ${value}%, rgba(34, 89, 171, 0) ${
+    value + 20
+  }%)`,
   borderRadius: '6px',
   marginBottom: '10px',
   '@media (max-width: 768px)': {
@@ -195,9 +196,8 @@ const VotingBlock = styled.div(() => ({
   marginBottom: '10px',
 }));
 
-export const Voting = () => { //VoteBlockИ также советую в массив запихнуть
-
-  const [paramAnimation, setParamAnimation] = useState(0)
+export const VotingPure = ({ lang }: any) => {
+  const [paramAnimation, setParamAnimation] = useState(0);
 
   const VoteProgressAnimation = styled.div(() => ({
     height: '6px',
@@ -206,91 +206,91 @@ export const Voting = () => { //VoteBlockИ также советую в мас�
     position: 'absolute',
     top: 0,
     right: 0,
-    left: `${paramAnimation}px`
+    left: `${paramAnimation}px`,
   }));
 
   useEffect(() => {
     if (paramAnimation < 240) {
       const timeout = setTimeout(() => {
-        setParamAnimation(prevIndex => prevIndex + 3);
+        setParamAnimation((prevIndex) => prevIndex + 3);
       }, 10);
-  
+
       return () => clearTimeout(timeout);
     }
-  }, [paramAnimation])
+  }, [paramAnimation]);
 
-  return <>
-    <DefaultLayout>
-      <Container>
-        <TitleBlock>DAO Proposals</TitleBlock>
-        <VoteItem>
-          <VoteLeft>
-            <Title>Vote for Chess</Title>
-            <Description>
-              Chess is a board game for two players, called White and Black,
-              each controlling an army of chess pieces in their color, with the
-              objective to chekmate the opponents king.
-            </Description>
-          </VoteLeft>
-          <VoteRight>
-            <Result>Result</Result>
-            <VoteRightInfo>
-              <div>
-                <VoteBlock>
-                  <div>
-                    Yes
-                    <span style={{ marginRight: '20px' }}>60%</span>
-                  </div>
-                  <VotingBlock>
-                    <VoteProgressContainer>
-                    <VoteProgressAnimation />
-                      <VoteProgress value={60} />
-                    </VoteProgressContainer>{' '}
-                    <VoteCheckBox />
-                  </VotingBlock>
-                </VoteBlock>
-                <VoteBlock>
-                  <div>
-                    No
-                    <span style={{ marginRight: '20px' }}>30%</span>
-                  </div>
-                  <VotingBlock>
-                    <VoteProgressContainer>
-                    <VoteProgressAnimation />
-                      <VoteProgress value={30} />
-                    </VoteProgressContainer>{' '}
-                    <VoteCheckBox />
-                  </VotingBlock>
-                </VoteBlock>
-                <VoteBlock>
-                  <div>
-                    Abstain
-                    <span style={{ marginRight: '20px' }}>10%</span>
-                  </div>
-                  <VotingBlock>
-                    <VoteProgressContainer>
-                    <VoteProgressAnimation />
-                      <VoteProgress value={10} />
-                    </VoteProgressContainer>{' '}
-                    <VoteCheckBox />
-                  </VotingBlock>
-                </VoteBlock>
-              </div>
+  return (
+    <>
+      <DefaultLayout>
+        <Container>
+          <TitleBlock>{lang.DAO}</TitleBlock>
+          <VoteItem>
+            <VoteLeft>
+              <Title>{lang.VOTE}</Title>
+              <Description>{lang.VOTE_TEXT}</Description>
+            </VoteLeft>
+            <VoteRight>
+              <Result>{lang.RESULT}</Result>
+              <VoteRightInfo>
+                <div>
+                  <VoteBlock>
+                    <div>
+                      {lang.YES}
+                      <span style={{ marginRight: '20px' }}>60%</span>
+                    </div>
+                    <VotingBlock>
+                      <VoteProgressContainer>
+                        <VoteProgressAnimation />
+                        <VoteProgress value={60} />
+                      </VoteProgressContainer>{' '}
+                      <VoteCheckBox />
+                    </VotingBlock>
+                  </VoteBlock>
+                  <VoteBlock>
+                    <div>
+                      {lang.NO}
+                      <span style={{ marginRight: '20px' }}>30%</span>
+                    </div>
+                    <VotingBlock>
+                      <VoteProgressContainer>
+                        <VoteProgressAnimation />
+                        <VoteProgress value={30} />
+                      </VoteProgressContainer>{' '}
+                      <VoteCheckBox />
+                    </VotingBlock>
+                  </VoteBlock>
+                  <VoteBlock>
+                    <div>
+                      {lang.ABSTAIN}
+                      <span style={{ marginRight: '20px' }}>10%</span>
+                    </div>
+                    <VotingBlock>
+                      <VoteProgressContainer>
+                        <VoteProgressAnimation />
+                        <VoteProgress value={10} />
+                      </VoteProgressContainer>{' '}
+                      <VoteCheckBox />
+                    </VotingBlock>
+                  </VoteBlock>
+                </div>
 
-              <VoteInfo>
-                <VoteRightInfoTitle>
-                  Votes used: <span style={{ color: '#01C2F9' }}>0</span>
-                </VoteRightInfoTitle>
-                <span style={{ marginBottom: '6px' }}>
-                  Start date: 11.06.2023
-                </span>
-                <span>End date: 28.06.2023</span>
-              </VoteInfo>
-            </VoteRightInfo>
-          </VoteRight>
-        </VoteItem>
-      </Container>
-      <Footer />
-    </DefaultLayout>
-  </>
-}
+                <VoteInfo>
+                  <VoteRightInfoTitle>
+                    {lang.VOTES_US} <span style={{ color: '#01C2F9' }}>0</span>
+                  </VoteRightInfoTitle>
+                  <span style={{ marginBottom: '6px' }}>
+                    {lang.START_D} 11.06.2023
+                  </span>
+                  <span>{lang.END_D} 28.06.2023</span>
+                </VoteInfo>
+              </VoteRightInfo>
+            </VoteRight>
+          </VoteItem>
+        </Container>
+        <Footer />
+      </DefaultLayout>
+    </>
+  );
+};
+
+export const Voting = LanguageHOC(VotingPure, 'voting');

@@ -43,6 +43,7 @@ const Board: React.FC = () => {
 
   const cellsFigure: { [key: string]: FigureData | null } = {};
 
+  // Function to check if a cell is available for move
   const isAvailableCellForMove = (x: number, y: number): boolean => {
     if (choseFigurePos && choseFigurePos.availableCells[`${x}-${y}`]) {
       return true;
@@ -50,10 +51,12 @@ const Board: React.FC = () => {
     return false;
   };
 
+  // Function to check if a cell has a figure
   const isCellHavingFigure = (x: number, y: number): boolean => {
     return cellsFigure[`${x}-${y}`] ? true : false;
   };
 
+  // Function to move a figure to a new position
   const moveOn = (figure: FigureData, x: number, y: number) => {
     cellsFigure[`${figure.x}-${figure.y}`] = null;
     cellsFigure[`${x}-${y}`] = figure;
@@ -61,6 +64,7 @@ const Board: React.FC = () => {
     setChoseFigurePos(null);
   };
 
+  // Function to handle cell click event
   const cellClicked = (x: number, y: number): void => {
     if (!choseFigurePos) return;
     if (!choseFigurePos.availableCells[`${x}-${y}`]) return;
@@ -69,6 +73,7 @@ const Board: React.FC = () => {
     nextAIMoveDelayed();
   };
 
+  // Function to initialize the board cells
   const initCells = (): JSX.Element[] => {
     const cells: JSX.Element[] = [];
     for (let y = 8; y >= 1; y--) {
@@ -107,21 +112,25 @@ const Board: React.FC = () => {
     return cells;
   };
 
+  // Function to check if a figure is eatable by the selected figure
   const isEatableFigure = (figure: FigureData): boolean => {
     if (!choseFigurePos) return false;
     return choseFigurePos.availableCells[`${figure.x}-${figure.y}`];
   };
 
+  // Function to check if a figure is currently selected
   const isSelectedFigure = (figure: FigureData): boolean => {
     if (!choseFigurePos) return false;
     return choseFigurePos.figure.id === figure.id;
   };
 
+  // Function to check if a cell is currently selected
   const isSelectedCell = (x: number, y: number): boolean => {
     if (!choseFigurePos) return false;
     return choseFigurePos.figure.x === x && choseFigurePos.figure.y === y;
   };
 
+  // Function to initialize the figures on the game board
   const initFigures = (): JSX.Element[] => {
     const figuresJSX: JSX.Element[] = [];
 
@@ -142,6 +151,7 @@ const Board: React.FC = () => {
     return figuresJSX;
   };
 
+  // Function to resize the game board
   const resizeBoard = () => {
     const paddingsWidth = 48 + 12;
     const paddingHeight = 52 + 12;
@@ -163,7 +173,9 @@ const Board: React.FC = () => {
     }
   };
 
+  // Function to handle the click event on a figure
   const figureClicked = (figure: FigureData) => {
+    // Check if there is a selected figure, and if the clicked cell is a valid move and not occupied by an ally
     if (
       choseFigurePos &&
       choseFigurePos.availableCells[`${figure.x}-${figure.y}`] &&
@@ -174,6 +186,7 @@ const Board: React.FC = () => {
       return;
     }
 
+    // Check if the clicked figure is already selected, if so, deselect it
     if (
       choseFigurePos &&
       choseFigurePos.figure.name === figure.name &&
@@ -185,21 +198,24 @@ const Board: React.FC = () => {
       return;
     }
 
+    // Check if the clicked figure belongs to the ally side, and if it's not the king in check
     if (sides.ally !== figure.color) return;
-
     if (isKingInCheck && figure.name !== Figures.KING) return;
 
+    // Select the clicked figure and update the available cells for it
     setChoseFigurePos({
       figure,
       availableCells: getAvailableCells(figure),
     });
   };
 
+  // Function to end the game and declare the winner
   const endGame = (winner: Colors) => {
     dispatch(setGameWon(winner));
     dispatch(setGameStarted(false));
   };
 
+  // Function to handle eating a figure
   const eatFigure = (figure: FigureData): void => {
     cellsFigure[`${figure.x}-${figure.y}`] = null;
     if (figure.name === Figures.KING) {
@@ -208,6 +224,7 @@ const Board: React.FC = () => {
     dispatch(removeFigure(figure));
   };
 
+  // Function to handle moving or eating a figure to a specific cell
   const moveOrEat = (figure: FigureData, x: number, y: number): void => {
     const figureOnCell = cellsFigure[`${x}-${y}`];
     if (figureOnCell && figureOnCell.color !== figure.color)
@@ -215,24 +232,28 @@ const Board: React.FC = () => {
     moveOn(figure, x, y);
   };
 
+  // Function to get the available cells for a figure
   const getAvailableCells = (
     figure: FigureData,
     isForDangerousCells: boolean = false,
   ): { [key: string]: boolean } => {
     let way: { y: number; x: number }[] = [];
 
+    // Helper function to check if the movement should be stopped at a certain cell
     const toStopWay = (x: number, y: number): boolean => {
       if (cellsFigure[`${x}-${y}`] === undefined) return true;
       if (cellsFigure[`${x}-${y}`]) return true;
       return false;
     };
 
+    // Helper function to check if a cell is valid for movement and add it to the way
     const checkCellForMove = (x: number, y: number): boolean => {
       if (toStopWay(x, y)) return false;
       way.push({ x, y });
       return true;
     };
 
+    // Function to move vertically from the current position to the specified y coordinate
     const verticalTop = (toY: number, fromY: number = figure.y) => {
       for (let i = fromY + 1; i <= toY; i++) {
         if (toStopWay(figure.x, i)) return;
@@ -240,6 +261,7 @@ const Board: React.FC = () => {
       }
     };
 
+    // Function to move vertically in the opposite direction (down) from the current position to the specified y coordinate
     const verticalBottom = (toY: number, fromY: number = figure.y) => {
       for (let i = fromY - 1; i >= toY; i--) {
         if (toStopWay(figure.x, i)) return;
@@ -247,6 +269,7 @@ const Board: React.FC = () => {
       }
     };
 
+    // Function to move horizontally from the current position to the specified x coordinate
     const horizontalLeft = (toX: number, fromX: number = figure.x) => {
       for (let i = fromX - 1; i >= toX; i--) {
         if (toStopWay(i, figure.y)) return;
@@ -254,6 +277,7 @@ const Board: React.FC = () => {
       }
     };
 
+    // Function to move horizontally in the opposite direction (right) from the current position to the specified x coordinate
     const horizontalRight = (toX: number, fromX: number = figure.x) => {
       for (let i = fromX + 1; i <= toX; i++) {
         if (toStopWay(i, figure.y)) return;
@@ -261,6 +285,7 @@ const Board: React.FC = () => {
       }
     };
 
+    // Function to check diagonal movements
     const checkDiagonal = () => {
       // top right
       for (let i = 1; i <= 8; i++) {
@@ -274,12 +299,15 @@ const Board: React.FC = () => {
       for (let i = 1; i <= 8; i++) {
         if (!checkCellForMove(figure.x - i, figure.y - i)) break;
       }
+      // top left
       for (let i = 1; i <= 8; i++) {
         if (!checkCellForMove(figure.x - i, figure.y + i)) break;
       }
     };
 
+    // Function to check eatable figures by diagonal movements
     const checkEatableFiguresByDiagonal = () => {
+      // top right
       for (let i = 1; i <= 8; i++) {
         if (checkEatableOrAlliesCell(figure.x + i, figure.y + i)) break;
       }
@@ -291,20 +319,24 @@ const Board: React.FC = () => {
       for (let i = 1; i <= 8; i++) {
         if (checkEatableOrAlliesCell(figure.x - i, figure.y - i)) break;
       }
+      // top left
       for (let i = 1; i <= 8; i++) {
         if (checkEatableOrAlliesCell(figure.x - i, figure.y + i)) break;
       }
     };
 
+    // Function to check if a cell is eatable by the figure
     const isEatableCell = (x: number, y: number): boolean => {
       if (
         cellsFigure[`${x}-${y}`] &&
         figure.color !== cellsFigure[`${x}-${y}`]?.color
-      )
+      ) {
         return true;
+      }
       return false;
     };
 
+    // Function to check and add an eatable cell to the available cells
     const checkEatableCell = (x: number, y: number): boolean => {
       if (isEatableCell(x, y)) {
         way.push({ x, y });
@@ -313,12 +345,14 @@ const Board: React.FC = () => {
       return false;
     };
 
+    // Function to check if a cell is eatable or occupied by an ally figure
     const checkEatableOrAlliesCell = (x: number, y: number): boolean => {
       if (
         cellsFigure[`${x}-${y}`] &&
         cellsFigure[`${x}-${y}`]?.color === figure.color
-      )
+      ) {
         return true;
+      }
       if (isEatableCell(x, y)) {
         way.push({ x, y });
         return true;
@@ -479,15 +513,17 @@ const Board: React.FC = () => {
     return obj;
   };
 
+  // Executes the AI's next move
   const nextAIMove = () => {
     const figures = store.getState().game.figures;
 
+    // Utility function to get a random element from an array
     const getRandomElementOfArray = <T extends unknown>(arr: T[]): T => {
       return arr[Math.floor(Math.random() * arr.length)];
     };
 
     const figuresIds = Object.keys(figures);
-    if (figuresIds.length < 1) return;
+    if (figuresIds.length < 1) return; // No figures available, return
     const enemyFiguresIds = figuresIds.filter(
       (id) => figures[id].color === sides.enemy,
     );
@@ -495,39 +531,51 @@ const Board: React.FC = () => {
     let availableCells = getAvailableCells(figures[randomFigureId]);
     let availableCellsArr = Object.keys(availableCells);
     const triedFiguresIds: string[] = [];
+
+    // Find a figure with available cells to move
     while (availableCellsArr.length < 1) {
-      if (triedFiguresIds.length >= enemyFiguresIds.length) return;
+      if (triedFiguresIds.length >= enemyFiguresIds.length) return; // No available cells, return
       randomFigureId = getRandomElementOfArray(enemyFiguresIds);
       availableCells = getAvailableCells(figures[randomFigureId]);
       availableCellsArr = Object.keys(availableCells);
       triedFiguresIds.push(randomFigureId);
     }
+
+    // Select a random cell to move to
     const cellForMove = getRandomElementOfArray(availableCellsArr);
     const [x, y] = cellForMove.split('-');
     moveOrEat(figures[randomFigureId], Number(x), Number(y));
   };
 
+  // Executes the AI's next move with a delay
   const nextAIMoveDelayed = (delay: number = 200) => {
     setTimeout(nextAIMove, delay);
   };
 
+  // Get all figures of a specific color
   const getFiguresBySide = (color: Colors) => {
     return Object.keys(figures)
       .filter((figureId) => figures[figureId].color === color)
       .map((figureId) => figures[figureId]);
   };
 
+  // Update available cells for all figures of both colors
   const updateAllAvailableCells = () => {
     dangerousCells.current.white = {};
     dangerousCells.current.black = {};
+
     const whiteFigures = getFiguresBySide(Colors.WHITE);
     const blackFigures = getFiguresBySide(Colors.BLACK);
+
+    // Update available cells for white figures
     whiteFigures.forEach((figure) => {
       dangerousCells.current.white = {
         ...dangerousCells.current.white,
         ...getAvailableCells(figure, true),
       };
     });
+
+    // Update available cells for black figures
     blackFigures.forEach((figure) => {
       dangerousCells.current.black = {
         ...dangerousCells.current.black,
@@ -536,25 +584,34 @@ const Board: React.FC = () => {
     });
   };
 
+  // Utility function to get the color opposite to the given color
   const getOtherColor = (color: Colors) => {
     return color === Colors.BLACK ? Colors.WHITE : Colors.BLACK;
   };
 
+  // Check if the king of the specified color is in check
   const checkIsKingInCheck = (color: Colors) => {
     updateAllAvailableCells();
+
+    // Get the kings of both colors
     const kings = {
       [Colors.WHITE]: figures['white-king-5-1'],
       [Colors.BLACK]: figures['black-king-5-8'],
     };
+
     const king = kings[color];
     if (!king) return;
+
+    // Check if the king's position is in the dangerous cells of the opposite color
     if (dangerousCells.current[getOtherColor(color)][`${king.x}-${king.y}`])
       setIsKingInCheck(true);
     else setIsKingInCheck(false);
   };
 
+  // Generate JSX for the game won modal
   const getGameWonJSX = (): JSX.Element | null => {
     if (!gameWon) return null;
+
     const color = gameWon[0].toUpperCase() + gameWon.slice(1);
 
     return (
@@ -568,10 +625,12 @@ const Board: React.FC = () => {
     );
   };
 
+  // Check if the king is in check when the figures state changes
   useEffect(() => {
     checkIsKingInCheck(sides.ally);
   }, [figures]);
 
+  // Resize the board and initialize the game when the component mounts
   useEffect(() => {
     resizeBoard();
     window.addEventListener('resize', resizeBoard);
