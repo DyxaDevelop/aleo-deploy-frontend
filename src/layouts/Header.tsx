@@ -20,6 +20,7 @@ import TopArrowSVG from '../assets/svg/topArrow.svg';
 import BottomArrowSVG from '../assets/svg/bottomArrow.svg';
 import { UserLangContext } from 'App';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
+import { LanguageHOC } from 'hoc/langHoc';
 
 const Container = styled.div(() => ({
   backgroundColor: '#12141C',
@@ -66,7 +67,7 @@ const LogoBlock = styled.div(() => ({
 }));
 
 const DesktopMessage = styled.div(() => ({
-  width: '140px',
+  width: '100px',
   textAlign: 'center',
   fontSize: '12px',
   color: '#F6F6F6',
@@ -113,7 +114,7 @@ const ItemText = styled.p(() => ({}));
 
 const Item = styled(NavLink)(() => ({
   display: 'flex',
-  width: '130px',
+  minWidth: '130px',
   textDecoration: 'none',
   gap: '25px',
   alignItems: 'center',
@@ -148,7 +149,7 @@ const LangBlock = styled.div(() => ({
   '@media (max-width: 768px)': {
     fontSize: '12px',
     gap: '4px',
-    marginRight: '40px',
+    marginRight: '45px',
   },
 }));
 
@@ -169,7 +170,7 @@ const LangBlockMenu = styled.div(() => ({
   '@media (max-width: 768px)': {
     width: '20px',
     top: '19px',
-    right: '190px',
+    right: '160px',
   },
 }));
 
@@ -203,34 +204,6 @@ const Links = styled.div(() => ({
   },
 }));
 
-const sidebarItems = [
-  {
-    label: 'Wallet',
-    link: '/wallet',
-    icon: WalletSVG,
-  },
-  {
-    label: 'Account',
-    link: '/account',
-    icon: AccountSVG,
-  },
-  {
-    label: 'Games',
-    link: '/games',
-    icon: GamesSVG,
-  },
-  {
-    label: 'Voting',
-    link: '/voting',
-    icon: VotingSVG,
-  },
-  {
-    label: 'ANS',
-    link: '/ens',
-    icon: AnsSVG,
-  },
-];
-
 const socialMedias = [
   {
     link: 'https://twitter.com/aleogameshq',
@@ -258,7 +231,35 @@ const langs = {
 
 const WalletMultiButtonStyled = styled(WalletMultiButton)(() => ({}));
 
-export const Header = () => {
+//@ts-ignore
+export const HeaderPure = (props) => {
+  const sidebarItems = [
+    {
+      label: props.lang.WALLET,
+      link: '/wallet',
+      icon: WalletSVG,
+    },
+    {
+      label: props.lang.ACC,
+      link: '/account',
+      icon: AccountSVG,
+    },
+    {
+      label: props.lang.GAME,
+      link: '/games',
+      icon: GamesSVG,
+    },
+    {
+      label: props.lang.VOTE,
+      link: '/voting',
+      icon: VotingSVG,
+    },
+    {
+      label: 'ANS',
+      link: '/ens',
+      icon: AnsSVG,
+    },
+  ];
   //@ts-ignore
   const { lang, setLang } = useContext(UserLangContext);
 
@@ -332,27 +333,11 @@ export const Header = () => {
               </span>
               <span
                 onClick={() => {
-                  onHandleClickChange('chi');
+                  onHandleClickChange('ua');
                 }}
               >
                 {' '}
-                中国人
-              </span>
-              <span
-                onClick={() => {
-                  onHandleClickChange('ge');
-                }}
-              >
-                {' '}
-                Deutsch
-              </span>
-              <span
-                onClick={() => {
-                  onHandleClickChange('isp');
-                }}
-              >
-                {' '}
-                Español
+                Українська
               </span>
               <span
                 onClick={() => {
@@ -364,25 +349,41 @@ export const Header = () => {
               </span>
               <span
                 onClick={() => {
-                  onHandleClickChange('ua');
-                }}
-              >
-                {' '}
-                Українська
-              </span>
-              <span
-                onClick={() => {
                   onHandleClickChange('rb');
                 }}
               >
                 {' '}
                 Беларускі
               </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('chi');
+                }}
+              >
+                {' '}
+                中国人
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('isp');
+                }}
+              >
+                {' '}
+                Español
+              </span>
+              <span
+                onClick={() => {
+                  onHandleClickChange('ge');
+                }}
+              >
+                {' '}
+                Deutsch
+              </span>
             </LangItems>
             <img src={BottomArrowSVG} />
           </LangBlockMenu>
         </Show>
-        <DesktopMessage>Desktop Wallet Only</DesktopMessage>
+        <DesktopMessage>Desktop Only</DesktopMessage>
         <BurgerMenu
           onClick={() => setIsMenuBurgerOpened(true)}
           src={BurgerSVG}
@@ -471,3 +472,5 @@ export const Header = () => {
     </>
   );
 };
+
+export const Header = LanguageHOC(HeaderPure, 'menu');

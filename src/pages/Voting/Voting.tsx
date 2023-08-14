@@ -77,6 +77,9 @@ const Description = styled.div(() => ({
   fontSize: '14px',
   lineHeight: '22px',
   color: '#fff',
+  '@media (max-width: 768px)': {
+    textAlign: 'center',
+  },
 }));
 
 const VoteRight = styled.div(() => ({

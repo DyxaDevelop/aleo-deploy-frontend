@@ -42,5 +42,6 @@
 	"USER2": "Hidden",
 	"TIME": "Time",
 	"BID_A": "Bid amount",
-	"PAY": "Payment"
+	"PAY": "Payment",
+  "COMING": "Live feed coming soon"
 }

@@ -345,11 +345,11 @@ export const ProfilePure = ({ lang }: any) => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <SuspenseImg src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <SuspenseImg src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
@@ -358,11 +358,11 @@ export const ProfilePure = ({ lang }: any) => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <SuspenseImg src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <SuspenseImg src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
@@ -371,11 +371,11 @@ export const ProfilePure = ({ lang }: any) => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <SuspenseImg src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <img src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
@@ -384,11 +384,11 @@ export const ProfilePure = ({ lang }: any) => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <img src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <img src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
@@ -397,11 +397,11 @@ export const ProfilePure = ({ lang }: any) => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <img src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <img src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
@@ -410,11 +410,11 @@ export const ProfilePure = ({ lang }: any) => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <img src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <img src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
@@ -423,11 +423,11 @@ export const ProfilePure = ({ lang }: any) => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <img src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <img src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
@@ -436,11 +436,11 @@ export const ProfilePure = ({ lang }: any) => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <img src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <img src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
@@ -449,11 +449,11 @@ export const ProfilePure = ({ lang }: any) => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <img src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <img src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
@@ -462,11 +462,11 @@ export const ProfilePure = ({ lang }: any) => {
                     <LiveFeedItem>
                       <div className="row r-1">
                         <img src={xSVG} />
-                        Chess
+                        {lang.CHESS}
                       </div>
                       <div className="row r-3">
                         <img src={HiddenSVG} />
-                        Hidden
+                        {lang.HIDD}
                       </div>
                       <div className="row r-3">23:26</div>
                       <div className="row r-4">2.59950002</div>
