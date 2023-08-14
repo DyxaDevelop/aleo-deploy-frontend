@@ -227,7 +227,7 @@ export const CreateENSPure = ({ lang }: any) => {
       <DefaultLayout>
         <Container>
           <Typewriter text={lang.CR_ANS} delay={70}></Typewriter>
-          <TitleBlockMobile>Create on PC!</TitleBlockMobile>
+          <TitleBlockMobile>{lang.CR_PC}</TitleBlockMobile>
           <InputBlock>
             <InputSearch
               value={inputValue}

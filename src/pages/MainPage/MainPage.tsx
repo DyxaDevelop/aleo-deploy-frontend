@@ -29,9 +29,16 @@ import discordWhiteSVG from '../../assets/svg/discordWhite.svg';
 import githubWhiteSVG from '../../assets/svg/githubWhite.svg';
 import FaqSVG from '../../assets/svg/FaqArrow.svg';
 import MobileSectionSVG from '../../assets/svg/mobileMainPage.svg';
+import MobileSectionCH from '../../assets/svg/mobileMainPageCH.svg';
+import MobileSectionSP from '../../assets/svg/mobileMainPageSP.svg';
+import MobileSectionGR from '../../assets/svg/mobileMainPageGR.svg';
+import MobileSectionRU from '../../assets/svg/mobileMainPageRU.svg';
+import MobileSectionUA from '../../assets/svg/mobileMainPageUA.svg';
+import MobileSectionBR from '../../assets/svg/mobileMainPageBR.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 import LogoSVG from '../../assets/svg/newLogoMobile.svg';
 import { LanguageHOC } from 'hoc/langHoc';
+import { UserLangContext } from 'App';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -69,7 +76,7 @@ const FirstSection = styled.div(() => ({
     display: 'none',
     paddingRight: '20px',
     paddingLeft: '20px',
-    paddingTop: '50px',
+    paddingTop: '80px',
     flexDirection: 'row-reverse',
     '& img': {
       maxWidth: '150px',
@@ -84,8 +91,9 @@ const FirstSectionMobile = styled.div(() => ({
     display: 'flex',
     paddingRight: '20px',
     paddingLeft: '20px',
-    paddingTop: '50px',
+    paddingTop: '80px',
     flexDirection: 'row-reverse',
+    alignItems: 'center',
     '& img': {
       maxWidth: '150px',
     },
@@ -186,7 +194,9 @@ const SecondSection = styled.div(() => ({
   paddingLeft: '50px',
   paddingRight: '50px',
   boxSizing: 'border-box',
+  transform: 'unset !important',
   '& img': {
+    transform: 'unset !important',
     maxWidth: '50%',
     '@media (max-width: 768px)': {
       maxWidth: '30%',
@@ -214,27 +224,6 @@ const SecondSectionText = styled.span(() => ({
     letterSpacing: '0px',
     marginTop: '50px',
   },
-}));
-
-const FAQTitle = styled.span(() => ({
-  fontFamily: 'Inter',
-  fontStyle: 'normal',
-  fontWeight: '800',
-  fontSize: '82px',
-  lineHeight: '99px',
-  letterSpacing: '-1.5078px',
-  marginTop: '100px',
-  color: '#fff',
-  '@media (max-width: 768px)': {
-    fontSize: '30px',
-    lineHeight: '22px',
-    letterSpacing: '0px',
-    marginTop: '50px',
-    marginBottom: '20px',
-  },
-  background: 'linear-gradient(126.81deg, #1055FA -3.23%, #00D0F6 111.59%)',
-  backgroundClip: 'text',
-  textFillColor: 'transparent',
 }));
 
 const Platform = styled(SecondSectionText)(() => ({
@@ -639,9 +628,45 @@ const FooterItemMobile = styled.div(() => ({
 }));
 
 export const MainPagePure = ({ lang }: any) => {
-  console.log(lang);
   const [openAccordeon, setOpenAccordeon] = useState<string>('');
   const [imagePos, setImagePos] = useState({ x: 0, y: 0 });
+  const context = useContext(UserLangContext);
+  const [sectionMobileIMG, setSectionMobileIMG] = useState('');
+
+  //@ts-ignore
+  useEffect(() => {
+    //@ts-ignore
+    console.log(context.lang);
+    //@ts-ignore
+    if (context.lang == 'chi') {
+      setSectionMobileIMG(MobileSectionCH);
+    }
+    //@ts-ignore
+    if (context.lang == 'isp') {
+      setSectionMobileIMG(MobileSectionSP);
+    }
+    //@ts-ignore
+    if (context.lang == 'ge') {
+      setSectionMobileIMG(MobileSectionGR);
+    }
+    //@ts-ignore
+    if (context.lang == 'ru') {
+      setSectionMobileIMG(MobileSectionRU);
+    }
+    //@ts-ignore
+    if (context.lang == 'ua') {
+      setSectionMobileIMG(MobileSectionUA);
+    }
+    //@ts-ignore
+    if (context.lang == 'rb') {
+      setSectionMobileIMG(MobileSectionBR);
+    }
+    //@ts-ignore
+    if (context.lang == 'eng') {
+      setSectionMobileIMG(MobileSectionSVG);
+    }
+    //@ts-ignore
+  }, [context.lang]);
 
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
@@ -875,10 +900,12 @@ export const MainPagePure = ({ lang }: any) => {
             <Platform>{lang.WHAT_ALEO}</Platform>
             <br /> {lang.WHAT_ALEO2}
           </SecondSectionText>
+
           <SuspenseImg src={SecondScreenSVG} />
         </SecondSection>
         <BlockSection>
-          <MobileSection src={MobileSectionSVG} />
+          {/*@ts-ignore*/}
+          <MobileSection src={sectionMobileIMG} />
           <BlockItem>
             <BlockNumber>1</BlockNumber>
             <BlockItemContent>
@@ -967,7 +994,7 @@ export const MainPagePure = ({ lang }: any) => {
           </FAQItem>
         </FAQBlock>
         <LiveFeed>
-          <LiveFeedSoon>Live feed coming soon...</LiveFeedSoon>
+          <LiveFeedSoon>{lang.COMING}</LiveFeedSoon>
           <Tab>
             {lang.LIVE_FEED}
             {/* <BlueCircle /> */}

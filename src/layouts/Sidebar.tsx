@@ -99,34 +99,6 @@ const Links = styled.div(() => ({
   },
 }));
 
-const sidebarItems = [
-  {
-    label: 'Wallet',
-    link: '/wallet',
-    icon: WalletSVG,
-  },
-  {
-    label: 'Account',
-    link: '/account',
-    icon: AccountSVG,
-  },
-  {
-    label: 'Games',
-    link: '/games',
-    icon: GamesSVG,
-  },
-  {
-    label: 'Voting',
-    link: '/voting',
-    icon: VotingSVG,
-  },
-  {
-    label: 'ANS',
-    link: '/ens',
-    icon: AnsSVG,
-  },
-];
-
 const socialMedias = [
   {
     link: 'https://twitter.com/aleogameshq',
