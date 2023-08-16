@@ -1,14 +1,21 @@
 import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import styled from '@emotion/styled';
-import React, { Suspense } from 'react';
+import React, { Suspense, useContext, useEffect, useState } from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
 import { Sidebar } from '../../layouts/Sidebar';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
 import chessGameSVG from '../../assets/svg/chessGame.svg';
 import soonGamesSVG from '../../assets/svg/soonGames.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
+import MobileSectionCH from '../../assets/svg/soonGamesCH.svg';
+import MobileSectionSP from '../../assets/svg/soonGamesSP.svg';
+import MobileSectionGR from '../../assets/svg/soonGamesGR.svg';
+import MobileSectionRU from '../../assets/svg/soonGamesRU.svg';
+import MobileSectionUA from '../../assets/svg/soonGamesUA.svg';
+import MobileSectionBR from '../../assets/svg/soonGamesBR.svg';
 import { Footer } from 'layouts/Footer';
 import { LanguageHOC } from 'hoc/langHoc';
+import { UserLangContext } from 'App';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -90,29 +97,71 @@ const PlayButtonMobile = styled.div(() => ({
   },
 }));
 
-export const GamesPure = ({ lang }: any) => (
-  <>
-    <DefaultLayout>
-      <Container>
-        <GameBlocksContainer>
-          <GameBlock>
-            <SuspenseImg style={{ position: 'absolute' }} src={chessGameSVG} />
-            <PlayButton to={'/games/chess'}>{lang.PLAY}</PlayButton>
-            <PlayButtonMobile>{lang.PLAY}</PlayButtonMobile>
-          </GameBlock>
-          <GameBlockSoon>
-            {' '}
-            <SuspenseImg style={{ position: 'absolute' }} src={soonGamesSVG} />
-          </GameBlockSoon>
-          <GameBlockSoon>
-            {' '}
-            <SuspenseImg style={{ position: 'absolute' }} src={soonGamesSVG} />
-          </GameBlockSoon>
-        </GameBlocksContainer>
-      </Container>
-      <Footer />
-    </DefaultLayout>
-  </>
-);
+export const GamesPure = ({ lang }: any) => {
+  const [sectionMobileIMG, setSectionMobileIMG] = useState('');
+  const context = useContext(UserLangContext);
+  //@ts-ignore
+  useEffect(() => {
+    //@ts-ignore
+    console.log(context.lang);
+    //@ts-ignore
+    if (context.lang == 'chi') {
+      setSectionMobileIMG(MobileSectionCH);
+    }
+    //@ts-ignore
+    if (context.lang == 'isp') {
+      setSectionMobileIMG(MobileSectionSP);
+    }
+    //@ts-ignore
+    if (context.lang == 'ge') {
+      setSectionMobileIMG(MobileSectionGR);
+    }
+    //@ts-ignore
+    if (context.lang == 'ru') {
+      setSectionMobileIMG(MobileSectionRU);
+    }
+    //@ts-ignore
+    if (context.lang == 'ua') {
+      setSectionMobileIMG(MobileSectionUA);
+    }
+    //@ts-ignore
+    if (context.lang == 'rb') {
+      setSectionMobileIMG(MobileSectionBR);
+    }
+    //@ts-ignore
+    if (context.lang == 'eng') {
+      setSectionMobileIMG(soonGamesSVG);
+    }
+    //@ts-ignore
+  }, [context.lang]);
+
+  return (
+    <>
+      <DefaultLayout>
+        <Container>
+          <GameBlocksContainer>
+            <GameBlock>
+              <SuspenseImg
+                style={{ position: 'absolute' }}
+                src={chessGameSVG}
+              />
+              <PlayButton to={'/games/chess'}>{lang.PLAY}</PlayButton>
+              <PlayButtonMobile>{lang.PLAY}</PlayButtonMobile>
+            </GameBlock>
+            <GameBlockSoon>
+              {' '}
+              <img style={{ position: 'absolute' }} src={sectionMobileIMG} />
+            </GameBlockSoon>
+            <GameBlockSoon>
+              {' '}
+              <img style={{ position: 'absolute' }} src={sectionMobileIMG} />
+            </GameBlockSoon>
+          </GameBlocksContainer>
+        </Container>
+        <Footer />
+      </DefaultLayout>
+    </>
+  );
+};
 
 export const Games = LanguageHOC(GamesPure, 'games');
