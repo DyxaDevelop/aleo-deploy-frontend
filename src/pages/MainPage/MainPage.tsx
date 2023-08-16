@@ -20,7 +20,7 @@ import FourCoin from '../../assets/svg/animationCoins/coin_4.svg';
 import SixCoin from '../../assets/svg/animationCoins/coin_6.svg';
 import FirstScreenSVG from '../../assets/svg/firstScreen.svg';
 
-import SecondScreenSVG from '../../assets/svg/secondScreen.svg';
+import SecondScreenSVG from '../../assets/svg/secondScreen.png';
 import xSVG from '../../assets/svg/x.svg';
 import HiddenSVG from '../../assets/svg/hidden.svg';
 import logoSVG from '../../assets/svg/LOGO.svg';
@@ -28,13 +28,13 @@ import twitterWhiteSVG from '../../assets/svg/twitterWhite.svg';
 import discordWhiteSVG from '../../assets/svg/discordWhite.svg';
 import githubWhiteSVG from '../../assets/svg/githubWhite.svg';
 import FaqSVG from '../../assets/svg/FaqArrow.svg';
-import MobileSectionSVG from '../../assets/svg/mobileMainPage.svg';
-import MobileSectionCH from '../../assets/svg/mobileMainPageCH.svg';
-import MobileSectionSP from '../../assets/svg/mobileMainPageSP.svg';
-import MobileSectionGR from '../../assets/svg/mobileMainPageGR.svg';
-import MobileSectionRU from '../../assets/svg/mobileMainPageRU.svg';
-import MobileSectionUA from '../../assets/svg/mobileMainPageUA.svg';
-import MobileSectionBR from '../../assets/svg/mobileMainPageBR.svg';
+import MobileSectionSVG from '../../assets/svg/mobileMainPage.png';
+import MobileSectionCH from '../../assets/svg/mobileMainPageCH.png';
+import MobileSectionSP from '../../assets/svg/mobileMainPageSP.png';
+import MobileSectionGR from '../../assets/svg/mobileMainPageGR.png';
+import MobileSectionRU from '../../assets/svg/mobileMainPageRU.png';
+import MobileSectionUA from '../../assets/svg/mobileMainPageUA.png';
+import MobileSectionBR from '../../assets/svg/mobileMainPageBR.png';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 import LogoSVG from '../../assets/svg/newLogoMobile.svg';
 import { LanguageHOC } from 'hoc/langHoc';
@@ -871,7 +871,6 @@ export const MainPagePure = ({ lang }: any) => {
                   <Aleo>{lang.ALEO_IS}</Aleo> {lang.ALEO_IS2}
                   <Web3> {lang.ALEO_IS3}</Web3>
                   {lang.ALEO_IS4}
-                  {lang.ALEO_IS4}
                 </FirstSectionTextTitle>
                 <p>{lang.ON_ALEO}</p>
               </FirstSectionText>
@@ -1023,7 +1022,7 @@ export const MainPagePure = ({ lang }: any) => {
             <LiveFeedItem>
               <div className="row r-1">
                 <SuspenseImg src={xSVG} />
-                Chess
+                {lang.GAME}
               </div>
               <div className="row r-3 mobileHide">
                 <SuspenseImg src={HiddenSVG} />
@@ -1036,7 +1035,7 @@ export const MainPagePure = ({ lang }: any) => {
             <LiveFeedItem>
               <div className="row r-1">
                 <SuspenseImg src={xSVG} />
-                Chess
+                {lang.GAME}
               </div>
               <div className="row r-3 mobileHide">
                 <img src={HiddenSVG} />
@@ -1049,7 +1048,7 @@ export const MainPagePure = ({ lang }: any) => {
             <LiveFeedItem>
               <div className="row r-1">
                 <img src={xSVG} />
-                Chess
+                {lang.GAME}
               </div>
               <div className="row r-3 mobileHide">
                 <img src={HiddenSVG} />
@@ -1062,7 +1061,7 @@ export const MainPagePure = ({ lang }: any) => {
             <LiveFeedItem>
               <div className="row r-1">
                 <img src={xSVG} />
-                Chess
+                {lang.GAME}
               </div>
               <div className="row r-3 mobileHide">
                 <img src={HiddenSVG} />
@@ -1075,7 +1074,7 @@ export const MainPagePure = ({ lang }: any) => {
             <LiveFeedItem>
               <div className="row r-1">
                 <img src={xSVG} />
-                Chess
+                {lang.GAME}
               </div>
               <div className="row r-3 mobileHide">
                 <img src={HiddenSVG} />
@@ -1088,7 +1087,7 @@ export const MainPagePure = ({ lang }: any) => {
             <LiveFeedItem>
               <div className="row r-1">
                 <img src={xSVG} />
-                Chess
+                {lang.GAME}
               </div>
               <div className="row r-3 mobileHide">
                 <img src={HiddenSVG} />
@@ -1109,9 +1108,15 @@ export const MainPagePure = ({ lang }: any) => {
             <br />
             Become Private.
             <LinksFooter>
-              <img src={twitterWhiteSVG} />
-              <img src={githubWhiteSVG} />
-              <img src={discordWhiteSVG} />
+              <a href="https://twitter.com/aleogameshq">
+                <img src={twitterWhiteSVG} />
+              </a>
+              <a href="https://github.com/AleoHQ">
+                <img src={githubWhiteSVG} />
+              </a>
+              <a href="https://discord.com/invite/aleohq">
+                <img src={discordWhiteSVG} />
+              </a>
             </LinksFooter>
             <BottomFooterText>
               © Aleo Systems Inc • Your Privacy is{' '}
@@ -1140,9 +1145,15 @@ export const MainPagePure = ({ lang }: any) => {
           <FooterItemMobile>
             <span>
               <LinksFooter>
-                <img src={twitterWhiteSVG} />
-                <img src={githubWhiteSVG} />
-                <img src={discordWhiteSVG} />
+                <a href="https://twitter.com/aleogameshq">
+                  <img src={twitterWhiteSVG} />
+                </a>
+                <a href="https://github.com/AleoHQ">
+                  <img src={githubWhiteSVG} />
+                </a>
+                <a href="https://discord.com/invite/aleohq">
+                  <img src={discordWhiteSVG} />
+                </a>
               </LinksFooter>
             </span>
           </FooterItemMobile>

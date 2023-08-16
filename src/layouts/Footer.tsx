@@ -133,7 +133,9 @@ export const Footer = () => {
               <NavLink to="https://twitter.com/aleogameshq">
                 <img src={twitterWhiteSVG} />
               </NavLink>
-              <img src={githubWhiteSVG} />
+              <a href="https://github.com/AleoHQ">
+                <img src={githubWhiteSVG} />
+              </a>
               <NavLink to="https://discord.gg/aleohq">
                 <img src={discordWhiteSVG} />
               </NavLink>
@@ -168,7 +170,9 @@ export const Footer = () => {
                 <NavLink to="https://twitter.com/aleogameshq">
                   <img src={twitterWhiteSVG} />
                 </NavLink>
-                <img src={githubWhiteSVG} />
+                <a href="https://github.com/AleoHQ">
+                  <img src={githubWhiteSVG} />
+                </a>
                 <NavLink to="https://discord.gg/aleohq">
                   <img src={discordWhiteSVG} />
                 </NavLink>
