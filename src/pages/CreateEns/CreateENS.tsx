@@ -11,6 +11,12 @@ import { Show } from 'components/Show/Show';
 import { Footer } from 'layouts/Footer';
 import Typewriter from 'components/TypeWriter/TypeWriter';
 import { LanguageHOC } from 'hoc/langHoc';
+import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
+import {
+  Transaction,
+  WalletAdapterNetwork,
+} from '@demox-labs/aleo-wallet-adapter-base';
+import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -211,6 +217,16 @@ export const CreateENSPure = ({ lang }: any) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [monthValue, setMonthValue] = useState<number>(1);
 
+  const { wallet, publicKey, requestRecords } = useWallet();
+
+  function tryParseJSON(input: string): string | object {
+    try {
+      return JSON.parse(input);
+    } catch (error) {
+      return input;
+    }
+  }
+
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
   };
@@ -220,6 +236,30 @@ export const CreateENSPure = ({ lang }: any) => {
       return;
     }
     setMonthValue(+monthValue + value);
+  };
+
+  const claimEns = async () => {
+    const parsedInputs: any = [
+      0.12 * monthValue * 100000 + 'u128',
+      inputValue + 'public',
+      //@ts-ignore
+    ].map((elem) => tryParseJSON(elem));
+
+    const aleoTransaction = Transaction.createTransaction(
+      //@ts-ignore
+      publicKey,
+      WalletAdapterNetwork.Testnet,
+      'ansaleogames.aleo',
+      'initialize_ans',
+      parsedInputs,
+      5000000,
+    );
+    //@ts-ignore
+    const txId =
+      (await (wallet?.adapter as LeoWalletAdapter).requestTransaction(
+        aleoTransaction,
+      )) || '';
+    //@ts-ignore
   };
 
   return (
@@ -275,7 +315,7 @@ export const CreateENSPure = ({ lang }: any) => {
               <Price>
                 {lang.PRICE}: {(0.12 * monthValue).toFixed(2)} ALEO
               </Price>
-              <Button>{lang.BUY_N}</Button>
+              <Button onClick={() => claimEns()}>{lang.BUY_N}</Button>
             </EnsBlock>
           </Show>
         </Container>

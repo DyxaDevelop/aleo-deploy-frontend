@@ -1,6 +1,6 @@
 import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import styled from '@emotion/styled';
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Sidebar } from '../../layouts/Sidebar';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
@@ -9,6 +9,8 @@ import logoForENS from '../../assets/svg/logoForENS.svg';
 import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 import { Footer } from 'layouts/Footer';
 import { LanguageHOC } from 'hoc/langHoc';
+import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
+import { WalletNotConnectedError } from '@demox-labs/aleo-wallet-adapter-base';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -157,52 +159,82 @@ const AssetItemInactive = styled(AssetItem)(() => ({
   fontWeight: 700,
 }));
 
-export const WalletPure = ({ lang }: any) => (
-  <>
-    <DefaultLayout>
-      <Container>
-        <BalanceBlock>
-          <BalanceBlockInside>
-            <div>
-              <div>{lang.YOUR_BAL}</div>
-              <BalanceCount>$ 11,000.22</BalanceCount>
-              <BalanceCountMobile>Use Desktop Wallet</BalanceCountMobile>
-            </div>
-            <SuspenseImg src={walletImage} />
-          </BalanceBlockInside>
-        </BalanceBlock>
-        <AssetItem>
-          <BalanceBlockBalance>
-            <AssetInfo>
-              <AssetLogo>
-                <SuspenseImg src={logoForENS} />
-              </AssetLogo>
-              <AssetName>
-                Aleo Credit
-                <span>ALEO</span>
-              </AssetName>
-            </AssetInfo>
-            <AssetAmount>
-              <AssetName>
-                ????
-                <span>ALEO</span>
-              </AssetName>
-              <AssetName>
-                ???
-                <span>USD</span>
-              </AssetName>
-            </AssetAmount>
-          </BalanceBlockBalance>
-        </AssetItem>
-        <AssetItemInactive>Soon...</AssetItemInactive>
-        <AssetItemInactive>Soon...</AssetItemInactive>
-        <AssetItemInactive>Soon...</AssetItemInactive>
-        <AssetItemInactive>Soon...</AssetItemInactive>
-        <AssetItemInactive>Soon...</AssetItemInactive>
-      </Container>
-      <Footer />
-    </DefaultLayout>
-  </>
-);
+export const WalletPure = ({ lang }: any) => {
+  const { wallet, publicKey, requestRecords } = useWallet();
+
+  let [balance, setBalance] = useState<number | null>();
+
+  useEffect(() => {
+    if (publicKey && !balance) {
+      requestRecords!('credits.aleo').then((res) => {
+        const filteredRecords = res.filter((rec) => {
+          return !rec.spent;
+        });
+        let recordsFormatted = filteredRecords.map((rec) =>
+          JSON.parse(JSON.stringify(rec, null, 2)),
+        );
+        let balance = 0;
+        recordsFormatted = recordsFormatted.map((elem) => {
+          const currentRecord =
+            parseInt(elem.data.microcredits.replace(/[^\d]/g, ''), 10) /
+            100000000;
+          balance += currentRecord;
+          return currentRecord;
+        });
+        setBalance(balance);
+      });
+    }
+  }, []);
+
+  return (
+    <>
+      <DefaultLayout>
+        <Container>
+          <BalanceBlock>
+            <BalanceBlockInside>
+              <div>
+                <div>{lang.YOUR_BAL}</div>
+                <BalanceCount>
+                  $ {balance ? balance.toFixed(3) : '????'}
+                </BalanceCount>
+                <BalanceCountMobile>Use Desktop Wallet</BalanceCountMobile>
+              </div>
+              <SuspenseImg src={walletImage} />
+            </BalanceBlockInside>
+          </BalanceBlock>
+          <AssetItem>
+            <BalanceBlockBalance>
+              <AssetInfo>
+                <AssetLogo>
+                  <SuspenseImg src={logoForENS} />
+                </AssetLogo>
+                <AssetName>
+                  Aleo Credit
+                  <span>ALEO</span>
+                </AssetName>
+              </AssetInfo>
+              <AssetAmount>
+                <AssetName>
+                  {balance ? balance.toFixed(3) : '????'}
+                  <span>ALEO</span>
+                </AssetName>
+                <AssetName>
+                  {balance ? balance.toFixed(3) + '$' : '????'}
+                  <span>USD</span>
+                </AssetName>
+              </AssetAmount>
+            </BalanceBlockBalance>
+          </AssetItem>
+          <AssetItemInactive>Soon...</AssetItemInactive>
+          <AssetItemInactive>Soon...</AssetItemInactive>
+          <AssetItemInactive>Soon...</AssetItemInactive>
+          <AssetItemInactive>Soon...</AssetItemInactive>
+          <AssetItemInactive>Soon...</AssetItemInactive>
+        </Container>
+        <Footer />
+      </DefaultLayout>
+    </>
+  );
+};
 
 export const Wallet = LanguageHOC(WalletPure, 'wallet');
