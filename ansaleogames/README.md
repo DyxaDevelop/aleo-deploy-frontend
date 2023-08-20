@@ -1,4 +1,4 @@
-# ANS Aleo Games Smart Contract
+# ANS Aleo Games Program
 
 ## Overview
 
