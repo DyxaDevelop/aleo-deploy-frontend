@@ -1,6 +1,12 @@
 import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import styled from '@emotion/styled';
-import React, { Suspense, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  Suspense,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
 import profileAvatarSVG from '../../assets/svg/profileAvatar.svg';
 import { DefaultLayout } from '../../layouts/DefaultLayout';
@@ -11,6 +17,12 @@ import { Modal } from 'components/Modal/Modal';
 import walletImage from '../../assets/svg/walletImage.svg';
 import { Footer } from 'layouts/Footer';
 import { LanguageHOC } from 'hoc/langHoc';
+import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
+import {
+  Transaction,
+  WalletAdapterNetwork,
+} from '@demox-labs/aleo-wallet-adapter-base';
+import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -281,6 +293,116 @@ const LiveFeedItem = styled.div(() => ({
 }));
 
 export const ProfilePure = ({ lang }: any) => {
+  const { wallet, publicKey, requestRecords } = useWallet();
+
+  let [recordsPayloadForANS, setRecordsPayloadForANS] = useState<
+    string | null
+  >();
+  let [recordsPayloadForToken, setRecordsPayloadForToken] = useState<
+    number | null
+  >();
+  let [balance, setBalance] = useState<number | null>();
+
+  function tryParseJSON(input: string): string | object {
+    try {
+      return JSON.parse(input);
+    } catch (error) {
+      return input;
+    }
+  }
+
+  // useEffect(() => {
+  //   if (publicKey) {
+  //     if (!balance) {
+  //       requestRecords!('aleogamesvoting.aleo').then((res) => {
+  //         const filteredRecords = res.filter((rec) => {
+  //           return !rec.spent;
+  //         });
+  //         let recordsFormatted = filteredRecords.map((rec) =>
+  //           JSON.parse(JSON.stringify(rec, null, 2)),
+  //         );
+  //         let balance = 0;
+  //         recordsFormatted = recordsFormatted.map((elem) => {
+  //           const currentRecord =
+  //             parseInt(elem.data.microcredits.replace(/[^\d]/g, ''), 10) /
+  //             100000000;
+  //           balance += currentRecord;
+  //           return currentRecord;
+  //         });
+  //         setBalance(balance);
+  //       });
+  //     }
+  //     if (!recordsPayloadForToken) {
+  //       requestRecords!('aleogamestoken.aleo').then((res) => {
+  //         const filteredRecords = res.filter((rec) => {
+  //           return !rec.spent;
+  //         });
+  //         let recordsFormatted = filteredRecords.map((rec) =>
+  //           JSON.parse(JSON.stringify(rec, null, 2)),
+  //         );
+  //         let balance = 0;
+  //         recordsFormatted = recordsFormatted.map((elem) => {
+  //           const currentRecord =
+  //             parseInt(elem.data.microcredits.replace(/[^\d]/g, ''), 10) /
+  //             100000000;
+  //           balance += currentRecord;
+  //           return currentRecord;
+  //         });
+  //         setRecordsPayloadForToken(balance);
+  //       });
+  //     }
+  //   }
+  // }, []);
+
+  const mintTokens = async () => {
+    const parsedInputs: any = [
+      publicKey,
+      '500u64',
+      '500u128',
+      //@ts-ignore
+    ].map((elem) => tryParseJSON(elem));
+
+    const aleoTransaction = Transaction.createTransaction(
+      //@ts-ignore
+      publicKey,
+      WalletAdapterNetwork.Testnet,
+      'aleogamestoken.aleo',
+      'mint_public',
+      parsedInputs,
+      5000000,
+    );
+    //@ts-ignore
+    const txId =
+      (await (wallet?.adapter as LeoWalletAdapter).requestTransaction(
+        aleoTransaction,
+      )) || '';
+    //@ts-ignore
+  };
+
+  const claimVotes = async () => {
+    const parsedInputs: any = [
+      publicKey,
+      '21888242871839275222246405745257275088548364400416034343698204186575808495617field',
+      //@ts-ignore
+    ].map((elem) => tryParseJSON(elem));
+
+    const aleoTransaction = Transaction.createTransaction(
+      //@ts-ignore
+      publicKey,
+      WalletAdapterNetwork.Testnet,
+      'aleogamesvoting.aleo',
+      'mint_public',
+      parsedInputs,
+      5000000,
+    );
+    //@ts-ignore
+    const txId =
+      (await (wallet?.adapter as LeoWalletAdapter).requestTransaction(
+        aleoTransaction,
+      )) || '';
+    //@ts-ignore
+  };
+
   return (
     <>
       <DefaultLayout>
@@ -301,14 +423,16 @@ export const ProfilePure = ({ lang }: any) => {
               <ClaimVotes>
                 <span>{lang.CLM_VOTES}</span>
                 <ContentDynamic>
-                  <Button>{lang.CLM}</Button>
+                  <Button onClick={() => claimVotes()}>{lang.CLM}</Button>
                 </ContentDynamic>
               </ClaimVotes>
               <AvailableVotes>
                 <span>{lang.AVLB_VOTES}</span>
-                <ContentDynamic>???</ContentDynamic>
+                <ContentDynamic>
+                  {balance ? balance.toFixed(3) : '???'}
+                </ContentDynamic>
               </AvailableVotes>
-              <ClaimVotes>
+              <ClaimVotes onClick={() => mintTokens()}>
                 <span>{lang.TOK_MINT}</span>
                 <ContentDynamic>
                   <Button>{lang.MINT}</Button>
