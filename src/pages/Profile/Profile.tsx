@@ -357,8 +357,8 @@ export const ProfilePure = ({ lang }: any) => {
   const mintTokens = async () => {
     const parsedInputs: any = [
       publicKey,
-      '500u64',
-      '500u128',
+      '50000000u64',
+      '50000000u128',
       //@ts-ignore
     ].map((elem) => tryParseJSON(elem));
 
@@ -381,8 +381,8 @@ export const ProfilePure = ({ lang }: any) => {
 
   const claimVotes = async () => {
     const parsedInputs: any = [
-      publicKey,
       '21888242871839275222246405745257275088548364400416034343698204186575808495617field',
+      publicKey,
       //@ts-ignore
     ].map((elem) => tryParseJSON(elem));
 
