@@ -1,4 +1,4 @@
-# Aleo Voting Smart Contract
+# Aleo Voting Program
 
 ## Overview
 
