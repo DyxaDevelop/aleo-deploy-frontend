@@ -1,4 +1,4 @@
-# Aleo Games Token Smart Contract
+# Aleo Games Token Program
 
 ## Overview
 
