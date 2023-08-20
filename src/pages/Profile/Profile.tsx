@@ -391,7 +391,7 @@ export const ProfilePure = ({ lang }: any) => {
       publicKey,
       WalletAdapterNetwork.Testnet,
       'aleogamesvoting.aleo',
-      'mint_public',
+      'new_ticket',
       parsedInputs,
       5000000,
     );
