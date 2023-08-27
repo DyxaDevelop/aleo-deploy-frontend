@@ -20,6 +20,9 @@ const Foooter = styled.div(() => ({
   '@media (max-width: 768px)': {
     display: 'none',
   },
+  '& a': {
+    textDecoration: 'none',
+  },
 }));
 
 const FooterLogoBlock = styled.div(() => ({
@@ -51,6 +54,9 @@ const FooterMobile = styled.div(() => ({
     marginTop: 100,
     borderTopLeftRadius: '12px',
     borderTopRightRadius: '12px',
+  },
+  '& a': {
+    textDecoration: 'none',
   },
 }));
 
@@ -147,17 +153,43 @@ export const Footer = () => {
           </FooterLogoBlock>
           <FooterRightLinks>
             <FooterRightLinksBlock>
-              <span style={{ color: '#fff' }}>Aleo.org</span>
-              <span style={{ color: '#fff' }}>Home</span>
+              <a href="https://aleo.org" style={{ color: '#fff' }}>
+                Aleo.org
+              </a>
+              <a href="https://aleo.org" style={{ color: '#fff' }}>
+                Home
+              </a>
               <span>Our Blog</span>
               <span>Opportunities</span>
             </FooterRightLinksBlock>
             <FooterRightLinksBlock>
-              <span style={{ color: '#fff' }}>For Developers</span>
-              <span>Aleo Studio</span>
-              <span>Aleo Explorer</span>
-              <span>Aleo Package Manager</span>
-              <span> Aleo Developer Docs</span>
+              <a href="https://developer.aleo.org" style={{ color: '#fff' }}>
+                For Developers
+              </a>
+              <a
+                style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+                href="https://aleo.studio"
+              >
+                Aleo Studio
+              </a>
+              <a
+                style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+                href="https://aleo.network"
+              >
+                Aleo Explorer
+              </a>
+              <a
+                style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+                href="https://aleo.pm"
+              >
+                Aleo Package Manager
+              </a>
+              <a
+                style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+                href="https://developer.aleo.org"
+              >
+                Aleo Developer Docs
+              </a>
             </FooterRightLinksBlock>
           </FooterRightLinks>
         </FooterContainer>
@@ -180,16 +212,51 @@ export const Footer = () => {
             </span>
           </FooterItemMobile>
           <FooterItemMobile>
-            <span>Aleo.org</span>
-            <span>Home</span>
+            <a
+              style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+              href="https://aleo.org"
+            >
+              Aleo.org
+            </a>
+            <a
+              style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+              href="https://aleo.org"
+            >
+              Home
+            </a>
             <span>Our Blog</span>
           </FooterItemMobile>
           <FooterItemMobile>
-            <span>For Developers</span>
-            <span>Aleo Studio</span>
-            <span>Aleo Explorer</span>
-            <span>Aleo Package Manager</span>
-            <span>Aleo Developer Docs</span>
+            <a
+              style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+              href="https://developer.aleo.org"
+            >
+              For Developers
+            </a>
+            <a
+              style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+              href="https://aleo.studio"
+            >
+              Aleo Studio
+            </a>
+            <a
+              style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+              href="https://aleo.network"
+            >
+              Aleo Explorer
+            </a>
+            <a
+              style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+              href="https://aleo.pm"
+            >
+              Aleo Package Manager
+            </a>
+            <a
+              style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+              href="https://developer.aleo.org"
+            >
+              Aleo Developer Docs
+            </a>
           </FooterItemMobile>
           <FooterItemMobile>
             <FooterLogo src={LogoSVG} />

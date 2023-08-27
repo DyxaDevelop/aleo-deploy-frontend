@@ -39,6 +39,7 @@ import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
 import LogoSVG from '../../assets/svg/newLogoMobile.svg';
 import { LanguageHOC } from 'hoc/langHoc';
 import { UserLangContext } from 'App';
+import { Footer } from 'layouts/Footer';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -1100,80 +1101,7 @@ export const MainPagePure = ({ lang }: any) => {
           </LiveFeedBlock>
         </LiveFeed>
       </Container>
-      <Foooter>
-        <FooterContainer>
-          <FooterLogoBlock>
-            <img style={{ width: 177 }} src={logoSVG} />
-            Where Applications
-            <br />
-            Become Private.
-            <LinksFooter>
-              <a href="https://twitter.com/aleogameshq">
-                <img src={twitterWhiteSVG} />
-              </a>
-              <a href="https://github.com/AleoHQ">
-                <img src={githubWhiteSVG} />
-              </a>
-              <a href="https://discord.com/invite/aleohq">
-                <img src={discordWhiteSVG} />
-              </a>
-            </LinksFooter>
-            <BottomFooterText>
-              © Aleo Systems Inc • Your Privacy is{' '}
-              <span style={{ color: '#fff' }}>Protected</span>
-            </BottomFooterText>
-          </FooterLogoBlock>
-          <FooterRightLinks>
-            <FooterRightLinksBlock>
-              <span style={{ color: '#fff' }}>Aleo.org</span>
-              <span style={{ color: '#fff' }}>Home</span>
-              <span>Our Blog</span>
-              <span>Opportunities</span>
-            </FooterRightLinksBlock>
-            <FooterRightLinksBlock>
-              <span style={{ color: '#fff' }}>For Developers</span>
-              <span>Aleo Studio</span>
-              <span>Aleo Explorer</span>
-              <span>Aleo Package Manager</span>
-              <span> Aleo Developer Docs</span>
-            </FooterRightLinksBlock>
-          </FooterRightLinks>
-        </FooterContainer>
-      </Foooter>
-      <FooterMobile>
-        <FooterContainerMobile>
-          <FooterItemMobile>
-            <span>
-              <LinksFooter>
-                <a href="https://twitter.com/aleogameshq">
-                  <img src={twitterWhiteSVG} />
-                </a>
-                <a href="https://github.com/AleoHQ">
-                  <img src={githubWhiteSVG} />
-                </a>
-                <a href="https://discord.com/invite/aleohq">
-                  <img src={discordWhiteSVG} />
-                </a>
-              </LinksFooter>
-            </span>
-          </FooterItemMobile>
-          <FooterItemMobile>
-            <span>Aleo.org</span>
-            <span>Home</span>
-            <span>Our Blog</span>
-          </FooterItemMobile>
-          <FooterItemMobile>
-            <span>For Developers</span>
-            <span>Aleo Studio</span>
-            <span>Aleo Explorer</span>
-            <span>Aleo Package Manager</span>
-            <span>Aleo Developer Docs</span>
-          </FooterItemMobile>
-          <FooterItemMobile>
-            <FooterLogo src={LogoSVG} />
-          </FooterItemMobile>
-        </FooterContainerMobile>
-      </FooterMobile>
+      <Footer />
     </DefaultLayout>
   );
 };
