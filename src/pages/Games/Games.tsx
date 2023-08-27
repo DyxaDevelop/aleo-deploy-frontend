@@ -16,6 +16,7 @@ import MobileSectionBR from '../../assets/svg/soonGamesBR.svg';
 import { Footer } from 'layouts/Footer';
 import { LanguageHOC } from 'hoc/langHoc';
 import { UserLangContext } from 'App';
+import { useWebSocket } from 'react-use-websocket/dist/lib/use-websocket';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',

@@ -357,8 +357,8 @@ export const ProfilePure = ({ lang }: any) => {
   const mintTokens = async () => {
     const parsedInputs: any = [
       publicKey,
-      '50000000u64',
-      '50000000u128',
+      '500u64',
+      '5000000000u128',
       //@ts-ignore
     ].map((elem) => tryParseJSON(elem));
 
@@ -369,7 +369,7 @@ export const ProfilePure = ({ lang }: any) => {
       'aleogamestoken.aleo',
       'mint_public',
       parsedInputs,
-      5000000,
+      '100000',
     );
     //@ts-ignore
     const txId =
@@ -393,7 +393,7 @@ export const ProfilePure = ({ lang }: any) => {
       'aleogamesvoting.aleo',
       'new_ticket',
       parsedInputs,
-      5000000,
+      50000,
     );
     //@ts-ignore
     const txId =

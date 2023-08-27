@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import styles from './Board.module.scss';
 import { BoardLettersByNumber, Colors, FigureData, Figures } from '../../types';
@@ -6,24 +7,92 @@ import Figure from '../Figure/Figure';
 import {
   changeFigurePosition,
   removeFigure,
+  resetGame,
   selectColor,
   selectFigures,
   selectGameWon,
+  setColor,
   setGameStarted,
   setGameWon,
 } from '../../redux/gameSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import store from '../../redux/store';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Modal } from 'components/Modal/Modal';
 import winSVG from '../../../../assets/svg/win.svg';
 import confettiSVG from '../../../../assets/svg/confetti.svg';
+import luckySVG from '../../../../assets/svg/lucky.svg';
+import secondSVG from '../../../../assets/svg/secondPlayer.svg';
+import { useWebSocket } from 'react-use-websocket/dist/lib/use-websocket';
+import { Show } from 'components/Show/Show';
+import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
+import {
+  Transaction,
+  WalletAdapterNetwork,
+} from '@demox-labs/aleo-wallet-adapter-base';
+import styled from '@emotion/styled';
+
+function tryParseJSON(input: string): string | object {
+  try {
+    return JSON.parse(input);
+  } catch (error) {
+    return input;
+  }
+}
+
+const Button = styled.div(() => ({
+  width: '80px',
+  height: '29px',
+  background: 'linear-gradient(90.36deg, #1056FA 0.21%, #00C7F8 101.74%)',
+  borderRadius: '8px',
+  fontSize: '12px',
+  color: '#fff',
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  cursor: 'pointer',
+  zIndex: 100,
+  '&:hover': {
+    transition: '1s',
+    background: 'linear-gradient(90.36deg, #1056FA 0.21%, #1056FA 101.74%)',
+  },
+}));
 
 const Board: React.FC = () => {
   const dispatch = useAppDispatch();
   const gameColor = useAppSelector(selectColor);
   const figures = useAppSelector(selectFigures);
   const gameWon = useAppSelector(selectGameWon);
+  const [figureClickedBlock, setFigureClickedBlock] = useState(false);
+  const [lastEnemyMove, setLastEnemyMove] = useState('');
+
+  const mintTokens = async () => {
+    const parsedInputs: any = [
+      publicKey,
+      '5000u64',
+      '5000000u128',
+      //@ts-ignore
+    ].map((elem) => tryParseJSON(elem));
+
+    const aleoTransaction = Transaction.createTransaction(
+      //@ts-ignore
+      publicKey,
+      WalletAdapterNetwork.Testnet,
+      'aleogamestoken.aleo',
+      'mint_public',
+      parsedInputs,
+      '100000',
+    );
+    //@ts-ignore
+    const txId =
+      (await (wallet?.adapter as LeoWalletAdapter).requestTransaction(
+        aleoTransaction,
+      )) || '';
+    //@ts-ignore
+  };
+
   let [isKingInCheck, setIsKingInCheck] = useState<boolean>(false);
   let dangerousCells: MutableRefObject<{
     white: { [key: string]: boolean };
@@ -34,11 +103,11 @@ const Board: React.FC = () => {
     ally: gameColor,
     enemy: gameColor === Colors.WHITE ? Colors.BLACK : Colors.WHITE,
   };
-
   const boardRef = useRef<HTMLDivElement>(null);
   const [choseFigurePos, setChoseFigurePos] = useState<{
     figure: FigureData;
     availableCells: { [key: string]: boolean };
+    currentPos: { [key: string]: boolean };
   } | null>(null);
 
   const cellsFigure: { [key: string]: FigureData | null } = {};
@@ -68,9 +137,10 @@ const Board: React.FC = () => {
   const cellClicked = (x: number, y: number): void => {
     if (!choseFigurePos) return;
     if (!choseFigurePos.availableCells[`${x}-${y}`]) return;
-
+    // console.log('Moved');
+    sendMyMessage(choseFigurePos.figure, x, y, choseFigurePos.currentPos);
     moveOn(choseFigurePos.figure, x, y);
-    nextAIMoveDelayed();
+    // nextAIMoveDelayed();
   };
 
   // Function to initialize the board cells
@@ -175,14 +245,19 @@ const Board: React.FC = () => {
 
   // Function to handle the click event on a figure
   const figureClicked = (figure: FigureData) => {
+    if (figureClickedBlock) {
+      return;
+    }
     // Check if there is a selected figure, and if the clicked cell is a valid move and not occupied by an ally
     if (
       choseFigurePos &&
       choseFigurePos.availableCells[`${figure.x}-${figure.y}`] &&
       choseFigurePos.figure.color !== figure.color
     ) {
+      // console.log(1);
       moveOrEat(choseFigurePos.figure, figure.x, figure.y);
-      nextAIMoveDelayed();
+      // console.log(figure.x, figure.y);
+      // nextAIMoveDelayed();
       return;
     }
 
@@ -194,6 +269,7 @@ const Board: React.FC = () => {
       choseFigurePos.figure.y === figure.y &&
       choseFigurePos.figure.color === figure.color
     ) {
+      // console.log(2);
       setChoseFigurePos(null);
       return;
     }
@@ -201,23 +277,38 @@ const Board: React.FC = () => {
     // Check if the clicked figure belongs to the ally side, and if it's not the king in check
     if (sides.ally !== figure.color) return;
     if (isKingInCheck && figure.name !== Figures.KING) return;
+    // console.log(3);
+    // console.log('setChoseFigurePos');
+    // console.log(figure.x, figure.y);
+    // console.log('setChoseFigurePos');
 
     // Select the clicked figure and update the available cells for it
     setChoseFigurePos({
       figure,
       availableCells: getAvailableCells(figure),
+      currentPos: {
+        x: figure.x,
+        y: figure.y,
+      },
     });
+    // console.log(4);
   };
 
   // Function to end the game and declare the winner
   const endGame = (winner: Colors) => {
-    dispatch(setGameWon(winner));
-    dispatch(setGameStarted(false));
+    sendMessage(
+      JSON.stringify({
+        //@ts-ignore
+        color: winner,
+        win: true,
+      }),
+    );
   };
 
   // Function to handle eating a figure
   const eatFigure = (figure: FigureData): void => {
     cellsFigure[`${figure.x}-${figure.y}`] = null;
+    // console.log(figure);
     if (figure.name === Figures.KING) {
       endGame(getOtherColor(figure.color));
     }
@@ -227,8 +318,27 @@ const Board: React.FC = () => {
   // Function to handle moving or eating a figure to a specific cell
   const moveOrEat = (figure: FigureData, x: number, y: number): void => {
     const figureOnCell = cellsFigure[`${x}-${y}`];
-    if (figureOnCell && figureOnCell.color !== figure.color)
+    // console.log('CONFIRMED');
+    // console.log(figure);
+    // console.log(x);
+    // console.log(y);
+    // console.log('CONFIRMED');
+    if (figureOnCell && figureOnCell.color !== figure.color) {
       eatFigure(figureOnCell);
+      if (figureOnCell.color !== playerColor)
+        sendMyMessage(
+          figure,
+          x,
+          y,
+          {
+            x: figure.x,
+            y: figure.y,
+          },
+          true,
+        );
+    }
+    // console.log(figure);
+    // sendMyMessage(choseFigurePos.figure, x, y, choseFigurePos.currentPos);
     moveOn(figure, x, y);
   };
 
@@ -236,6 +346,7 @@ const Board: React.FC = () => {
   const getAvailableCells = (
     figure: FigureData,
     isForDangerousCells: boolean = false,
+    isEnemy: boolean = false,
   ): { [key: string]: boolean } => {
     let way: { y: number; x: number }[] = [];
 
@@ -374,7 +485,11 @@ const Board: React.FC = () => {
     if (figure.name === Figures.PAWN) {
       if (figure.color === Colors.BLACK) {
         if (!isForDangerousCells) {
-          verticalBottom(figure.y - 2);
+          if (figure.y == 7) {
+            verticalBottom(figure.y - 2);
+          } else {
+            verticalBottom(figure.y - 1);
+          }
         } else {
           way.push({ y: figure.y - 1, x: figure.x - 1 });
           way.push({ y: figure.y - 1, x: figure.x + 1 });
@@ -382,7 +497,11 @@ const Board: React.FC = () => {
       }
       if (figure.color === Colors.WHITE) {
         if (!isForDangerousCells) {
-          verticalTop(figure.y + 2);
+          if (figure.y == 2) {
+            verticalTop(figure.y + 2);
+          } else {
+            verticalTop(figure.y + 1);
+          }
         } else {
           way.push({ y: figure.y + 1, x: figure.x - 1 });
           way.push({ y: figure.y + 1, x: figure.x + 1 });
@@ -510,46 +629,29 @@ const Board: React.FC = () => {
     way.forEach((el) => {
       obj[`${el.x}-${el.y}`] = true;
     });
+    console.log('-------------');
+    console.log(figure.name);
+    console.log(obj);
+    console.log('-------------');
+    if (figure.name === 'king') {
+      if (Object.keys(obj).length == 0) {
+        endGame(figure.color);
+      }
+    }
     return obj;
   };
 
   // Executes the AI's next move
-  const nextAIMove = () => {
-    const figures = store.getState().game.figures;
+  const nextAIMove = (message) => {
+    const [x, y] = message.target_position.split('');
 
-    // Utility function to get a random element from an array
-    const getRandomElementOfArray = <T extends unknown>(arr: T[]): T => {
-      return arr[Math.floor(Math.random() * arr.length)];
-    };
-
-    const figuresIds = Object.keys(figures);
-    if (figuresIds.length < 1) return; // No figures available, return
-    const enemyFiguresIds = figuresIds.filter(
-      (id) => figures[id].color === sides.enemy,
-    );
-    let randomFigureId = getRandomElementOfArray(enemyFiguresIds);
-    let availableCells = getAvailableCells(figures[randomFigureId]);
-    let availableCellsArr = Object.keys(availableCells);
-    const triedFiguresIds: string[] = [];
-
-    // Find a figure with available cells to move
-    while (availableCellsArr.length < 1) {
-      if (triedFiguresIds.length >= enemyFiguresIds.length) return; // No available cells, return
-      randomFigureId = getRandomElementOfArray(enemyFiguresIds);
-      availableCells = getAvailableCells(figures[randomFigureId]);
-      availableCellsArr = Object.keys(availableCells);
-      triedFiguresIds.push(randomFigureId);
-    }
-
-    // Select a random cell to move to
-    const cellForMove = getRandomElementOfArray(availableCellsArr);
-    const [x, y] = cellForMove.split('-');
-    moveOrEat(figures[randomFigureId], Number(x), Number(y));
-  };
-
-  // Executes the AI's next move with a delay
-  const nextAIMoveDelayed = (delay: number = 200) => {
-    setTimeout(nextAIMove, delay);
+    const xformatted = [0, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+    setLastEnemyMove({
+      figure: figures[message.id],
+      x: Number(xformatted.indexOf(x)),
+      y: Number(y),
+    });
+    moveOrEat(figures[message.id], Number(xformatted.indexOf(x)), Number(y));
   };
 
   // Get all figures of a specific color
@@ -602,6 +704,14 @@ const Board: React.FC = () => {
     const king = kings[color];
     if (!king) return;
 
+    // console.log('DANGEROUS ');
+    // console.log(king);
+    // console.log(dangerousCells);
+    // console.log(dangerousCells.current);
+    // console.log(
+    //   dangerousCells.current[getOtherColor(color)][`${king.x}-${king.y}`],
+    // );
+    // console.log('DANGEROUS ');
     // Check if the king's position is in the dangerous cells of the opposite color
     if (dangerousCells.current[getOtherColor(color)][`${king.x}-${king.y}`])
       setIsKingInCheck(true);
@@ -613,33 +723,154 @@ const Board: React.FC = () => {
     if (!gameWon) return null;
 
     const color = gameWon[0].toUpperCase() + gameWon.slice(1);
-
+    if (playerColor !== gameWon) {
+      return (
+        <Modal>
+          <div className={styles.gameWon}>
+            <h2 className={styles.gameWonTitle}>Congratulations!</h2>
+            <h2 className={styles.gameWonTitleDesc}>
+              You can mint some tokens!
+            </h2>
+            <Button onClick={() => mintTokens()}>Mint</Button>
+            <img src={confettiSVG} style={{ position: 'absolute' }} />
+            <img style={{ marginBottom: '-12px' }} src={winSVG} />
+          </div>
+        </Modal>
+      );
+    }
     return (
       <Modal>
         <div className={styles.gameWon}>
-          <h2 className={styles.gameWonTitle}>Congratulations!</h2>
-          <img src={confettiSVG} style={{ position: 'absolute' }} />
-          <img style={{ marginBottom: '-12px' }} src={winSVG} />
+          <h2 className={styles.gameWonTitle}>Sorry {':('}</h2>
+          <h2 className={styles.gameWonTitleDesc}>
+            Today is not your lucky day.
+          </h2>
+          <img style={{ marginBottom: '-12px' }} src={luckySVG} />
         </div>
       </Modal>
     );
   };
 
+  const { wallet, publicKey, requestRecords } = useWallet();
+  const { id } = useParams();
+  const [playerNumber, setPlayerNumber] = useState();
+  const [playerColor, setPlayerColor] = useState();
+  const [showWaitModal, setShowWaitModal] = useState(false);
+
   // Check if the king is in check when the figures state changes
   useEffect(() => {
-    checkIsKingInCheck(sides.ally);
+    if (lastEnemyMove?.figure) {
+      console.log(lastEnemyMove?.figure);
+      console.log(getAvailableCells(lastEnemyMove?.figure, false, true));
+      checkIsKingInCheck(sides.ally);
+    }
   }, [figures]);
 
-  // Resize the board and initialize the game when the component mounts
+  const WS_URL = 'ws://168.119.178.26:8000/ws/chess/afs/';
+
+  const socketUrl = 'ws://168.119.178.26:8000/ws/chess/' + id + '/';
+  const { lastMessage, sendMessage, readyState } = useWebSocket(socketUrl);
+
   useEffect(() => {
-    resizeBoard();
-    window.addEventListener('resize', resizeBoard);
-    dispatch(setGameStarted(true));
-  }, []);
+    // Handle new messages
+    if (lastMessage) {
+      //@ts-ignore
+      const lastMessageNew = JSON.parse(lastMessage.data);
+      switch (lastMessageNew.message.message_type) {
+        case 'timer':
+          break;
+        // statements;
+        case 'first_message':
+          // console.log(lastMessageNew);
+          // console.log(lastMessage.data);
+          if (lastMessageNew.message.player_number === 1) {
+            // @ts-ignore
+            setPlayerNumber(1);
+            setPlayerColor(lastMessageNew.message.color);
+            dispatch(setColor(lastMessageNew.message.color));
+            setShowWaitModal(true);
+          }
+          if (lastMessageNew.message.player_number === 2) {
+            if (!playerColor) {
+              // @ts-ignore
+              setPlayerNumber(2);
+              setPlayerColor(lastMessageNew.message.color);
+              dispatch(setColor(lastMessageNew.message.color));
+              setShowWaitModal(false);
+              resizeBoard();
+              window.addEventListener('resize', resizeBoard);
+              dispatch(setGameStarted(true));
+            } else {
+              setFigureClickedBlock(true);
+              setShowWaitModal(false);
+              resizeBoard();
+              window.addEventListener('resize', resizeBoard);
+              dispatch(setGameStarted(true));
+            }
+          }
+          break;
+        case 'move':
+          console.log(lastMessageNew);
+          console.log(lastMessage.data);
+          if (playerColor === lastMessageNew.message.color) {
+            setFigureClickedBlock(true);
+            // moveOrEat()
+          } else {
+            setFigureClickedBlock(false);
+            if (lastMessageNew.message.is_captured) {
+            }
+            // console.log('move');
+            nextAIMove(lastMessageNew.message);
+          }
+          break;
+        case 'result':
+          console.log(lastMessage.data);
+          dispatch(setGameWon(lastMessageNew.message.color));
+          dispatch(setGameStarted(false));
+          break;
+        default:
+        // default:
+        //   statements;
+      }
+      // Handle the received message as needed
+    }
+  }, [lastMessage]);
+
+  // useEffect(() => {
+  //   console.log(choseFigurePos);
+  // }, [choseFigurePos]);
+
+  // Send a message (example)
+  const sendMyMessage = (figure, x, y, current, is_captured) => {
+    const xformatted = [0, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+    // console.log(figure.id);
+    //@ts-ignore
+    sendMessage(
+      JSON.stringify({
+        //@ts-ignore
+        init_position: xformatted[current.x] + current.y,
+        target_position: xformatted[x] + y,
+        piece_name: figure.name,
+        is_captured: is_captured && true,
+        action_move_color: playerColor,
+        id: figure.id,
+      }),
+    );
+  };
 
   return (
     <div className="app">
       {' '}
+      <Show visible={showWaitModal}>
+        <Modal>
+          <div className={styles.gameWon}>
+            <h2 className={styles.gameWonTitle}>
+              Waiting for second player...
+            </h2>
+            <img style={{ width: '305px' }} src={secondSVG} />
+          </div>
+        </Modal>
+      </Show>
       <div className={styles.boardWrapper} ref={boardRef}>
         <ul className={styles.boardLeft}>
           <li className={styles.boardLeftItem}>1</li>

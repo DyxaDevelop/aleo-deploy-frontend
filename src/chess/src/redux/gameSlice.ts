@@ -4,14 +4,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
 interface GameState {
-  color: Colors;
+  color: string;
   figures: { [key: string]: FigureData };
-  gameWon: Colors | null;
+  gameWon: string | null;
   isGameStarted: boolean;
 }
 
 const initialState: GameState = {
-  color: Colors.WHITE,
+  color: 'white',
   figures: initialFigures,
   gameWon: null,
   isGameStarted: false,
@@ -25,7 +25,7 @@ export const gameSlice = createSlice({
   // Reducers are functions that modify the state. Each function receives the current state and an action with payload.
   reducers: {
     // setColor is a reducer that sets the color of the game state to the payload of the action.
-    setColor: (state, action: PayloadAction<Colors>) => {
+    setColor: (state, action: PayloadAction<string>) => {
       state.color = action.payload;
     },
 
@@ -44,7 +44,7 @@ export const gameSlice = createSlice({
     },
 
     // setGameWon is a reducer that sets the winner of the game.
-    setGameWon: (state, action: PayloadAction<Colors>) => {
+    setGameWon: (state, action: PayloadAction<string>) => {
       state.gameWon = action.payload;
     },
 
