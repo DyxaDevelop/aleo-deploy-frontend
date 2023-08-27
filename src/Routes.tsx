@@ -45,7 +45,7 @@ export const AppRoutes = () => (
         {/* <div className="app"> */}
         <Route path="/games/chess" element={<Chess />} />
         <Route
-          path="/games/chess/board"
+          path="/games/chess/board/:id"
           element={
             <PrivateRoute>
               <Board />

@@ -145,3 +145,18 @@ background: linear-gradient(90.36deg, #1056FA 0.21%, #00C7F8 101.74%);
 background-clip: text;
 text-fill-color: transparent;
 }
+
+.gameWonTitleDesc {
+  margin-top: 15px;
+  font-style: normal;
+font-weight: 700;
+font-size: 25px;
+line-height: 50px;
+display: flex;
+align-items: center;
+background: linear-gradient(90.36deg, #1056FA 0.21%, #00C7F8 101.74%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+}
