@@ -1,0 +1,10 @@
+{
+    "program": "aleogamesvoting.aleo",
+    "version": "0.0.0",
+    "description": "",
+    "development": {
+        "private_key": "APrivateKey1zkpCTzpdC6VUc3MCZ3kL9ym25jZudZgJ5KKRDqQnq4Cg6rT",
+        "address": "aleo1626a7j8v9vsh2tqx4clz8lsdjpfch0dnfyv68n08pq4djs57f5zsdvmytn"
+    },
+    "license": "MIT"
+}
