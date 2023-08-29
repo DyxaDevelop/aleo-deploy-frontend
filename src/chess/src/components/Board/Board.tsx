@@ -766,9 +766,7 @@ const Board: React.FC = () => {
     }
   }, [figures]);
 
-  const WS_URL = 'wss://168.119.178.26:8000/ws/chess/afs/';
-
-  const socketUrl = 'wss://168.119.178.26:8000/ws/chess/' + id + '/';
+  const socketUrl = 'wss://185.237.206.120/ws/chess/' + id + '/';
   const { lastMessage, sendMessage, readyState } = useWebSocket(socketUrl);
 
   useEffect(() => {
