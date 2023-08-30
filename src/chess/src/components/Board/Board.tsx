@@ -633,7 +633,7 @@ const Board: React.FC = () => {
     console.log(figure.name);
     console.log(obj);
     console.log('-------------');
-    if (figure.name === 'king') {
+    if (figure.name === 'king' && isKingInCheck) {
       if (Object.keys(obj).length == 0) {
         endGame(figure.color);
       }
@@ -760,8 +760,6 @@ const Board: React.FC = () => {
   // Check if the king is in check when the figures state changes
   useEffect(() => {
     if (lastEnemyMove?.figure) {
-      console.log(lastEnemyMove?.figure);
-      console.log(getAvailableCells(lastEnemyMove?.figure, false, true));
       checkIsKingInCheck(sides.ally);
     }
   }, [figures]);
