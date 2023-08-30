@@ -766,8 +766,12 @@ const Board: React.FC = () => {
     }
   }, [figures]);
 
-  const socketUrl = 'wss://185.237.206.120/ws/chess/' + id + '/';
-  const { lastMessage, sendMessage, readyState } = useWebSocket(socketUrl);
+  const socketUrl = 'wss://aleo-games.xyz/ws/chess/' + id + '/';
+  const { lastMessage, sendMessage, readyState } = useWebSocket(socketUrl, {
+    rejectUnauthorized: false,
+    requestCert: false,
+    agent: false,
+  });
 
   useEffect(() => {
     // Handle new messages
