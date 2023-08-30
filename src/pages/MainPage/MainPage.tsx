@@ -1,4 +1,3 @@
-import { WalletMultiButton } from '@demox-labs/aleo-wallet-adapter-reactui';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import React, {
@@ -40,6 +39,7 @@ import LogoSVG from '../../assets/svg/newLogoMobile.svg';
 import { LanguageHOC } from 'hoc/langHoc';
 import { UserLangContext } from 'App';
 import { Footer } from 'layouts/Footer';
+import { NavLink } from 'react-router-dom';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -301,12 +301,13 @@ const BlockNumber = styled.div(() => ({
   textFillColor: 'transparent',
 }));
 
-const Button = styled.div(() => ({
+const Button = styled(NavLink)(() => ({
   width: 'fit-content',
   background: 'linear-gradient(90.36deg, #1056FA 0.21%, #00C7F8 101.74%)',
   borderRadius: '6px',
   fontSize: '12px',
   color: '#fff',
+  textDecoration: 'none',
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 600,
@@ -911,7 +912,13 @@ export const MainPagePure = ({ lang }: any) => {
             <BlockItemContent>
               <BlockTitle>{lang.INSTALL_LEO_WALLET}</BlockTitle>
               <BlockDesc>{lang.INSTALL_LEO_WALLET2}</BlockDesc>
-              <Button>{lang.INSTALL_LEO_WALLET3}</Button>
+              <Button
+                target="_blank"
+                rel="noopener noreferrer"
+                to="https://chrome.google.com/webstore/detail/leo-wallet/nebnhfamliijlghikdgcigoebonmoibm"
+              >
+                {lang.INSTALL_LEO_WALLET3}
+              </Button>
             </BlockItemContent>
           </BlockItem>
           <BlockItem>
@@ -919,7 +926,13 @@ export const MainPagePure = ({ lang }: any) => {
             <BlockItemContent>
               <BlockTitle>{lang.GET_TOKENS}</BlockTitle>
               <BlockDesc>{lang.GET_TOKENS2}</BlockDesc>
-              <Button>{lang.GET_TOKENS3}</Button>
+              <Button
+                target="_blank"
+                rel="noopener noreferrer"
+                to="https://faucet.aleo.org/"
+              >
+                {lang.GET_TOKENS3}
+              </Button>
             </BlockItemContent>
           </BlockItem>
           <BlockItem>
@@ -927,7 +940,13 @@ export const MainPagePure = ({ lang }: any) => {
             <BlockItemContent>
               <BlockTitle>{lang.CHOOSE_GAME}</BlockTitle>
               <BlockDesc>{lang.CHOOSE_GAME2}</BlockDesc>
-              <Button>{lang.CHOOSE_GAME3}</Button>
+              <Button
+                target="_blank"
+                rel="noopener noreferrer"
+                to="https://aleo-games.com/games"
+              >
+                {lang.CHOOSE_GAME3}
+              </Button>
             </BlockItemContent>
           </BlockItem>
           <BlockItem>
@@ -935,7 +954,13 @@ export const MainPagePure = ({ lang }: any) => {
             <BlockItemContent>
               <BlockTitle>{lang.INVITE1} </BlockTitle>
               <BlockDesc>{lang.INVITE2}</BlockDesc>
-              <Button>{lang.INVITE3}</Button>
+              <Button
+                target="_blank"
+                rel="noopener noreferrer"
+                to="https://aleo-games.com/games/chess"
+              >
+                {lang.INVITE3}
+              </Button>
             </BlockItemContent>
           </BlockItem>
           <BlockItem>
@@ -943,7 +968,13 @@ export const MainPagePure = ({ lang }: any) => {
             <BlockItemContent>
               <BlockTitle>{lang.CREATE_ENS1}</BlockTitle>
               <BlockDesc>{lang.CREATE_ENS2}</BlockDesc>
-              <Button>{lang.CREATE_ENS3}</Button>
+              <Button
+                target="_blank"
+                rel="noopener noreferrer"
+                to="https://aleo-games.com/ens"
+              >
+                {lang.CREATE_ENS3}
+              </Button>
             </BlockItemContent>
           </BlockItem>
           <BlockItem>
@@ -951,7 +982,13 @@ export const MainPagePure = ({ lang }: any) => {
             <BlockItemContent>
               <BlockTitle>{lang.VOTE1} </BlockTitle>
               <BlockDesc>{lang.VOTE2} </BlockDesc>
-              <Button>{lang.VOTE3} </Button>
+              <Button
+                target="_blank"
+                rel="noopener noreferrer"
+                to="https://aleo-games.com/voting"
+              >
+                {lang.VOTE3}{' '}
+              </Button>
             </BlockItemContent>
           </BlockItem>
         </BlockSection>
