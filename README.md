@@ -1,5 +1,7 @@
 # Aleo-Games: The Ultimate Web3 Experience on the Aleo Blockchain
 
+[Official Website](https://aleo-games.com)
+
 Welcome to **Aleo-Games**, where the timeless game of chess meets the power of the Aleo blockchain. Our platform offers an immersive and exhilarating gaming experience that combines challenging chess matches with the excitement of Aleo token wagers. Get ready to unleash your strategic genius and dive into the captivating features that make Aleo-Games a true game-changer within the Aleo network.
 
 ## Key Features
