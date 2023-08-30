@@ -47,4 +47,4 @@ By encompassing these key aspects, Aleo-Games adds significant value to the Aleo
 5. Configure and connect your Leo Wallet to the application.
 6. Enjoy using Aleo-Games!
 
-For more details, please visit our [official website](https://aleogames.com) and join our vibrant community on [Discord](https://discord.gg/aleogames).
+For more details, please visit our [official website](https://aleo-games.com) and join our vibrant community on [Discord](https://discord.gg/aleogames).
