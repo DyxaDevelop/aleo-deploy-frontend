@@ -3,6 +3,10 @@ import { DefaultLayout } from '../../layouts/DefaultLayout';
 import { Footer } from 'layouts/Footer';
 import { useEffect, useState } from 'react';
 import { LanguageHOC } from 'hoc/langHoc';
+import walletImage from '../../assets/svg/walletImage.svg';
+import { SuspenseImg } from 'components/SuspenseImg/SuspenseImg';
+import { Modal } from 'components/Modal/Modal';
+import { Show } from 'components/Show/Show';
 
 const Container = styled.div(() => ({
   fontFamily: 'Inter',
@@ -164,6 +168,10 @@ const VoteCheckBox = styled.div(() => ({
   height: '10px',
   border: '1px solid #FFFFFF',
   borderRadius: '50%',
+  cursor: 'pointer',
+  '&.active': {
+    backgroundColor: '#1056FA',
+  },
 }));
 
 const VoteRightInfo = styled.div(() => ({
@@ -199,8 +207,37 @@ const VotingBlock = styled.div(() => ({
   marginBottom: '10px',
 }));
 
+const ConnectModal = styled.div(() => ({
+  width: '430px',
+  height: '150px',
+  backgroundColor: '#1A1C24',
+  border: '1px solid #313236',
+  borderRadius: '8px',
+  display: 'flex',
+  overflow: 'hidden',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+}));
+
+const ContentModal = styled.div(() => ({
+  fontStyle: 'normal',
+  fontWeight: '700',
+  fontSize: '18px',
+  color: '#fff',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px',
+  paddingLeft: '25px',
+}));
+
+const ImgModal = styled.div(() => ({
+  marginTop: '40px',
+}));
+
 export const VotingPure = ({ lang }: any) => {
   const [paramAnimation, setParamAnimation] = useState(0);
+
+  const [chosedVariant, setChosedVariant] = useState('');
 
   const VoteProgressAnimation = styled.div(() => ({
     height: '6px',
@@ -225,6 +262,18 @@ export const VotingPure = ({ lang }: any) => {
   return (
     <>
       <DefaultLayout>
+        <Show visible={!!chosedVariant}>
+          <Modal autoClose={true} onClose={() => setChosedVariant('')}>
+            <ConnectModal>
+              <ContentModal>
+                You don't have enough <br /> votes for voting!
+              </ContentModal>
+              <ImgModal>
+                <img src={walletImage} />
+              </ImgModal>
+            </ConnectModal>
+          </Modal>
+        </Show>
         <Container>
           <TitleBlock>{lang.DAO}</TitleBlock>
           <VoteItem>
@@ -241,7 +290,7 @@ export const VotingPure = ({ lang }: any) => {
                       {lang.YES}
                       <span style={{ marginRight: '20px' }}>60%</span>
                     </div>
-                    <VotingBlock>
+                    <VotingBlock onClick={() => setChosedVariant('60')}>
                       <VoteProgressContainer>
                         <VoteProgressAnimation />
                         <VoteProgress value={60} />
@@ -254,7 +303,7 @@ export const VotingPure = ({ lang }: any) => {
                       {lang.NO}
                       <span style={{ marginRight: '20px' }}>30%</span>
                     </div>
-                    <VotingBlock>
+                    <VotingBlock onClick={() => setChosedVariant('30')}>
                       <VoteProgressContainer>
                         <VoteProgressAnimation />
                         <VoteProgress value={30} />
@@ -267,7 +316,7 @@ export const VotingPure = ({ lang }: any) => {
                       {lang.ABSTAIN}
                       <span style={{ marginRight: '20px' }}>10%</span>
                     </div>
-                    <VotingBlock>
+                    <VotingBlock onClick={() => setChosedVariant('10')}>
                       <VoteProgressContainer>
                         <VoteProgressAnimation />
                         <VoteProgress value={10} />

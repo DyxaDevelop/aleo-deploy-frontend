@@ -240,8 +240,8 @@ export const CreateENSPure = ({ lang }: any) => {
 
   const claimEns = async () => {
     const parsedInputs: any = [
-      0.12 * monthValue * 100000 + 'u128',
-      inputValue + 'public',
+      { data1: '12214u128', data2: '11242u128' },
+      '1scalar',
       //@ts-ignore
     ].map((elem) => tryParseJSON(elem));
 
@@ -250,9 +250,9 @@ export const CreateENSPure = ({ lang }: any) => {
       publicKey,
       WalletAdapterNetwork.Testnet,
       'ansaleogames.aleo',
-      'initialize_ans',
+      'mint_ans',
       parsedInputs,
-      5000000,
+      10000000,
     );
     //@ts-ignore
     const txId =
