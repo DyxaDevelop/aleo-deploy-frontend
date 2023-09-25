@@ -45,6 +45,9 @@ const ContentBlock = styled.div(() => ({
   width: '50%',
   height: '100%',
   paddingLeft: '70px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }));
 
 const ControlBtns = styled.div(() => ({
@@ -60,7 +63,6 @@ const ControlBtns = styled.div(() => ({
 }));
 
 const Title = styled.div(() => ({
-  marginTop: '90px',
   fontWeight: 700,
   fontSize: '44px',
   lineHeight: '37px',
@@ -177,10 +179,7 @@ export const ChessPure = ({ lang }: any) => {
             <ContentBlock>
               <div style={{ margin: 'auto' }}>
                 <Title>{lang.ALEO_C}</Title>
-                <Description>
-                  {lang.ALEO_C2}
-                  <span style={{ color: '#fff' }}>Aleo platform!</span>
-                </Description>
+                <Description>{lang.ALEO_C2}</Description>
                 <ButtonGroup>
                   <Button
                     onClick={() => {
